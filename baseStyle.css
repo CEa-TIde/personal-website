@@ -1,0 +1,104 @@
+body {
+    margin : 0;
+    padding : 0;
+}
+
+.logo, .logo > img {
+    background : transparent;
+    max-height : 5vw;
+}
+.logo:hover {
+    opacity : 0.8;
+}
+
+header {
+    background : #002839;
+    width : 100vw;
+}
+
+aside {
+    float : left;
+    height : 300px;
+    width : 15vw;
+    background : #696969;
+}
+
+nav {
+    display : block;
+    border : 1px solid #005055;
+}
+
+main {
+    background : #152931;
+}
+
+.header-content {
+    display : inline-block;
+
+}
+
+/****************
+Dropdown menu styling:
+*******************/
+
+.dropdown:hover > .dropbtn {
+    background : #005055;
+}
+
+.dropdown {
+    position : relative;
+    float : left;
+}
+
+.dropdown > *, .sub-dropdown > * {
+    text-align : center;
+}
+
+.dropbtn {
+    background : #003139;
+    color : white;
+    padding : 10px;
+    border : none;
+}
+
+.dropdown-content {
+    display : none;
+    position : absolute;
+    z-index : 1;
+    white-space : nowrap;
+}
+
+.sub-drop-content {
+    left : 100%;
+}
+
+.dropdown:hover > .dropdown-content {
+    display : block;
+}
+
+.dropdown-content > a {
+    display : block;
+}
+
+.dropdown-content > a, .sub-dropbtn {
+    background : #696969;
+    border : 1px solid #696969;
+    padding : 5px;
+}
+
+.sub-dropbtn {
+    width : 100%;
+}
+
+.dropdown-content > a:hover, .sub-dropdown:hover > .sub-dropbtn {
+    background : #494949;
+    border : 1px solid #898989;
+}
+
+.sub-dropdown:hover > .sub-drop-content {
+    display : inline-block;
+}
+
+/*************
+End dropdown
+***********/
