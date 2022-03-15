@@ -1,40 +1,76 @@
+/* global variables */
+
+
+
+/* end global variables */
+
 body {
     margin : 0;
     padding : 0;
+    height : 2000px;
 }
 
 .logo, .logo > img {
     background : transparent;
-    max-height : 5vw;
+    width : 20%;
+    max-width : 250px;
 }
 .logo:hover {
     opacity : 0.8;
 }
 
-header {
-    background : #002839;
-    width : 100vw;
+.title {
+    font-size : max(3vw, 2em);
+    font-size : clamp(2em, 3vw, 4em);
+    width : 80%;
+    margin-left : 20px;
+    display : inline-block;
+    word-wrap : break-word;
+    white-space : normal;
 }
 
-aside {
-    float : left;
-    height : 300px;
-    width : 15vw;
-    background : #696969;
+header {
+    background : #002839;
+    width : 100%;
+}
+
+.header-content {
+    white-space : nowrap;
 }
 
 nav {
-    display : block;
-    border : 1px solid #005055;
+    background : #002839;
+    width : 100%;
+    position : -webkit-sticky;
+    position : sticky;
+    top : 0;
+    box-shadow : 0 10px 10px #49494977;
+    font-size : 0;
+}
+
+nav * {
+    font-size: initial;
+}
+
+aside {
+    clear : left;
+    height : 300px;
+    width : 15%;
+    background : #696969;
 }
 
 main {
     background : #152931;
+    width : 100%;
+    height : 100px;
+    display : none;
 }
 
-.header-content {
-    display : inline-block;
-
+footer {
+    background : green;
+    width : 200px;
+    height : 100px;
+    display : none;
 }
 
 /****************
@@ -46,16 +82,29 @@ Dropdown menu styling:
 }
 
 .dropdown {
-    position : relative;
-    float : left;
+    display : inline-block;
+    /*clear fix for IE 6/7*/
+    /* *zoom : 1;  */
 }
 
-.dropdown > *, .sub-dropdown > * {
+/*
+clearfix hack
+Source: https://nicolasgallagher.com/micro-clearfix-hack/
+*/
+/* .dropdown:before, .dropdown:after {
+    content: " ";
+    display : table;
+}
+.dropdown:after {
+    clear : both;
+} */
+
+.dropdown * {
     text-align : center;
 }
 
 .dropbtn {
-    background : #003139;
+    background : #004039;
     color : white;
     padding : 10px;
     border : none;
@@ -66,6 +115,7 @@ Dropdown menu styling:
     position : absolute;
     z-index : 1;
     white-space : nowrap;
+    box-shadow : 2px 5px 5px 3px #494949bb;
 }
 
 .sub-drop-content {
@@ -76,29 +126,61 @@ Dropdown menu styling:
     display : block;
 }
 
-.dropdown-content > a {
+.dropdown-content a {
     display : block;
+    text-decoration : none;
+    color : #152931;
+}
+
+.sub-dropbtn {
+    color : #152931;
+    width : 100%;
 }
 
 .dropdown-content > a, .sub-dropbtn {
     background : #696969;
     border : 1px solid #696969;
+    border-bottom : 2px solid #696969;
     padding : 5px;
 }
 
-.sub-dropbtn {
-    width : 100%;
-}
 
 .dropdown-content > a:hover, .sub-dropdown:hover > .sub-dropbtn {
     background : #494949;
-    border : 1px solid #898989;
+    border-bottom : 2px solid #898989;
 }
 
 .sub-dropdown:hover > .sub-drop-content {
     display : inline-block;
 }
 
+
 /*************
 End dropdown
 ***********/
+
+/************
+Side menu styling:
+***********/
+
+aside ul {
+    list-style-type : none;
+    padding-inline-start : 0;
+    padding-inline-end : 10px;
+
+}
+
+aside li {
+    margin-left : 10px;
+    background : #898989;
+}
+
+aside li.current, aside li:hover {
+    margin-left : 8px;
+    border-left : solid 2px #005055;
+}
+
+
+/***********
+End side menu
+************/
