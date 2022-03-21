@@ -38,20 +38,6 @@ header {
     white-space : nowrap;
 }
 
-nav {
-    background : #002839;
-    width : 100%;
-    position : -webkit-sticky;
-    position : sticky;
-    top : 0;
-    box-shadow : 0 10px 10px #49494977;
-    font-size : 0;
-}
-
-nav * {
-    font-size: initial;
-}
-
 aside {
     clear : left;
     height : 300px;
@@ -77,12 +63,34 @@ footer {
 Dropdown menu styling:
 *******************/
 
-.dropdown:hover > .dropbtn {
+nav {
+    background : #002839;
+    width : 100%;
+    position : -webkit-sticky;
+    position : sticky;
+    top : 0;
+    box-shadow : 0 10px 10px #49494977;
+    box-sizing : border-box;
+}
+
+nav > ul {
+    list-style : none;
+    display : flex;
+    height : 40px;
+    padding-left : 15%;
+    align-items : center;
+    background : #004039;
+    color : white;
+}
+
+.dropdown:hover {
     background : #005055;
 }
 
 .dropdown {
-    display : inline-block;
+    padding : 0 10px;
+    box-sizing : border-box;
+    line-height : 40px;
     /*clear fix for IE 6/7*/
     /* *zoom : 1;  */
 }
@@ -101,17 +109,17 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 
 .dropdown * {
     text-align : center;
+    line-height : initial;
 }
 
 .dropbtn {
     background : #004039;
     color : white;
-    padding : 10px;
     border : none;
 }
 
-.dropdown-content {
-    display : none;
+.dd-content {
+    /* display : none; */
     position : absolute;
     z-index : 1;
     white-space : nowrap;
@@ -122,11 +130,11 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     left : 100%;
 }
 
-.dropdown:hover > .dropdown-content {
+.dropdown:hover > .dd-content {
     display : block;
 }
 
-.dropdown-content a {
+.dd-content a {
     display : block;
     text-decoration : none;
     color : #152931;
@@ -137,7 +145,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     width : 100%;
 }
 
-.dropdown-content > a, .sub-dropbtn {
+.dd-content > a, .sub-dropbtn {
     background : #696969;
     border : 1px solid #696969;
     border-bottom : 2px solid #696969;
@@ -145,7 +153,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 
-.dropdown-content > a:hover, .sub-dropdown:hover > .sub-dropbtn {
+.dd-content > a:hover, .sub-dropdown:hover > .sub-dropbtn {
     background : #494949;
     border-bottom : 2px solid #898989;
 }
