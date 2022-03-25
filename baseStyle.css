@@ -64,7 +64,7 @@ Dropdown menu styling:
 *******************/
 
 nav {
-    --menu-height : 40px;
+    --menu-height : 60px;
     --dropdown-color : white;
 
     background : #002839;
@@ -90,36 +90,39 @@ nav > ul {
 }
 
 .dropdown {
-    padding : 10px 30px;
-    padding-right : 10px; /* for down-arrow dropdown */
+    padding : 0 50px;
     height : 100%;
     box-sizing : border-box;
-}
-.dropdown.dd-link {
-    padding-right : 30px; /* reset padding for simple links */
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    position : relative;
 }
 .dropdown:hover {
     background : #005055;
+    cursor : default;
 }
 .dropdown::after {
     content: '';
+    /* draw the triangle */
     width: 0;
     height: 0;
-    margin-left : 20px;
     border-left: 5px solid transparent;
     border-right: 5px solid transparent;
     border-top: 5px solid #a9a9a9;
-    position: relative;
-    right: 8px;
+
+    position: absolute;
+    right: 20px;
     top: 50%;
     transition : top 0.1s;
 }
+/* no arrow for simple links */
 .dropdown.dd-link::after {
-    margin-left : 0;
     display : none;
 }
+/* animate on hover */
 .dropdown:hover::after {
-    top : 75%;
+    top : 60%;
 }
 
 .sub-dropdown {
@@ -136,24 +139,24 @@ nav > ul {
     box-shadow : 2px 5px 5px 3px #494949bb;
     transition : opacity 0.5s;
 }
-
 /* show dropdown */
 li:hover > .dd-content {
-    /* use % so that each sub menu is slightly less visible */
     visibility : visible;
-    opacity : 95%; 
+    opacity : 1; 
 }
 
 /* arrow for sub-dropdowns */
 .sub-dropdown::after {
     content : "";
+    /* draw the triangle */
     width : 0;
     height : 0;
-    position : absolute;
-    right: 8px;
     border-left : 5px solid #a9a9a9;
     border-top : 5px solid transparent;
     border-bottom : 5px solid transparent;
+
+    position : absolute;
+    right: 8px;
     transition : right 0.1s;
 }
 .sub-dropdown:hover::after {
