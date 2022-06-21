@@ -2,7 +2,7 @@
 <html>
     <head>
         <!--style sheet with site-wide style rules-->
-        <link rel="stylesheet" href="baseStyle.css">
+        <link rel="stylesheet" href="main.css">
         <title>[title]</title>
     </head>
     <body>
@@ -12,18 +12,18 @@
         </header>
         <nav>
             <ul>
-                <li class="dropdown">
+                <li class="dropdown" tabindex="0">
                     Lorum
                     <ul class="dd-content">
                         <li class="dd-link"><a href="#">According to all</a></li>
                         <li class="dd-link"><a href="">known laws</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" tabindex="0">
                     Ipsum
                     <ul class="dd-content">
                         <li class="dd-link"><a href="">of aviation,</a></li>
-                        <li class="sub-dropdown">
+                        <li class="sub-dropdown" tabindex="0">
                             there is no way a bee
                             <ul class="dd-content">
                                 <li class="dd-link"><a href="">should be</a></li>
@@ -33,7 +33,7 @@
                                 <li class="dd-link"><a href="">off the ground.</a></li>
                                 <li class="dd-link"><a href="">The bee, of course,</a></li>
                                 <li class="dd-link"><a href="">flies anyway</a></li>
-                                <li class="sub-dropdown">
+                                <li class="sub-dropdown" tabindex="0">
                                     because bees don't care
                                     <ul class="dd-content">
                                         <li class="dd-link"><a href="">what humans think</a></li>
@@ -58,12 +58,14 @@
                 <li class="dropdown dd-link"><a href="">Simple link</a></li>
             </ul>
         </nav>
-        <aside>
-            
-        </aside>
-        <main>
-            
-        </main>
+        <div class="page-wrapper">
+            <aside>
+                
+            </aside>
+            <main>
+                
+            </main>
+        </div>
         <footer>
             
         </footer>
