@@ -1,27 +1,22 @@
-﻿using Server.Handlers;
+﻿using Server.Entities;
+using Server.Handlers;
 using Server.Services;
-using Microsoft.AspNetCore;
-using WebHost = Microsoft.AspNetCore.WebHost;
 
-//var builder = WebApplication.CreateBuilder(args);
-//var builder = CreateWebAppBuilder(args);
+var contentRoot = "../Client";
+
 var builder = WebApplication.CreateBuilder(new WebApplicationOptions {
     Args = args,
     // Look for static files at this path
-    WebRootPath = "../Client/"
+    WebRootPath = contentRoot
 });
-//builder.Host.ConfigureWebHost(webHostBuilder => {
-//    webHostBuilder.UseWebRoot(@"../Client/");
-//});
 
-//var bbuilder = Host.CreateDefaultBuilder(args).ConfigureWebHostDefaults(webHostBuilder => {
-//            webHostBuilder.UseWebRoot(@"../Client/");
-//        });
+var replacePatterns = new ReplacePattern[] {
+    new(new("\\[test\\]"), new FileInfo($"{contentRoot}/template.html"))
+};
 
-//builder.
-
+builder.Services.AddSingleton(replacePatterns);
 builder.Services.AddSingleton<FileProcessService>();
-builder.Services.AddSingleton(x => "../Client");
+builder.Services.AddSingleton(x => contentRoot);
 builder.Services.AddControllers();
 
 var app = builder.Build();
@@ -31,23 +26,3 @@ handler.HandleRequest();
 app.MapControllers();
 
 app.Run();
-/*
-static IHostBuilder CreateHostBuilder(string[] args) =>
-    Host.CreateDefaultBuilder(args)
-        .ConfigureWebHostDefaults(webHostBuilder => {
-            webHostBuilder.UseWebRoot("../Client/");
-        });
-
-static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
-    WebHost.CreateDefaultBuilder(args).Configure(appBuilder => {
-        appBuilder.UsePathBase(new PathString("../Client/"));
-    });
-
-static WebApplicationBuilder CreateWebAppBuilder(string[] args) {
-    var builder = WebApplication.CreateBuilder(args);
-    builder.WebHost.Configure(appBuilder => {
-        appBuilder.UsePathBase(new PathString("../Client/"));
-    });
-    return builder;
-}
-*/

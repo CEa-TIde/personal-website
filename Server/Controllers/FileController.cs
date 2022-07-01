@@ -7,35 +7,52 @@ namespace Server.Controllers;
 [Controller]
 public class FileController : Controller {
 
-    private readonly FileProcessService _pageProcessService;
+    private readonly FileProcessService _fileProcessService;
     private readonly string _rootDir;
 
     public FileController(FileProcessService pageProcessService, string rootDir) {
-        _pageProcessService = pageProcessService;
+        _fileProcessService = pageProcessService;
         _rootDir = rootDir;
     }
 
     [HttpGet("/{htmlFileName}/")]
     public IActionResult GetHtmlFile([FromRoute(Name = "htmlFileName")] string htmlFileName, [FromQuery(Name = "nolink")] bool? noLink) {
-        Console.WriteLine(htmlFileName);
         if (htmlFileName.Contains('.'))
             return NotFound();
-        return GetFile($"{htmlFileName}.html", "text/html");
+        return GetFileResponseFromTemplate($"{htmlFileName}.html", "text/html");
     }
 
     [HttpGet("css/{cssFileName}.css")]
     public IActionResult GetCssFile([FromRoute(Name = "cssFileName")] string cssFileName, [FromQuery(Name = "v")] bool? version) {
-        return GetFile($"css/{cssFileName}.css", "text/css");
+        return GetFileResponse($"css/{cssFileName}.css", "text/css");
     }
 
     [HttpGet("js/{jsFileName}.js")]
     public IActionResult GetJsFile([FromRoute(Name = "jsFileName")] string jsFileName, [FromQuery(Name = "v")] bool? version) {
-        return GetFile($"js/{jsFileName}.js", "text/javascript");
+        return GetFileResponse($"js/{jsFileName}.js", "text/javascript");
     }
 
-    internal IActionResult GetFile(string relFilePath, string mimeType) {
-        Console.WriteLine(relFilePath);
-        var filePath = new FileInfo(Path.Combine(_rootDir, relFilePath));
-        return File(_pageProcessService.ReadBytesFromFile(filePath), mimeType);
+    [HttpGet("media/{mediaFileName}")]
+    public IActionResult GetMediaFile([FromRoute(Name = "mediaFileName")] string mediaFileName, [FromQuery(Name = "v")] bool? version) {
+        var fileExtension = _fileProcessService.ExtractFileExtension(mediaFileName);
+        return GetFileResponse($"media/{mediaFileName}", $"image/{fileExtension}");
+    }
+
+    internal FileInfo GetFileFromPath(string relFilePath) {
+        return new FileInfo(Path.Combine(_rootDir, relFilePath));
+    }
+
+    internal IActionResult GetFileResponseFromTemplate(string relFilePath, string mimeType) {
+        Console.WriteLine($"Fetching '{relFilePath}' of type {mimeType}...");
+        var fileInfo = GetFileFromPath(relFilePath);
+        var fileContents = _fileProcessService.ReadStringFromFile(fileInfo);
+        var inserted = _fileProcessService.InsertFileContents(fileContents);
+        return File(_fileProcessService.ConvertToByteArray(inserted), mimeType);
+    }
+
+    internal IActionResult GetFileResponse(string relFilePath, string mimeType) {
+        Console.WriteLine($"Fetching '{relFilePath}' of type {mimeType}...");
+        var filePath = GetFileFromPath(relFilePath);
+        return File(_fileProcessService.ReadBytesFromFile(filePath), mimeType);
     }
 }

@@ -354,7 +354,7 @@ section ul, section ol {
 }
 
 a[target="_blank"]::after {
-    background-image : url('media/external-link.webp');
+    background-image : url('../media/external-link.webp');
     background-size : 1em 1em;
     display : inline-block;
     margin-left : 3px;
