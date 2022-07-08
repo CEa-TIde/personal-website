@@ -2,28 +2,29 @@
 <html>
     <head>
         <!--style sheet with site-wide style rules-->
-        <link rel="stylesheet" href="baseStyle.css">
+        <link rel="stylesheet" href="css/main.css?v=0">
+        <link rel="shortcut icon" type="image/png" href="media/favicon.png">
         <title>[title]</title>
     </head>
     <body>
         <header>
-            <a class="logo" href=""><img src="media/Logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-            <h1 class="title">Titlesdhsdfklgjhsdgkljsdhgkljsdhgkldjs gkldjghdksghdskhdkgjhdkfgjhsdkgjhsdgjkdfh</h1>
+            <a class="logo" href="/"><img src="media/Logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
+            <h1 class="title">[contentTitle]</h1>
         </header>
         <nav>
             <ul>
-                <li class="dropdown">
+                <li class="dropdown" tabindex="0">
                     Lorum
                     <ul class="dd-content">
                         <li class="dd-link"><a href="#">According to all</a></li>
                         <li class="dd-link"><a href="">known laws</a></li>
                     </ul>
                 </li>
-                <li class="dropdown">
+                <li class="dropdown" tabindex="0">
                     Ipsum
                     <ul class="dd-content">
                         <li class="dd-link"><a href="">of aviation,</a></li>
-                        <li class="sub-dropdown">
+                        <li class="sub-dropdown" tabindex="0">
                             there is no way a bee
                             <ul class="dd-content">
                                 <li class="dd-link"><a href="">should be</a></li>
@@ -33,7 +34,7 @@
                                 <li class="dd-link"><a href="">off the ground.</a></li>
                                 <li class="dd-link"><a href="">The bee, of course,</a></li>
                                 <li class="dd-link"><a href="">flies anyway</a></li>
-                                <li class="sub-dropdown">
+                                <li class="sub-dropdown" tabindex="0">
                                     because bees don't care
                                     <ul class="dd-content">
                                         <li class="dd-link"><a href="">what humans think</a></li>
@@ -58,14 +59,16 @@
                 <li class="dropdown dd-link"><a href="">Simple link</a></li>
             </ul>
         </nav>
-        <aside>
-            
-        </aside>
-        <main>
-            
-        </main>
+        <div class="page-wrapper">
+            [content]
+        </div>
         <footer>
-            
+            <div class="footer-content">
+                <div class="footer-info">
+                    hello
+                </div>
+                <img class="footer-img" src="media/jellyfish-6653502_960_720-edited.jpg"/>
+            </div>
         </footer>
     </body>
 </html>
