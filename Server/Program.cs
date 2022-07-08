@@ -10,19 +10,28 @@ var builder = WebApplication.CreateBuilder(new WebApplicationOptions {
     WebRootPath = contentRoot
 });
 
-var replacePatterns = new ReplacePattern[] {
-    new(new("\\[test\\]"), new FileInfo($"{contentRoot}/template.html"))
+var replacementDictionary = new Dictionary<string, ReplacePattern[]> {
+    { "default", new ReplacePattern[] {
+        new(new("\\[content\\]"), new("[File]")),
+        new(new("\\[title\\]"), new("[FileNameNoExt]")),
+        new(new("\\[contentTitle\\]"), new("[FileNameSpaced]"))
+    } },
+    { "buildadvice", new ReplacePattern[] {
+        new(new("\\[content\\]"), new("[File]")),
+        new(new("\\[title\\]"), new("build advice")),
+        new(new("\\[contentTitle\\]"), new("A slice of advice on building"))
+    } }
 };
 
-builder.Services.AddSingleton(replacePatterns);
+builder.Services.AddSingleton(replacementDictionary);
 builder.Services.AddSingleton<FileProcessService>();
 builder.Services.AddSingleton(x => contentRoot);
 builder.Services.AddControllers();
 
 var app = builder.Build();
 
-var handler = new RequestHandler(app);
-handler.HandleRequest();
+//var handler = new RequestHandler(app);
+//handler.HandleRequest();
 app.MapControllers();
 
 app.Run();

@@ -5,14 +5,14 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 
 * {
     /* global variables */
-    --text-color : #aaaaaa;
+    --text-color: #aaaaaa;
 
 
     /* end global variables */
 
-    margin : 0;
-    padding : 0;
-    box-sizing : border-box;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
@@ -20,17 +20,18 @@ body {
 }
 
 .page-wrapper {
-    width : 100%;
-    display : grid;
-    grid-template-columns : 15% auto;
-    gap : 15px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 15% auto;
+    /* gap : 15px; */
+    background: #111111;
 }
 
 main {
-    background : #152931;
-    margin : 15px;
-    padding : 15px;
-    border-radius : 15px;
+    background: #152931;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
     /* visibility : hidden; */
 }
 
@@ -44,29 +45,31 @@ Title bar styling:
 *******************/
 
 header {
-    background : #002839;
-    width : 100%;
-    white-space : nowrap;
+    background: #002839;
+    width: 100%;
+    white-space: nowrap;
 }
 
-.logo, .logo > img {
-    background : transparent;
-    width : 20%;
-    max-width : 250px;
+.logo,
+.logo>img {
+    background: transparent;
+    width: 20%;
+    max-width: 250px;
 }
+
 .logo:hover {
-    opacity : 0.8;
+    opacity: 0.8;
 }
 
 .title {
-    font-size : max(3vw, 2em);
-    font-size : clamp(2em, 3vw, 4em);
-    width : 80%;
-    margin-left : 20px;
-    padding : 20px;
-    display : inline-block;
-    word-wrap : break-word;
-    white-space : normal;
+    font-size: max(3vw, 2em);
+    font-size: clamp(2em, 3vw, 4em);
+    width: 80%;
+    margin-left: 20px;
+    padding: 20px;
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 /*************
@@ -78,43 +81,47 @@ Dropdown menu styling:
 *******************/
 
 nav {
-    --menu-height : 60px;
-    --dropdown-color : #dddddd;
+    --menu-height: 60px;
+    --dropdown-color: #dddddd;
 
-    width : 100%;
-    position : -webkit-sticky;
-    position : sticky;
-    top : 0;
-    box-shadow : 0 10px 10px #49494977, 0 -10px 10px #004039;
-    box-sizing : border-box;
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 10px 10px #49494977, 0 -10px 10px #004039;
+    box-sizing: border-box;
 }
+
 nav ul {
-    list-style : none;
+    list-style: none;
 }
 
 /* List containing dropdowns at the top */
-nav > ul {
-    display : flex;
-    height : var(--menu-height);
-    padding-left : 15%;
-    background : #004039;
-    align-items : center;
-    color : var(--dropdown-color);
+nav>ul {
+    display: flex;
+    height: var(--menu-height);
+    padding-left: 15%;
+    background: #004039;
+    align-items: center;
+    color: var(--dropdown-color);
 }
 
 .dropdown {
-    padding : 0 50px;
-    height : 100%;
-    box-sizing : border-box;
-    display : flex;
-    align-items : center;
-    justify-content : center;
-    position : relative;
+    padding: 0 50px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
 }
-.dropdown:hover, .dropdown:focus {
-    background : #005055;
-    cursor : default;
+
+.dropdown:hover,
+.dropdown:focus {
+    background: #005055;
+    cursor: default;
 }
+
 .dropdown::after {
     content: '';
     /* draw the triangle */
@@ -127,98 +134,109 @@ nav > ul {
     position: absolute;
     right: 20px;
     top: 50%;
-    transition : top 0.1s;
+    transition: top 0.1s;
 }
+
 /* no arrow for simple links */
 .dropdown.dd-link::after {
-    display : none;
+    display: none;
 }
+
 /* animate on hover */
-.dropdown:hover::after, .dropdown:focus::after {
-    top : 60%;
+.dropdown:hover::after,
+.dropdown:focus::after {
+    top: 60%;
 }
 
 .sub-dropdown {
-    position : relative;
+    position: relative;
 }
 
 .dd-content {
-    top : var(--menu-height);
-    visibility : hidden;
-    opacity : 0;
-    position : absolute;
-    z-index : 1;
-    white-space : nowrap;
-    box-shadow : 2px 5px 5px 3px #494949bb;
-    transition : opacity 0.5s;
+    top: var(--menu-height);
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    white-space: nowrap;
+    box-shadow: 2px 5px 5px 3px #494949bb;
+    transition: opacity 0.5s;
 }
+
 /* show dropdown */
-li:hover > .dd-content, li:focus > .dd-content {
-    visibility : visible;
-    opacity : 1; 
+li:hover>.dd-content,
+li:focus>.dd-content {
+    visibility: visible;
+    opacity: 1;
 }
 
 /* arrow for sub-dropdowns */
 .sub-dropdown::after {
-    content : "";
+    content: "";
     /* draw the triangle */
-    width : 0;
-    height : 0;
-    border-left : 5px solid #a9a9a9;
-    border-top : 5px solid transparent;
-    border-bottom : 5px solid transparent;
+    width: 0;
+    height: 0;
+    border-left: 5px solid #a9a9a9;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
 
-    position : absolute;
+    position: absolute;
     right: 8px;
-    transition : right 0.1s;
+    transition: right 0.1s;
 }
+
 .sub-dropdown:hover::after {
-    right : 2px;
+    right: 2px;
 }
 
 /* sub dropdowns need to be positioned to the right */
 .sub-dropdown .dd-content {
-    top : -2%;
-    left : 100%;
+    top: -2%;
+    left: 100%;
 }
 
 /* All dropdown elements (including in sub-dropdowns) */
 .dropdown li {
-    display : flex;
-    align-items : center;
-    justify-content : center;
-    color : black;
-    background : #898989;
-    height : 40px;
-    min-width : 160px;
-    padding : 0 20px;
-    box-sizing : border-box;
-    border-bottom : 2px solid #898989;
-}
-.dropdown li:hover {
-    background : #696969;
-    border-bottom : 2px solid #a9a9a9;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background: #898989;
+    height: 40px;
+    min-width: 160px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    border-bottom: 2px solid #898989;
 }
 
-.dropdown li, .dropdown .dd-link a {
-    color : black;
+.dropdown li:hover {
+    background: #696969;
+    border-bottom: 2px solid #a9a9a9;
 }
+
+.dropdown li,
+.dropdown .dd-link a {
+    color: black;
+}
+
 /* Simple links need to be the same color as the other dropdowns */
 .dropdown.dd-link a {
-    color : var(--dropdown-color);
+    color: var(--dropdown-color);
 }
 
 /* Styling links */
-.dd-link, .dd-link a {
-    text-decoration : none;
-    cursor : pointer;
-}
+.dd-link,
 .dd-link a {
-    display : flex;
-    align-items : center;
-    justify-content : center;
-    height : 100%;
-    width : 100%;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dd-link a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
 }
 
 
@@ -231,26 +249,27 @@ Side menu styling:
 ***********/
 
 aside {
-    height : 300px;
+    height: 300px;
     /* width : 15%; */
-    background : #696969;
+    background: #696969;
 }
 
 aside ul {
-    list-style-type : none;
-    padding-inline-start : 0;
-    padding-inline-end : 10px;
+    list-style-type: none;
+    padding-inline-start: 0;
+    padding-inline-end: 10px;
 
 }
 
 aside li {
-    margin-left : 10px;
-    background : #898989;
+    margin-left: 10px;
+    background: #898989;
 }
 
-aside li.current, aside li:hover {
-    margin-left : 8px;
-    border-left : solid 2px #005055;
+aside li.current,
+aside li:hover {
+    margin-left: 8px;
+    border-left: solid 2px #005055;
 }
 
 
@@ -263,10 +282,26 @@ Footer styling:
 ************/
 
 footer {
-    background : green;
-    width : 100%;
-    height : 100px;
-    visibility : hidden;
+    background: #000002;
+    width: 100%;
+    height: 300px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 15px;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.footer-info {
+    background: red;
+    color: blue;
+}
+
+.footer-img {
+    height: 300px;
 }
 
 /***********
@@ -274,63 +309,69 @@ End footer
 ***********/
 
 .disclaimer {
-    font-style : italic;
-    font-family : "Times New Roman", Times, serif;
-    width : 100%;
-    text-align : center;
-    color : var(--text-color);
+    font-style: italic;
+    font-family: "Times New Roman", Times, serif;
+    width: 100%;
+    text-align: center;
+    color: var(--text-color);
 
 }
 
 .last-updated-wrapper {
-    width : 100%;
-    text-align : right;
+    width: 100%;
+    text-align: right;
 }
 
 .last-updated {
-    font-size : 80%;
-    display : inline-block;
-    border-radius : 10px;
-    padding : 5px;
-    background : darkslategray;
-    opacity : 0.4;
+    font-size: 80%;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 5px;
+    background: darkslategray;
+    opacity: 0.4;
+    border: none;
 }
+
 .last-updated:hover {
-    opacity : 1;
+    opacity: 1;
 }
 
 section {
-    border-radius : 15px;
-    background : green;
-    margin : 5px 0 30px;
-    padding : 20px 10px;
+    border-radius: 15px;
+    background: green;
+    margin: 5px 0 30px;
+    padding: 20px 10px;
 }
 
 section .s-title {
-    padding-left : 10px;
+    padding-left: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #555555;
 }
 
-section .s-title + hr {
-    border : 1px solid #555555;
-    width : 80%;
-    display : flex;
-    justify-content : center;
-    margin : 5px 8px 20px;
-    width : auto;
-}
+/*section .s-title+hr {
+    border: 1px solid #555555;
+    width: 80%;
+    display: flex;
+    justify-content: center;
+    margin: 5px 8px 20px;
+    width: auto;
+    display: none;
+}*/
 
 figure.media {
-    width : 100%;
-    display : grid;
-    grid-template-columns : auto;
-    background : red;
-    border-radius : 15px;
-    padding : 20px 0;
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto;
+    background: red;
+    border-radius: 15px;
+    padding: 20px 0;
 }
 
 figure.media-wrap.inline {
     /* For inline media */
-    grid-template-columns : auto auto;
+    grid-template-columns: auto auto;
     gap: 5%;
 }
 
@@ -340,27 +381,28 @@ figure.media-wrap .media {
 
 
 .info {
-    background : darkred;
-    border-left : solid red 5px;
-    margin : 10px;
-    padding : 10px;
-    border-radius : 0px 5px 5px 0px;
+    background: darkred;
+    border-left: solid red 5px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 0px 5px 5px 0px;
 }
 
-section ul, section ol {
+section ul,
+section ol {
     /*list-style-type : none;*/
-    padding-inline-start : 0px;
-    margin-left : 1em;
+    padding-inline-start: 0px;
+    margin-left: 1em;
 }
 
 a[target="_blank"]::after {
-    background-image : url('../media/external-link.webp');
-    background-size : 1em 1em;
-    display : inline-block;
-    margin-left : 3px;
-    width : 1em; 
-    height : 1em;
-    content :"";
+    background-image: url('../media/external-link.webp');
+    background-size: 1em 1em;
+    display: inline-block;
+    margin-left: 3px;
+    width: 1em;
+    height: 1em;
+    content: "";
     /* Generated using: https://codepen.io/sosuke/pen/Pjoqqp 
         A code snippet that generates the filters needed to convert from a black image to any desired HEX colour value (approximately).*/
     filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
@@ -368,5 +410,5 @@ a[target="_blank"]::after {
 }
 
 .content-wrapper p {
-    color : var(--text-color);
+    color: var(--text-color);
 }
