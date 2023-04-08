@@ -18,8 +18,13 @@ var replacementDictionary = new Dictionary<string, ReplacePattern[]> {
     } },
     { "buildadvice", new ReplacePattern[] {
         new(new("\\[content\\]"), new("[File]")),
-        new(new("\\[title\\]"), new("build advice")),
+        new(new("\\[title\\]"), new("Build Advice")),
         new(new("\\[contentTitle\\]"), new("A slice of advice on building"))
+    } },
+    { "worldedit", new ReplacePattern[] {
+        new(new("\\[content\\]"), new("[File]")),
+        new(new("\\[title\\]"), new("World Edit")),
+        new(new("\\[contentTitle\\]"), new("World Edit tutorial"))
     } }
 };
 

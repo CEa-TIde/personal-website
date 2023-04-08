@@ -3,15 +3,31 @@ clearfix hack
 Source: https://nicolasgallagher.com/micro-clearfix-hack/
 */
 
+
+@font-face {
+    font-family: 'monospace';
+    src: url('SpaceMono-Regular.eot'); /* IE9 Compat Modes */
+    src: url('SpaceMono-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('SpaceMono-Regular.woff2') format('woff2'), /* Smaller than woff, but supported by fewer */
+        url('SpaceMono-Regular.woff') format('woff'), /* Modern Browsers */
+        url('SpaceMono-Regular.svg#SpaceMono-Regular') format('svg'); /* Legacy iOS */
+}
+
 :root {
     /* global variables */
-    --text-color: #aaaaaa;
     --title-color: #dddddd;
-    --hl-text-color: #99bbbb;
+    --text-color: #aaaaaa;
+    --text-color-hl: #99bbbb;
+    --text-color-dark: #555555;
 
     --bg-color-darkblue: #002839;
     --bg-color-teal: #004039;
     --bg-color-lightteal: #005055;
+    --bg-color-lighterteal: #006066;
+    --bg-color-lightblue: #31b6ee;
+
+    --bg-color-important: #DD2222;
+    --bg-color-warn: #DDDD22;
 
     --menu-height: 60px;
     /* end global variables */
@@ -45,6 +61,16 @@ main {
 .content-wrapper {
     /* Allows for absolute positioning relative to the content */
     /* position : relative; */
+}
+
+.announcement {
+    background: var(--bg-color-darkblue);
+    color: white;
+    border-radius: 15px;
+    border: solid 3px #EEEE00;
+    padding: 5px;
+    margin: 5px;
+    font-size: 1.1em;
 }
 
 /* SCROLLBAR
@@ -392,20 +418,25 @@ section {
     font-size: 1em;
 }
 
+/* SECTION: section title styling */
 section .s-title {
     padding-left: 10px;
     padding-bottom: 5px;
     margin-bottom: 20px;
     border-bottom: 2px solid #555555;
-    color: var(--title-color);
+}
+
+section .sub-title {
+    margin-top: 5px;
+    margin-bottom: 15px;
 }
 
 a.section-link {
-    color: var(--hl-text-color);
+    color: var(--text-color-hl);
     text-decoration: none;
 }
 
-a.section-link::after {
+/* a.section-link::after {
     background-image: url('../media/chain-link-icon.png');
     background-size: 1em 1em;
     display: inline-block;
@@ -414,10 +445,10 @@ a.section-link::after {
     height: 1em;
     content: "";
     /* Generated using: https://codepen.io/sosuke/pen/Pjoqqp 
-        A code snippet that generates the filters needed to convert from a black image to any desired HEX colour value (approximately).*/
+        A code snippet that generates the filters needed to convert from a black image to any desired HEX colour value (approximately).*\/
     filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
     -webkit-filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
-}
+} */
 
 /* Provide in-document link to link to that has an offset from the actual title.
     Otherwise, the title would be hidden under the header when linking to it. */
@@ -426,35 +457,120 @@ a.section-link::after {
     position: relative;
     top: calc(-1 * var(--menu-height) - 50px);
 }
+/* END: section title styling */
 
-figure.media {
+/* SECTION: media styling */
+.media-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-top: dashed 1px var(--bg-color-darkblue);
+    border-bottom: dashed 1px var(--bg-color-darkblue);
+}
+
+.media-section.align-left {
+    justify-content: left;
+}
+
+.media-section.align-right {
+    justify-content: right;
+}
+
+.media-wrapper {
     width: 100%;
     display: grid;
-    grid-template-columns: auto;
-    background: red;
+    grid-auto-flow: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-color-lightteal);
     border-radius: 15px;
-    padding: 20px 0;
+    padding: 5px 15px;
+    overflow-x: auto;
 }
 
-figure.media-wrap.inline {
-    /* For inline media */
-    grid-template-columns: auto auto;
-    gap: 5%;
+.media-wrapper:has(:only-child) {
+    width: initial;
 }
 
-figure.media-wrap .media {
-    /* The media itself */
+.media-wrapper.singular {
+    width: initial;
 }
 
+/* Figure type */
+figure.media {
+    background: var(--bg-color-lightblue);
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
 
+/* Text type */
+div.media {
+    background: var(--bg-color-lightblue);
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    overflow-y: auto;
+    height: 100%;
+    min-width: 300px;
+}
+
+figure.media .media-content {
+    display: inline-block;
+    max-height: 400px;
+}
+
+figure.media figcaption {
+    color: var(--text-color-dark);
+}
+/* END: media styling */
+
+/* SECTION: info block styling */
 .info {
     background: var(--bg-color-lightteal);
     border-left: solid var(--bg-color-darkblue) 5px;
     margin: 10px;
     padding: 10px;
     border-radius: 0px 5px 5px 0px;
-    box-shadow: 5px 5px 5px 5px var(--bg-color-lightteal);
+    box-shadow: 0 5px 5px -2px #555555aa;
 }
+
+.info.important {
+    border-left: solid var(--bg-color-important) 5px;
+}
+
+.info.warn {
+    border-left: solid var(--bg-color-warn) 5px;
+}
+
+.info.icon {
+    padding-left: 35px;
+    position: relative;
+}
+
+.info.icon::before {
+    position: absolute;
+    content: "i";
+    font-size: 15px;
+    font-weight: bolder;
+    width: 15px;
+    height: 15px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 50%;
+    border: solid 2px var(--text-color-hl);
+    color: var(--text-color-hl);
+    background: transparent;
+    left: 8px;
+}
+
+.info.warn.icon::before,
+.info.important.icon::before {
+    content: "!";
+}
+/* END: info block styling */
 
 section ul,
 section ol {
@@ -470,7 +586,7 @@ p a {
     text-underline-offset: 0.1em;
     text-decoration-thickness: 2px;
     position: relative;
-    color: var(--hl-text-color);
+    color: var(--text-color-hl);
 }
 
 a.slide-hover::before,
@@ -480,7 +596,7 @@ p a::before {
     bottom: calc(-0.1em + 1px);
     width: 2px;
     height: 2px;
-    background: var(--hl-text-color);
+    background: var(--text-color-hl);
     display: inline-block;
     visibility: hidden;
 
@@ -521,6 +637,28 @@ section .info {
 .p-start {
     font-style: italic;
     font-weight: bold;
-    color: var(--hl-text-color);
+    color: var(--text-color-hl);
     font-size: 1.05em;
+}
+
+.inline-code {
+    display: inline-block;
+    font-family: monospace;
+    background: var(--bg-color-darkblue);
+    color: white;
+    padding: 0 5px;
+    border-radius: 5px;
+    line-height: 1.3em;
+}
+
+.code-block {
+    display: block;
+    font-family: monospace;
+    background: var(--bg-color-darkblue);
+    color: white;
+    padding: 5px 5px;
+    line-height: 1.3em;
+    border-left: solid var(--bg-color-darkblue) 5px;
+    margin: 10px;
+    border-radius: 0px 5px 5px 0px;
 }

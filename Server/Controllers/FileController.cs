@@ -17,7 +17,7 @@ public class FileController : Controller {
 
     [HttpGet("/")]
     public IActionResult Index() {
-        return Ok("Index");
+        return Ok("Index. This site is still under construction. Expect the layout to change.");
     }
 
     [HttpGet("/{htmlFileName}")]
