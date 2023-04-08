@@ -26,6 +26,8 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Start build
+        run: echo Starting build...
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
@@ -37,6 +39,8 @@ jobs:
           destination: ./_site
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v1
+      - name: End build
+        run: echo Finished creating build.
 
   # Deployment job
   deploy:
@@ -46,6 +50,10 @@ jobs:
     runs-on: ubuntu-latest
     needs: build
     steps:
+      - name: Start Deployment
+        run: echo Start deploying build...
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v2
+      - name: End Deployment
+        run: echo Finished deploying build.\nVisit ${{ steps.deployment.outputs.page_url }} to view the build.
