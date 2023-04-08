@@ -1,168 +1,166 @@
-<!DOCTYPE html>
-<html>
-    <head>
-    </head>
-    <body>
-        <aside>
-            <div class="aside-content">
-                <h2 class="toc-title">Table of contents</h2>
-                <ul>
-                    <li><a href="#general">General</a></li>
-                    <li><a href="#architecture">Architecture</a></li>
-                    <li><a href="#terraforming">Terraforming</a></li>
-                    <li><a href="#organics">Organics</a></li>
-                </ul>
-            </div>
-        </aside>
+---
+layout: default
+title: World Edit Tutorial
+---
 
-        <main class="content-wrapper">
-            <div class="last-updated-wrapper"><div class="last-updated" tabindex="0">Last updated on: <em>26 September 2021 23:00 CEST</em></div></div>
-            <div class="disclaimer">This website is neither endorsed nor affiliated with Minecraft/Mojang/Microsoft.</div>
-            <section>
-                <p>
-                    This is a tutorial for the Minecraft build mod <em>World Edit</em>. Visit the official documentation
-                    <a href="https://worldedit.enginehub.org/en/latest/" title="The latest World Edit documentation">here</a>.<br/>
-                    Note that this mod is separate from the <em>FAWE</em> plugin (<em>Fast Async World Edit</em>). This plugin will not be covered here, although many commands are the same. <br/>
-                    To find out more about <em>FAWE</em>, use the in-game documentation (found by typing <span class="inline-code">//help</span>) or search for resources online.
-                </p>
-                <p>
-                    This tutorial is meant to give beginner and advanced <em>World Edit</em> users a place to start from, and provide tips on how the mod can be used.<br/>
-                    It has been separated into the basic commands, advanced commands, and the applications section.
-                    In the first section, you can find common commands you will use 90% of the time while building. <br/>
-                    If you believe you have mastered these, scroll down to the advanced commands section where more difficult concepts are explained.
-                    Lastly, a few examples of how you can use <em>World Edit</em> are given in the applications section.
-                </p>
+<aside>
+    <div class="aside-content">
+        <h2 class="toc-title">Table of contents</h2>
+        <ul>
+            <li><a href="#general">General</a></li>
+            <li><a href="#architecture">Architecture</a></li>
+            <li><a href="#terraforming">Terraforming</a></li>
+            <li><a href="#organics">Organics</a></li>
+        </ul>
+    </div>
+</aside>
 
-                <div class="info">
-                    Table of contents:
-                    <ul>
-                        <li><a class="slide-hover" href="#basic-commands">Basic Commands</a></li>
-                        <li><a class="slide-hover" href="#advanced-commands">Advanced Commands</a></li>
-                        <li><a class="slide-hover" href="#applications">Applications</a></li>
-                    </ul>
-                </div>
+<main class="content-wrapper">
+    <div class="last-updated-wrapper"><div class="last-updated" tabindex="0">Last updated on: <em>26 September 2021 23:00 CEST</em></div></div>
+    <div class="disclaimer">This website is neither endorsed nor affiliated with Minecraft/Mojang/Microsoft.</div>
+    <section>
+        <p>
+            This is a tutorial for the Minecraft build mod <em>World Edit</em>. Visit the official documentation
+            <a href="https://worldedit.enginehub.org/en/latest/" title="The latest World Edit documentation">here</a>.<br/>
+            Note that this mod is separate from the <em>FAWE</em> plugin (<em>Fast Async World Edit</em>). This plugin will not be covered here, although many commands are the same. <br/>
+            To find out more about <em>FAWE</em>, use the in-game documentation (found by typing <span class="inline-code">//help</span>) or search for resources online.
+        </p>
+        <p>
+            This tutorial is meant to give beginner and advanced <em>World Edit</em> users a place to start from, and provide tips on how the mod can be used.<br/>
+            It has been separated into the basic commands, advanced commands, and the applications section.
+            In the first section, you can find common commands you will use 90% of the time while building. <br/>
+            If you believe you have mastered these, scroll down to the advanced commands section where more difficult concepts are explained.
+            Lastly, a few examples of how you can use <em>World Edit</em> are given in the applications section.
+        </p>
 
-                <p>
-                    This tutorial is by no means exhaustive&mdash;<em>World Edit</em> can be used in many ways&mdash;but it should provide you a good starting point for using this mod.<br/>
-                    Look at the <a href="https://worldedit.enginehub.org/en/latest/" title="The latest World Edit documentation">official documentation</a>,
-                    try out the commands in-game and see what you can create. Experiment and happy building!
-                </p>
-                <p>
-                    Additions from the community are welcome :)<br/>
-                    Send a message in <a href="https://discord.com/channels/302094807046684672/305834181949390848"
-                    title="#builds channel from the official Minecraft Discord server">#builds</a> or send me a DM to discuss it.
-                </p>
-                <div class="info icon">
-                    When a command is listed, you can recognise arguments if they are surrounded by <span class="inline-code">&lt;&gt;</span> for required arguments 
-                    or <span class="inline-code">[]</span> for optional arguments. These symbols shouldn't be included in the actual command. 
-                    With the exception of flags which you can recognise by the dash in front, the arguments need to be in the correct order. Flags can be in any order, and between other arguments if you so desire.<br/>
-                    For zero-argument flags a shorthand notation is used. you do not need to put a dash in front of them separately. Example: <span class="inline-code">-as</span>.<br/>
-                    Flags that require an argument associated with it, need to be listed separately. Example: <span class="inline-code">-as -m 0</span>. Here the <span class="inline-code">-m</span> flag has one argument.
-                </div>
-                
-            </section>
+        <div class="info">
+            Table of contents:
+            <ul>
+                <li><a class="slide-hover" href="#basic-commands">Basic Commands</a></li>
+                <li><a class="slide-hover" href="#advanced-commands">Advanced Commands</a></li>
+                <li><a class="slide-hover" href="#applications">Applications</a></li>
+            </ul>
+        </div>
 
-            <section>
-                <h2 class="s-title"><a href="#basic-commands" class="section-link slide-hover">Basic Commands</a><div id="basic-commands" class="section-link-to"></div></h2>
-                <p>
-                    The basic commmands of <em>World Edit</em> can be found in this section.
-                </p>
-                <h3 class="sub-title"><a href="#navigation" class="section-link slide-hover">Navigation</a><div id="navigation" class="section-link-to"></div></h3>
-                <p>
-                    Especially when working on large-scale builds, it would be convenient to be able to move around quickly. For this reason there are a few commands packed with the mod.
+        <p>
+            This tutorial is by no means exhaustive&mdash;<em>World Edit</em> can be used in many ways&mdash;but it should provide you a good starting point for using this mod.<br/>
+            Look at the <a href="https://worldedit.enginehub.org/en/latest/" title="The latest World Edit documentation">official documentation</a>,
+            try out the commands in-game and see what you can create. Experiment and happy building!
+        </p>
+        <p>
+            Additions from the community are welcome :)<br/>
+            Send a message in <a href="https://discord.com/channels/302094807046684672/305834181949390848"
+            title="#builds channel from the official Minecraft Discord server">#builds</a> or send me a DM to discuss it.
+        </p>
+        <div class="info icon">
+            When a command is listed, you can recognise arguments if they are surrounded by <span class="inline-code">&lt;&gt;</span> for required arguments 
+            or <span class="inline-code">[]</span> for optional arguments. These symbols shouldn't be included in the actual command. 
+            With the exception of flags which you can recognise by the dash in front, the arguments need to be in the correct order. Flags can be in any order, and between other arguments if you so desire.<br/>
+            For zero-argument flags a shorthand notation is used. you do not need to put a dash in front of them separately. Example: <span class="inline-code">-as</span>.<br/>
+            Flags that require an argument associated with it, need to be listed separately. Example: <span class="inline-code">-as -m 0</span>. Here the <span class="inline-code">-m</span> flag has one argument.
+        </div>
+        
+    </section>
 
-                </p>
-                
-                <div class="code-block">
-                    /unstuck
-                </div>
-                <p>
-                    <span class="inline-code">/unstuck</span> or <span class="inline-code">/!</span> is a command that teleports you upwards until there is a space the player can stand without clipping into blocks.
-                    This is useful for example when generating spheres and accidentally placing one around yourself. It has no effect when the player is already in a free position.
-                </p>
+    <section>
+        <h2 class="s-title"><a href="#basic-commands" class="section-link slide-hover">Basic Commands</a><div id="basic-commands" class="section-link-to"></div></h2>
+        <p>
+            The basic commmands of <em>World Edit</em> can be found in this section.
+        </p>
+        <h3 class="sub-title"><a href="#navigation" class="section-link slide-hover">Navigation</a><div id="navigation" class="section-link-to"></div></h3>
+        <p>
+            Especially when working on large-scale builds, it would be convenient to be able to move around quickly. For this reason there are a few commands packed with the mod.
 
-                <div class="code-block">
-                    /ascend [levels]<br/>
-                    /descend [levels]
-                </div>
-                <p>
-                    <span class="inline-code">/ascend</span> or <span class="inline-code">/asc</span> moves the player up a floor.
-                    The <span class="inline-code">levels</span> argument specifies the amount of floors the player should be moved up to.
-                    If the player has only air above them, it will do nothing and display an error message instead: <span class="inline-code">No free space above you found.</span><br/>
-                    Similarly, <span class="inline-code">/descend</span> or <span class="inline-code">/desc</span> moves the player down a floor.
-                </p>
+        </p>
+        
+        <div class="code-block">
+            /unstuck
+        </div>
+        <p>
+            <span class="inline-code">/unstuck</span> or <span class="inline-code">/!</span> is a command that teleports you upwards until there is a space the player can stand without clipping into blocks.
+            This is useful for example when generating spheres and accidentally placing one around yourself. It has no effect when the player is already in a free position.
+        </p>
 
-                <div class="code-block">
-                    /ceil [-fg] [clearance]
-                </div>
-                <p>
-                    <span class="inline-code">/ceil</span> moves the player to the ceiling. If you are not flying you will immediately fall however.
-                    With the <span class="inline-code">-f</span> and <span class="inline-code">-g</span> flags you can make sure that won't happen,
-                    by forcing fly mode or putting a glass block below the player respectively. <br/>
-                    If the player has only air above them, it will do nothing and display an error message instead: <span class="inline-code">No free space above you found.</span><br/>
-                </p>
-                <div class="code-block">
-                    /thru
-                </div>
-                <p>
-                    The <span class="inline-code">/thru</span> command moves the player through blocks in the direction the player is looking.
-                    If there is nothing in front of the player within a few blocks, it will display an error message instead.
-                </p>
+        <div class="code-block">
+            /ascend [levels]<br/>
+            /descend [levels]
+        </div>
+        <p>
+            <span class="inline-code">/ascend</span> or <span class="inline-code">/asc</span> moves the player up a floor.
+            The <span class="inline-code">levels</span> argument specifies the amount of floors the player should be moved up to.
+            If the player has only air above them, it will do nothing and display an error message instead: <span class="inline-code">No free space above you found.</span><br/>
+            Similarly, <span class="inline-code">/descend</span> or <span class="inline-code">/desc</span> moves the player down a floor.
+        </p>
 
-                <div class="code-block">
-                    /jumpto
-                </div>
-                <p>
-                    <span class="inline-code">/jumpto</span> or <span class="inline-code">/j</span> teleports the player to the block the player is looking at,
-                    and then moves them up until there is a free spot, similar to the <span class="inline-code">/unstuck</span> command.
-                    If there is no block in front of the player, or if it is too far away, it will display an error message instead.
-                </p>
+        <div class="code-block">
+            /ceil [-fg] [clearance]
+        </div>
+        <p>
+            <span class="inline-code">/ceil</span> moves the player to the ceiling. If you are not flying you will immediately fall however.
+            With the <span class="inline-code">-f</span> and <span class="inline-code">-g</span> flags you can make sure that won't happen,
+            by forcing fly mode or putting a glass block below the player respectively. <br/>
+            If the player has only air above them, it will do nothing and display an error message instead: <span class="inline-code">No free space above you found.</span><br/>
+        </p>
+        <div class="code-block">
+            /thru
+        </div>
+        <p>
+            The <span class="inline-code">/thru</span> command moves the player through blocks in the direction the player is looking.
+            If there is nothing in front of the player within a few blocks, it will display an error message instead.
+        </p>
 
-                <div class="code-block">
-                    /up [-fg] &lt;distance&gt;
-                </div>
-                <p>
-                    <span class="inline-code">/up</span> moves the player up by the amount specified by <span class="inline-code">distance</span>.
-                    To ensure you don't immediately fall, you can use the <span class="inline-code">-f</span> and <span class="inline-code">-g</span> flags,
-                    by forcing fly mode or putting a glass block below the player respectively.<br/>
-                    The command does nothing and displays an error if there is a block within that distance.
-                </p>
+        <div class="code-block">
+            /jumpto
+        </div>
+        <p>
+            <span class="inline-code">/jumpto</span> or <span class="inline-code">/j</span> teleports the player to the block the player is looking at,
+            and then moves them up until there is a free spot, similar to the <span class="inline-code">/unstuck</span> command.
+            If there is no block in front of the player, or if it is too far away, it will display an error message instead.
+        </p>
 
-                <h3 class="sub-title"><a href="#selection" class="section-link slide-hover">Selection</a><div id="selection" class="section-link-to"></div></h3>
+        <div class="code-block">
+            /up [-fg] &lt;distance&gt;
+        </div>
+        <p>
+            <span class="inline-code">/up</span> moves the player up by the amount specified by <span class="inline-code">distance</span>.
+            To ensure you don't immediately fall, you can use the <span class="inline-code">-f</span> and <span class="inline-code">-g</span> flags,
+            by forcing fly mode or putting a glass block below the player respectively.<br/>
+            The command does nothing and displays an error if there is a block within that distance.
+        </p>
 
-                <div class="code-block">
-                    //wand -n
-                </div>
-                <p>
-                    <span class="inline-code">//wand</span> is where it all starts when using <em>World Edit</em>. This command gives you the wand to select areas with.<br/>
-                    If the <span class="inline-code">-n</span> flag is set, the user is granted a navigation wand instead,
-                    which behaves similarly to the <span class="inline-code">/jumpto</span> command when clicking. &lt;---- Fact check!
-                </p>
-                
-                <h3 class="sub-title"><a href="#clipboard" class="section-link slide-hover">Clipboard</a><div id="clipboard" class="section-link-to"></div></h3>
-                
-                <h3 class="sub-title"><a href="#patterns" class="section-link slide-hover">Pattern matching</a><div id="patterns" class="section-link-to"></div></h3>
-                
-                <h3 class="sub-title"><a href="#brushes" class="section-link slide-hover">WE Brushes</a><div id="brushes" class="section-link-to"></div></h3>
-                
-                <h3 class="sub-title"><a href="#masking" class="section-link slide-hover">Masking</a><div id="masking" class="section-link-to"></div></h3>
-            </section>
+        <h3 class="sub-title"><a href="#selection" class="section-link slide-hover">Selection</a><div id="selection" class="section-link-to"></div></h3>
 
-            <section>
-                <h2 class="s-title"><a href="#advanced-commands" class="section-link slide-hover">Advanced Commands</a><div id="advanced-commands" class="section-link-to"></div></h2>
-                
-                <h3 class="sub-title"><a href="#selection-modes" class="section-link slide-hover">Selection modes</a><div id="selection-modes" class="section-link-to"></div></h3>
-                
-                <h3 class="sub-title"><a href="#schematics" class="section-link slide-hover">Schematics</a><div id="schematics" class="section-link-to"></div></h3>
-            </section>
+        <div class="code-block">
+            //wand -n
+        </div>
+        <p>
+            <span class="inline-code">//wand</span> is where it all starts when using <em>World Edit</em>. This command gives you the wand to select areas with.<br/>
+            If the <span class="inline-code">-n</span> flag is set, the user is granted a navigation wand instead,
+            which behaves similarly to the <span class="inline-code">/jumpto</span> command when clicking. &lt;---- Fact check!
+        </p>
+        
+        <h3 class="sub-title"><a href="#clipboard" class="section-link slide-hover">Clipboard</a><div id="clipboard" class="section-link-to"></div></h3>
+        
+        <h3 class="sub-title"><a href="#patterns" class="section-link slide-hover">Pattern matching</a><div id="patterns" class="section-link-to"></div></h3>
+        
+        <h3 class="sub-title"><a href="#brushes" class="section-link slide-hover">WE Brushes</a><div id="brushes" class="section-link-to"></div></h3>
+        
+        <h3 class="sub-title"><a href="#masking" class="section-link slide-hover">Masking</a><div id="masking" class="section-link-to"></div></h3>
+    </section>
 
-            <section>
-                <h2 class="s-title"><a href="#applications" class="section-link slide-hover">Applications</a><div id="applications" class="section-link-to"></div></h2>
-                
-                <h3 class="sub-title"><a href="#placeholders" class="section-link slide-hover">Placeholders</a><div id="placeholders" class="section-link-to"></div></h3>
-                
-                <h3 class="sub-title"><a href="#texturing" class="section-link slide-hover">Texturing</a><div id="texturing" class="section-link-to"></div></h3>
-            </section>
-        </main>
-    </body>
-</html>
+    <section>
+        <h2 class="s-title"><a href="#advanced-commands" class="section-link slide-hover">Advanced Commands</a><div id="advanced-commands" class="section-link-to"></div></h2>
+        
+        <h3 class="sub-title"><a href="#selection-modes" class="section-link slide-hover">Selection modes</a><div id="selection-modes" class="section-link-to"></div></h3>
+        
+        <h3 class="sub-title"><a href="#schematics" class="section-link slide-hover">Schematics</a><div id="schematics" class="section-link-to"></div></h3>
+    </section>
+
+    <section>
+        <h2 class="s-title"><a href="#applications" class="section-link slide-hover">Applications</a><div id="applications" class="section-link-to"></div></h2>
+        
+        <h3 class="sub-title"><a href="#placeholders" class="section-link slide-hover">Placeholders</a><div id="placeholders" class="section-link-to"></div></h3>
+        
+        <h3 class="sub-title"><a href="#texturing" class="section-link slide-hover">Texturing</a><div id="texturing" class="section-link-to"></div></h3>
+    </section>
+</main>

@@ -4,12 +4,12 @@
         <!--style sheet with site-wide style rules-->
         <link rel="stylesheet" href="css/main.css?v=0">
         <link rel="shortcut icon" type="image/png" href="media/favicon.png">
-        <title>[title]</title>
+        <title>{{ page.title }}</title>
     </head>
     <body>
         <header>
             <a class="logo" href="/"><img src="media/Logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-            <h1 class="title">[contentTitle]</h1>
+            <h1 class="title">{{ page.title }}</h1>
         </header>
         <nav>
             <ul class="dropdown-menu">
@@ -19,8 +19,7 @@
         </nav>
         <div class="announcement">This website is currently under construction. Expect changes to be made, and there may be outages at certain times.</div>
         <div class="page-wrapper">
-            
-            [content]
+            {{ content }}
         </div>
         <footer>
             <div class="footer-content">
