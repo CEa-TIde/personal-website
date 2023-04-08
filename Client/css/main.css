@@ -1,0 +1,664 @@
+/*
+clearfix hack
+Source: https://nicolasgallagher.com/micro-clearfix-hack/
+*/
+
+
+@font-face {
+    font-family: 'monospace';
+    src: url('SpaceMono-Regular.eot'); /* IE9 Compat Modes */
+    src: url('SpaceMono-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('SpaceMono-Regular.woff2') format('woff2'), /* Smaller than woff, but supported by fewer */
+        url('SpaceMono-Regular.woff') format('woff'), /* Modern Browsers */
+        url('SpaceMono-Regular.svg#SpaceMono-Regular') format('svg'); /* Legacy iOS */
+}
+
+:root {
+    /* global variables */
+    --title-color: #dddddd;
+    --text-color: #aaaaaa;
+    --text-color-hl: #99bbbb;
+    --text-color-dark: #555555;
+
+    --bg-color-darkblue: #002839;
+    --bg-color-teal: #004039;
+    --bg-color-lightteal: #005055;
+    --bg-color-lighterteal: #006066;
+    --bg-color-lightblue: #31b6ee;
+
+    --bg-color-important: #DD2222;
+    --bg-color-warn: #DDDD22;
+
+    --menu-height: 60px;
+    /* end global variables */
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    overflow: overlay;
+}
+
+.page-wrapper {
+    width: 100%;
+    display: grid;
+    grid-template-columns: auto auto;
+    /* gap : 15px; */
+    background: #111111;
+}
+
+main {
+    background: #152931;
+    margin: 15px;
+    padding: 15px;
+    border-radius: 15px;
+}
+
+.content-wrapper {
+    /* Allows for absolute positioning relative to the content */
+    /* position : relative; */
+}
+
+.announcement {
+    background: var(--bg-color-darkblue);
+    color: white;
+    border-radius: 15px;
+    border: solid 3px #EEEE00;
+    padding: 5px;
+    margin: 5px;
+    font-size: 1.1em;
+}
+
+/* SCROLLBAR
+Note: Custom scrollbars are not supported in Firefox or in Edge, prior version 79. */
+
+/* width */
+::-webkit-scrollbar {
+    margin-top: var(--menu-height);
+    width: 10px;
+    background: transparent;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey;
+    border-radius: 10px;
+    margin-top: var(--menu-height);
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: var(--bg-color-lightteal);
+    border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--bg-color-teal);
+}
+
+/****************
+Title bar styling:
+*******************/
+
+header {
+    background: var(--bg-color-darkblue);
+    width: 100%;
+    white-space: nowrap;
+}
+
+.logo,
+.logo>img {
+    background: transparent;
+    width: 20%;
+    max-width: 250px;
+}
+
+.logo:hover {
+    opacity: 0.8;
+}
+
+.title {
+    font-size: max(3vw, 2em);
+    font-size: clamp(2em, 3vw, 4em);
+    width: 80%;
+    margin-left: 20px;
+    padding: 20px;
+    display: inline-block;
+    word-wrap: break-word;
+    white-space: normal;
+    color: var(--title-color);
+    font-style: italic;
+    font-family: "Times New Roman", Times, serif;
+}
+
+/*************
+End title bar
+***********/
+
+/****************
+Dropdown menu styling:
+*******************/
+
+nav {
+    width: 100%;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    box-shadow: 0 10px 10px #49494977, 0 -10px 10px var(--bg-color-teal);
+    box-sizing: border-box;
+    z-index: 1;
+}
+
+nav .dropdown-menu {
+    list-style: none;
+}
+
+/* List containing dropdowns at the top */
+nav>.dropdown-menu {
+    display: flex;
+    height: var(--menu-height);
+    padding-left: 15%;
+    background: var(--bg-color-teal);
+    align-items: center;
+    color: var(--title-color);
+}
+
+.dropdown {
+    padding: 0 70px;
+    height: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.dropdown.dd-link {
+    padding: 0 50px;
+}
+
+.dropdown:hover,
+.dropdown:focus {
+    background: var(--bg-color-lightteal);
+    cursor: default;
+}
+
+.dropdown::after {
+    content: '';
+    /* draw the triangle */
+    width: 0;
+    height: 0;
+    border-left: 5px solid transparent;
+    border-right: 5px solid transparent;
+    border-top: 5px solid #a9a9a9;
+
+    position: absolute;
+    right: 20px;
+    top: 50%;
+    transition: top 0.1s;
+}
+
+/* no arrow for simple links */
+.dropdown.dd-link::after {
+    display: none;
+}
+
+/* animate on hover */
+.dropdown:hover::after,
+.dropdown:focus::after {
+    top: 60%;
+}
+
+.sub-dropdown {
+    position: relative;
+}
+
+.dd-content {
+    top: var(--menu-height);
+    visibility: hidden;
+    opacity: 0;
+    position: absolute;
+    z-index: 1;
+    white-space: nowrap;
+    box-shadow: 2px 5px 5px 3px #494949bb;
+    transition: opacity 0.5s;
+}
+
+/* show dropdown */
+li:hover>.dd-content,
+li:focus>.dd-content {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* arrow for sub-dropdowns */
+.sub-dropdown::after {
+    content: "";
+    /* draw the triangle */
+    width: 0;
+    height: 0;
+    border-left: 5px solid #a9a9a9;
+    border-top: 5px solid transparent;
+    border-bottom: 5px solid transparent;
+
+    position: absolute;
+    right: 8px;
+    transition: right 0.1s;
+}
+
+.sub-dropdown:hover::after {
+    right: 2px;
+}
+
+/* sub dropdowns need to be positioned to the right */
+.sub-dropdown .dd-content {
+    top: -2%;
+    left: 100%;
+}
+
+/* All dropdown elements (including in sub-dropdowns) */
+.dropdown li {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    background: #898989;
+    height: 40px;
+    min-width: 160px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    border-bottom: 2px solid #898989;
+}
+
+.dropdown li:hover {
+    background: #696969;
+    border-bottom: 2px solid #a9a9a9;
+}
+
+.dropdown li,
+.dropdown .dd-link a {
+    color: black;
+}
+
+/* Simple links need to be the same color as the other dropdowns */
+.dropdown.dd-link a {
+    color: var(--title-color);
+}
+
+/* Styling links */
+.dd-link,
+.dd-link a {
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.dd-link a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+
+/*************
+End dropdown
+***********/
+
+/************
+Side menu styling:
+***********/
+
+aside {
+    overflow-y: auto;
+}
+
+.aside-content {
+    padding-bottom: 5px;
+    background: #696969;
+}
+
+aside ul {
+    list-style-type: none;
+    padding-inline-start: 0;
+    padding-inline-end: 0;
+}
+
+aside li {
+    padding: 5px 20px;
+    font-size: 1.1em;
+    background: #898989;
+}
+
+aside li.current,
+aside li:hover {
+    background: #aaaaaa;
+}
+
+aside .toc-title {
+    padding: 10px;
+    color: var(--text-color);
+}
+
+
+/***********
+End side menu
+************/
+
+/***********
+Footer styling:
+************/
+
+footer {
+    background: #000002;
+    width: 100%;
+    height: 300px;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-gap: 15px;
+    justify-content: space-between;
+    padding: 0 15px;
+}
+
+.footer-info {
+    background: red;
+    color: blue;
+}
+
+.footer-img {
+    height: 300px;
+}
+
+/***********
+End footer
+***********/
+
+.disclaimer {
+    font-style: italic;
+    font-family: "Times New Roman", Times, serif;
+    width: 100%;
+    text-align: center;
+    color: var(--text-color);
+
+}
+
+.last-updated-wrapper {
+    width: 100%;
+    text-align: right;
+}
+
+.last-updated {
+    font-size: 80%;
+    display: inline-block;
+    border-radius: 10px;
+    padding: 5px;
+    background: darkslategray;
+    opacity: 0.4;
+    border: none;
+}
+
+.last-updated:hover,
+.last-updated:focus {
+    opacity: 1;
+}
+
+section {
+    border-radius: 15px;
+    background: var(--bg-color-teal);
+    margin: 5px 0 30px;
+    padding: 20px 10px;
+    font-size: 1em;
+}
+
+/* SECTION: section title styling */
+section .s-title {
+    padding-left: 10px;
+    padding-bottom: 5px;
+    margin-bottom: 20px;
+    border-bottom: 2px solid #555555;
+}
+
+section .sub-title {
+    margin-top: 5px;
+    margin-bottom: 15px;
+}
+
+a.section-link {
+    color: var(--text-color-hl);
+    text-decoration: none;
+}
+
+/* a.section-link::after {
+    background-image: url('../media/chain-link-icon.png');
+    background-size: 1em 1em;
+    display: inline-block;
+    margin-left: 3px;
+    width: 1em;
+    height: 1em;
+    content: "";
+    /* Generated using: https://codepen.io/sosuke/pen/Pjoqqp 
+        A code snippet that generates the filters needed to convert from a black image to any desired HEX colour value (approximately).*\/
+    filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
+    -webkit-filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
+} */
+
+/* Provide in-document link to link to that has an offset from the actual title.
+    Otherwise, the title would be hidden under the header when linking to it. */
+.section-link-to {
+    display: inline;
+    position: relative;
+    top: calc(-1 * var(--menu-height) - 50px);
+}
+/* END: section title styling */
+
+/* SECTION: media styling */
+.media-section {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    border-top: dashed 1px var(--bg-color-darkblue);
+    border-bottom: dashed 1px var(--bg-color-darkblue);
+}
+
+.media-section.align-left {
+    justify-content: left;
+}
+
+.media-section.align-right {
+    justify-content: right;
+}
+
+.media-wrapper {
+    width: 100%;
+    display: grid;
+    grid-auto-flow: column;
+    gap: 15px;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--bg-color-lightteal);
+    border-radius: 15px;
+    padding: 5px 15px;
+    overflow-x: auto;
+}
+
+.media-wrapper:has(:only-child) {
+    width: initial;
+}
+
+.media-wrapper.singular {
+    width: initial;
+}
+
+/* Figure type */
+figure.media {
+    background: var(--bg-color-lightblue);
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+}
+
+/* Text type */
+div.media {
+    background: var(--bg-color-lightblue);
+    padding: 5px;
+    border-radius: 5px;
+    display: inline-block;
+    overflow-y: auto;
+    height: 100%;
+    min-width: 300px;
+}
+
+figure.media .media-content {
+    display: inline-block;
+    max-height: 400px;
+}
+
+figure.media figcaption {
+    color: var(--text-color-dark);
+}
+/* END: media styling */
+
+/* SECTION: info block styling */
+.info {
+    background: var(--bg-color-lightteal);
+    border-left: solid var(--bg-color-darkblue) 5px;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 0px 5px 5px 0px;
+    box-shadow: 0 5px 5px -2px #555555aa;
+}
+
+.info.important {
+    border-left: solid var(--bg-color-important) 5px;
+}
+
+.info.warn {
+    border-left: solid var(--bg-color-warn) 5px;
+}
+
+.info.icon {
+    padding-left: 35px;
+    position: relative;
+}
+
+.info.icon::before {
+    position: absolute;
+    content: "i";
+    font-size: 15px;
+    font-weight: bolder;
+    width: 15px;
+    height: 15px;
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    border-radius: 50%;
+    border: solid 2px var(--text-color-hl);
+    color: var(--text-color-hl);
+    background: transparent;
+    left: 8px;
+}
+
+.info.warn.icon::before,
+.info.important.icon::before {
+    content: "!";
+}
+/* END: info block styling */
+
+section ul,
+section ol {
+    /*list-style-type : none;*/
+    padding-inline-start: 0px;
+    margin-left: 1em;
+}
+
+/* Style link: slide animation underline on hover */
+a.slide-hover,
+p a {
+    text-decoration-style: dotted;
+    text-underline-offset: 0.1em;
+    text-decoration-thickness: 2px;
+    position: relative;
+    color: var(--text-color-hl);
+}
+
+a.slide-hover::before,
+p a::before {
+    position: absolute;
+    content: "";
+    bottom: calc(-0.1em + 1px);
+    width: 2px;
+    height: 2px;
+    background: var(--text-color-hl);
+    display: inline-block;
+    visibility: hidden;
+
+    transition: width 0.5s ease-in-out, visibility 0s linear 0.5s;
+}
+
+a.slide-hover:hover::before,
+a.slide-hover:focus::before,
+p a:hover::before,
+p a:focus::before {
+    transition: width 0.1s ease-in-out, visibility 0s linear;
+    width: 100%;
+    visibility: visible;
+}
+
+a[target="_blank"]::after {
+    background-image: url('../media/external-link.webp');
+    background-size: 1em 1em;
+    display: inline-block;
+    margin-left: 3px;
+    width: 1em;
+    height: 1em;
+    content: "";
+    /* Generated using: https://codepen.io/sosuke/pen/Pjoqqp 
+        A code snippet that generates the filters needed to convert from a black image to any desired HEX colour value (approximately).*/
+    filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
+    -webkit-filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
+}
+
+section p,
+section .info {
+    color: var(--text-color);
+    margin-top: 1em;
+    margin-bottom: 1em;
+    line-height: 1.5em;
+}
+
+.p-start {
+    font-style: italic;
+    font-weight: bold;
+    color: var(--text-color-hl);
+    font-size: 1.05em;
+}
+
+.inline-code {
+    display: inline-block;
+    font-family: monospace;
+    background: var(--bg-color-darkblue);
+    color: white;
+    padding: 0 5px;
+    border-radius: 5px;
+    line-height: 1.3em;
+}
+
+.code-block {
+    display: block;
+    font-family: monospace;
+    background: var(--bg-color-darkblue);
+    color: white;
+    padding: 5px 5px;
+    line-height: 1.3em;
+    border-left: solid var(--bg-color-darkblue) 5px;
+    margin: 10px;
+    border-radius: 0px 5px 5px 0px;
+}
