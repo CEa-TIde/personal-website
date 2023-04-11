@@ -30,6 +30,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     --bg-color-warn: #DDDD22;
 
     --menu-height: 60px;
+    --footer-height: 300px;
     /* end global variables */
 }
 
@@ -42,6 +43,10 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 html {
     min-height: 100%;
     position: relative;
+}
+
+body {
+    margin-bottom: var(--footer-height);
 }
 
 .page-wrapper {
@@ -358,7 +363,7 @@ Footer styling:
 footer {
     background: #000002;
     width: 100%;
-    height: 300px;
+    height: var(--footer-height);
 
     /* make the footer stick to the bottom if page is shorter than viewport height */
     position: absolute;
