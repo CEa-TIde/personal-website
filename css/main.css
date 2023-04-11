@@ -25,12 +25,16 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     --bg-color-lightteal: #005055;
     --bg-color-lighterteal: #006066;
     --bg-color-lightblue: #31b6ee;
+    --bg-color-darkgrey: #181a1b;
 
     --bg-color-important: #DD2222;
     --bg-color-warn: #DDDD22;
 
     --menu-height: 60px;
     --footer-height: 300px;
+
+    --logo-width: 20%;
+    --logo-max-width: 250px;
     /* end global variables */
 }
 
@@ -43,6 +47,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 html {
     min-height: 100%;
     position: relative;
+    background: var(--bg-color-darkgrey);
 }
 
 body {
@@ -120,12 +125,20 @@ header {
 .logo,
 .logo>img {
     background: transparent;
-    width: 20%;
-    max-width: 250px;
+    width: var(--logo-width);
+    max-width: var(--logo-max-width);
 }
 
 .logo:hover {
     opacity: 0.8;
+}
+
+/* if logo in the nav bar,
+    use the height of the nav bar instead */
+nav .logo,
+nav .logo>img {
+    width: unset;
+    height: var(--menu-height);
 }
 
 .title {
@@ -152,12 +165,15 @@ Dropdown menu styling:
 
 nav {
     width: 100%;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
     box-shadow: 0 10px 10px #49494977, 0 -10px 10px var(--bg-color-teal);
     box-sizing: border-box;
     z-index: 1;
+    position: -webkit-sticky;
+    position: sticky;
+    top: 0;
+    display: flex;
+    height: var(--menu-height);
+    background: var(--bg-color-teal);
 }
 
 nav .dropdown-menu {
@@ -167,15 +183,19 @@ nav .dropdown-menu {
 /* List containing dropdowns at the top */
 nav>.dropdown-menu {
     display: flex;
+    flex-direction: row;
     height: var(--menu-height);
     padding-left: 15%;
-    background: var(--bg-color-teal);
-    align-items: center;
     color: var(--title-color);
 }
 
+/* if logo is in the nav, subtract width of logo */
+.logo+.dropdown-menu {
+    display: inline-flex;
+    padding-left: 5%;
+}
+
 .dropdown {
-    padding: 0 70px;
     height: 100%;
     box-sizing: border-box;
     display: flex;
@@ -184,7 +204,10 @@ nav>.dropdown-menu {
     position: relative;
 }
 
-.dropdown.dd-link {
+/* Place padding on link if possible so that larger area is clickable.
+Place padding on dropdown button otherwise */
+.dropdown:not(.dd-link),
+.dd-link a {
     padding: 0 50px;
 }
 
@@ -468,6 +491,7 @@ a.section-link {
     position: relative;
     top: calc(-1 * var(--menu-height) - 50px);
 }
+
 /* END: section title styling */
 
 /* SECTION: media styling */
@@ -535,6 +559,7 @@ figure.media .media-content {
 figure.media figcaption {
     color: var(--text-color-dark);
 }
+
 /* END: media styling */
 
 /* SECTION: info block styling */
@@ -581,6 +606,7 @@ figure.media figcaption {
 .info.important.icon::before {
     content: "!";
 }
+
 /* END: info block styling */
 
 section ul,

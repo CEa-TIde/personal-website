@@ -1,0 +1,38 @@
+<!-- layout for the index page
+    the header is removed and the logo is moved into the nav bar -->
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="keywords" content="CEa_TIde, Cyana, personal website, {{ page.keys }}"/>
+        <meta name="description" content="{{ page.desc }}"/>
+        <meta name="author" content="CEa_TIde"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!--style sheet with site-wide style rules-->
+        <link rel="stylesheet" href="css/main.css?v=0">
+        <link rel="shortcut icon" type="image/png" href="media/favicon.png">
+        <title>{{ page.title }}</title>
+    </head>
+    <body>
+        <nav>
+            <a class="logo" href="/"><img src="media/Logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
+            <ul class="dropdown-menu">
+                <li class="dropdown dd-link"><a href="/buildadvice">Build advice</a></li>
+                <li class="dropdown dd-link"><a href="/worldedit">World edit tutorial</a></li>
+            </ul>
+        </nav>
+        <div class="announcement">This website is currently under construction. Expect changes to be made, and there may be outages at certain times.</div>
+        <div class="page-wrapper">
+            {{ content }}
+        </div>
+        <footer>
+            <div class="footer-content">
+                <div class="footer-info">
+                    hello
+                </div>
+                <img class="footer-img" src="media/jellyfish-6653502_960_720-edited.jpg"/>
+            </div>
+        </footer>
+    </body>
+</html>
