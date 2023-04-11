@@ -57,8 +57,9 @@ body {
 .page-wrapper {
     width: 100%;
     display: grid;
-    grid-template-columns: auto auto;
+    grid-template-columns: 300px auto;
     /* gap : 15px; */
+    /* display: flex; */
     background: #111111;
 }
 
@@ -345,6 +346,7 @@ Side menu styling:
 
 aside {
     overflow-y: auto;
+    /* min-width: 300px; */
 }
 
 .aside-content {
