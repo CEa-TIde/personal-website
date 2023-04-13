@@ -715,15 +715,17 @@ section .info {
 
 .welcome-wrapper {
     width: 100%;
-    min-height: 70vw;
+    min-height: 40vw;
+    padding: 0 10vw;
     background: var(--bg-color-lighterteal);
     /* anchor for art to position relative to */
-    position: relative; 
+    position: relative;
+    margin-bottom: 30px;
 }
 
 .welcome-msgbox {
-    margin-top: 20px;
-    margin-left: 20px;
+    margin-top: 5vw;
+    margin-left: 5vw;
     width: 50vw;
 }
 
