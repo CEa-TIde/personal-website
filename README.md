@@ -1,2 +1,2 @@
-# ceatide.net
+# ceatide.lgbt
 Website
