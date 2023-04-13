@@ -728,12 +728,15 @@ section .info {
 }
 
 .welcome-msgbox {
-    margin-top: 5vw;
-    margin-left: 5vw;
+    padding: 5vw;
     width: 50vw;
 }
 
 .welcome-msg {
+
+}
+
+.welcome-subcaption {
 
 }
 
