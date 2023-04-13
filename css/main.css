@@ -715,9 +715,8 @@ section .info {
 
 .welcome-wrapper {
     width: 100%;
-    height: 70vw;
+    min-height: 70vw;
     background: var(--bg-color-lighterteal);
-    overflow: hidden;
     /* anchor for art to position relative to */
     position: relative; 
 }
@@ -733,5 +732,9 @@ section .info {
 }
 
 .welcome-art {
+    position: absolute;
+    right: 2vw;
+    bottom: 0;
+    width: 20vw;
 
 }
