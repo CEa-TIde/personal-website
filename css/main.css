@@ -720,7 +720,7 @@ section .info {
 }
 
 .welcome-box {
-    --bg-welcome-box: var(--bg-color-lighter-teal);
+    --bg-welcome-box: var(--bg-color-lighterteal);
 
     width: 100%;
     min-height: 40vw;
