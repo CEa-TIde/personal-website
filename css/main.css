@@ -743,7 +743,7 @@ section .info {
 
 }
 
-.welcome-art {
+.welcome-art-wrapper {
     position: absolute;
     right: 2vw;
     bottom: 0;
@@ -751,7 +751,7 @@ section .info {
 
 }
 
-.welcome-art::after {
+.welcome-art-wrapper::after {
     content: "";
     display: block;
     position: relative;
@@ -760,5 +760,8 @@ section .info {
     background: linear-gradient(to top, var(--bg-welcome-box), transparent);
     bottom: 0;
     left: 0;
+}
 
+.welcome-art {
+    
 }
