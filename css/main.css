@@ -747,8 +747,6 @@ section .info {
     position: absolute;
     right: 2vw;
     bottom: 0;
-    width: 20vw;
-
 }
 
 .welcome-art-wrapper::after {
@@ -763,5 +761,5 @@ section .info {
 }
 
 .welcome-art {
-    
+    width: 20vw;
 }
