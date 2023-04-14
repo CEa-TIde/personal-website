@@ -752,10 +752,13 @@ section .info {
 .welcome-art-wrapper::after {
     content: "";
     display: block;
-    position: relative;
+    position: absolute;
     width: 100%;
-    height: 10%;
+    height: 5%;
     background: linear-gradient(to top, var(--bg-welcome-box), transparent);
+    background: -webkit-linear-gradient(to top, var(--bg-welcome-box), transparent);
+    background: -o-linear-gradient(to top, var(--bg-welcome-box), transparent);
+    background: -moz-linear-gradient(to top, var(--bg-welcome-box), transparent);
     bottom: 0;
     left: 0;
 }
