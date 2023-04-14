@@ -723,7 +723,8 @@ section .info {
     width: 100%;
     min-height: 40vw;
     background: var(--bg-color-lighterteal);
-    box-shadow: 0 0 5px 5px var(--bg-color-lighterteal);
+    box-shadow: 2vw 0 5px 5px var(--bg-color-lighterteal),
+    -2vw 0 5px 5px var(--bg-color-lighterteal);
     /* anchor for art to position relative to */
     position: relative;
 }
