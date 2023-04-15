@@ -91,12 +91,16 @@ body {
 }
 
 .announcement {
+    position: absolute;
+    top: var(--menu-height);
+    left: 0;
+    width: 100%;
+    z-index: 1;
     background: var(--bg-color-darkblue);
     color: white;
     border-radius: 15px;
     border: solid 3px #EEEE00;
     padding: 5px;
-    margin: 5px;
     font-size: 1.1em;
 }
 
@@ -727,7 +731,7 @@ section .info {
     --bg-welcome-wrapper2: var(--bg-color-darkgrey);
 
     width: 100%;
-    min-height: 40vw;
+    min-height: calc(100vh - var(--menu-height));
     background: linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
     background: -o-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
     background: -webkit-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
@@ -740,6 +744,7 @@ section .info {
 .welcome-msgbox {
     padding: 5vw;
     width: 80vw;
+    color: var(--text-color);
 }
 
 .welcome-msg {
