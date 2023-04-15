@@ -743,26 +743,32 @@ section .info {
 }
 
 .welcome-msg {
-    font-size: 4em;
+    font-size: calc(min(4em, 5vw));
+    font-weight: 150;
 }
 
 .welcome-msg span {
     color: var(--text-color-purple);
-    font-family: 'Great Vibes', sans-serif;
+    font-family: 'Great Vibes', cursive;
     font-weight: 100;
 }
 
 .welcome-subcaption {
     padding: 1vw 0 1vw 10vw;
-    font-size: 1.2em;
+    font-size: calc(min(1.2em, 1.5vw));
+    font-style: italic;
+}
+
+.welcome-subcaption span {
+    color: var(--text-color-pink);
+    font-style: normal;
 }
 
 .welcome-joblist {
     padding-left: 20vw;
-    font-size: 1.6em;
+    font-size: calc(min(1.6em, 2vw));
 
     /* colour gradient */
-    /* color: transparent; */
     background: linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
     background: -o-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
     background: -webkit-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
