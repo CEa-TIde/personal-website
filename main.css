@@ -5,12 +5,19 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 
 /* monospace font for code blocks */
 @font-face {
-    font-family: 'monospace';
-    src: url('SpaceMono-Regular.eot'); /* IE9 Compat Modes */
-    src: url('SpaceMono-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-        url('SpaceMono-Regular.woff2') format('woff2'), /* Smaller than woff, but supported by fewer */
-        url('SpaceMono-Regular.woff') format('woff'), /* Modern Browsers */
-        url('SpaceMono-Regular.svg#SpaceMono-Regular') format('svg'); /* Legacy iOS */
+    font-family: 'Space Mono';
+    src: url('fonts/smr/SpaceMono-Regular.eot'); /* IE9 Compat Modes */
+    src: url('fonts/smr/SpaceMono-Regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
+        url('fonts/smr/SpaceMono-Regular.woff2') format('woff2'), /* Smaller than woff, but supported by fewer */
+        url('fonts/smr/SpaceMono-Regular.woff') format('woff'), /* Modern Browsers */
+        url('fonts/smr/SpaceMono-Regular.svg#SpaceMono-Regular') format('svg'); /* Legacy iOS */
+}
+
+/* calligraphy font for names */
+@font-face {
+    font-family: 'Great Vibes';
+    src: url('fonts/gv/GreatVibes-A7yL.otf') format('opentype'),
+        url('fonts/gv/GreatVibes-Wmr4.ttf') format('truetype');
 }
 
 :root {
@@ -19,6 +26,8 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     --text-color: #aaaaaa;
     --text-color-hl: #99bbbb;
     --text-color-dark: #555555;
+    --text-color-purple: #9f18fa;
+    --text-color-pink: #fa6cff;
 
     --bg-color-darkblue: #002839;
     --bg-color-teal: #004039;
@@ -701,7 +710,7 @@ section .info {
 
 .code-block {
     display: block;
-    font-family: monospace;
+    font-family: 'Space Mono', monospace;
     background: var(--bg-color-darkblue);
     color: white;
     padding: 5px 5px;
@@ -711,38 +720,57 @@ section .info {
     border-radius: 0px 5px 5px 0px;
 }
 
-.welcome-wrapper {
-    width: 100%;
-    padding: 0 10vw;
-    margin-bottom: 30px;
-}
+/* SECTION: welcome message styling */
 
-.welcome-box {
-    --bg-welcome-box: var(--bg-color-lighterteal);
+.welcome-wrapper {
+    --bg-welcome-wrapper: var(--bg-color-lighterteal);
+    --bg-welcome-wrapper2: var(--bg-color-darkgrey);
 
     width: 100%;
     min-height: 40vw;
-    background: var(--bg-welcome-box);
-    box-shadow: 0 0 5px 5px var(--bg-welcome-box);
+    background: linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
+    background: -o-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
+    background: -webkit-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
+    background: -moz-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
     /* anchor for art to position relative to */
     position: relative;
+    margin-bottom: 30px;
 }
 
 .welcome-msgbox {
     padding: 5vw;
-    width: 50vw;
+    width: 80vw;
 }
 
 .welcome-msg {
+    font-size: 4em;
+}
 
+.welcome-msg span {
+    color: var(--text-color-purple);
+    font-family: 'Great Vibes', sans-serif;
+    font-weight: 100;
 }
 
 .welcome-subcaption {
-
+    padding: 1vw 0 1vw 10vw;
+    font-size: 1.2em;
 }
 
 .welcome-joblist {
+    padding-left: 20vw;
+    font-size: 1.6em;
 
+    /* colour gradient */
+    /* color: transparent; */
+    background: linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
+    background: -o-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
+    background: -webkit-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
+    background: -moz-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    -moz-background-clip: text;
 }
 
 .welcome-art-wrapper {
@@ -751,20 +779,22 @@ section .info {
     bottom: 0;
 }
 
-.welcome-art-wrapper::after {
+/* .welcome-art-wrapper::after {
     content: "";
     display: block;
     position: absolute;
     width: 100%;
     height: 5%;
-    background: linear-gradient(to top, var(--bg-welcome-box), transparent);
-    background: -webkit-linear-gradient(to top, var(--bg-welcome-box), transparent);
-    background: -o-linear-gradient(to top, var(--bg-welcome-box), transparent);
-    background: -moz-linear-gradient(to top, var(--bg-welcome-box), transparent);
+    background: linear-gradient(to top, var(--bg-welcome-wrapper), transparent);
+    background: -webkit-linear-gradient(to top, var(--bg-welcome-wrapper), transparent);
+    background: -o-linear-gradient(to top, var(--bg-welcome-wrapper), transparent);
+    background: -moz-linear-gradient(to top, var(--bg-welcome-wrapper), transparent);
     bottom: 0;
     left: 0;
-}
+} */
 
 .welcome-art {
     width: 20vw;
 }
+
+/* END SECTION: welcome message styling */
