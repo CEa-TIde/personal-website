@@ -66,19 +66,17 @@ body {
     display: block;
 } */
 
-main:only-child {
+/* if no sidebar, expand to full screen */
+.page-wrapper > :only-child {
     width: 100%;
 }
 
-main {
+.content-wrapper {
     background: #152931;
     margin: 15px;
     padding: 15px;
     border-radius: 15px;
     overflow-x: hidden;
-}
-
-.content-wrapper {
     /* Allows for absolute positioning relative to the content */
     /* position : relative; */
 }
@@ -740,6 +738,10 @@ section .info {
 }
 
 .welcome-subcaption {
+
+}
+
+.welcome-joblist {
 
 }
 
