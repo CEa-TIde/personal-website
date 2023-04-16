@@ -746,12 +746,13 @@ section .info {
 
 .inline-code {
     display: inline-block;
-    font-family: monospace;
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
     background: var(--bg-color-darkblue);
     color: white;
     padding: 0 5px;
     border-radius: 5px;
-    line-height: 1.3em;
+    line-height: 1.5em;
+    font-size: 0.8em;
 }
 
 .code-block {
@@ -760,7 +761,8 @@ section .info {
     background: var(--bg-color-darkblue);
     color: white;
     padding: 5px 5px;
-    line-height: 1.3em;
+    line-height: 1.5em;
+    font-size: 0.8em;
     border-left: solid var(--bg-color-darkblue) 5px;
     margin: 10px;
     border-radius: 0px 5px 5px 0px;
