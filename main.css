@@ -411,7 +411,7 @@ Footer styling:
 footer {
     background: #000002;
     width: 100%;
-    height: var(--footer-height);
+    min-height: var(--footer-height);
 
     /* make the footer stick to the bottom if page is shorter than viewport height */
     position: absolute;
@@ -425,11 +425,35 @@ footer {
     grid-gap: 15px;
     justify-content: space-between;
     padding: 0 15px;
+    height: 100%;
 }
 
 .footer-info {
-    background: red;
-    color: blue;
+    color: var(--text-color);
+    margin: auto 0;
+    font-size: 1em;
+}
+
+.footer-category {
+    display: inline-block;
+    padding-left: 10vw;
+    padding-top: 20px;
+    vertical-align: top;
+}
+
+.footer-category > span {
+    font-size: 1.3em;
+    font-weight: 100;
+}
+
+.footer-entry {
+    display: block;
+    padding-top: 10px;
+}
+
+.footer-entry a {
+    text-decoration: none;
+
 }
 
 .footer-img {
@@ -656,6 +680,7 @@ p a::before {
     position: absolute;
     content: "";
     bottom: calc(-0.1em + 1px);
+    bottom: 0;
     width: 2px;
     height: 2px;
     background: var(--text-color-hl);
