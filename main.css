@@ -105,6 +105,20 @@ body {
     font-size: 1.1em;
 }
 
+#announcement-x {
+    border: none;
+    color: red;
+    background: none;
+    text-align: center;
+    text-decoration: none;
+    padding: 5px;
+    float: right;
+}
+
+#announcement-x:hover {
+    color: white;
+}
+
 /* SCROLLBAR
 Note: Custom scrollbars are not supported in Firefox or in Edge, prior version 79. */
 
