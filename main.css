@@ -431,6 +431,7 @@ footer {
     position: absolute;
     left: 0;
     bottom: 0;
+    overflow-x: hidden;
 }
 
 .footer-content {
@@ -453,11 +454,12 @@ footer {
     padding-left: 10vw;
     padding-top: 20px;
     vertical-align: top;
+    white-space: nowrap;
 }
 
 .footer-category > span {
-    font-size: 1.3em;
-    font-weight: 100;
+    font-size: 1.4em;
+    font-weight: 200;
 }
 
 .footer-entry {
