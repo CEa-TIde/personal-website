@@ -47,6 +47,13 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     /* end global variables */
 }
 
+/* This is added so that the element the URI fragment links to, is not hidden under the nav bar */
+:target {
+    scroll-margin-top: calc(var(--menu-height) + 10vh);
+    scroll-snap-margin-top: calc(var(--menu-height) + 10vh); /* alternative name used by Safari, prior version 14.1 */
+    outline: none;
+  }
+
 * {
     margin: 0;
     padding: 0;
@@ -89,6 +96,12 @@ body {
     overflow-x: hidden;
     /* Allows for absolute positioning relative to the content */
     /* position : relative; */
+}
+
+.content-wrapper.not-boxed {
+    background: transparent;
+    border-radius: 0;
+    margin: 15px 0;
 }
 
 .announcement {
@@ -512,9 +525,23 @@ End footer
 section {
     border-radius: 15px;
     background: var(--bg-color-teal);
-    margin: 5px 0 30px;
+    margin: 5px 0;
     padding: 20px 10px;
     font-size: 1em;
+}
+
+section:not(:first-child) {
+    margin-top: 30px;
+}
+
+section.align-left {
+    width: 60%;
+    margin-right: auto;
+}
+
+section.align-right {
+    width: 60%;
+    margin-left: auto;
 }
 
 /* SECTION: section title styling */
@@ -676,7 +703,7 @@ figure.media figcaption {
 
 section ul,
 section ol {
-    /*list-style-type : none;*/
+    list-style-type : none;
     padding-inline-start: 0px;
     margin-left: 1em;
 }
@@ -716,7 +743,7 @@ p a:focus::before {
 }
 
 a[target="_blank"]::after {
-    background-image: url('../media/external-link.webp');
+    background-image: url('/media/external-link.webp');
     background-size: 1em 1em;
     display: inline-block;
     margin-left: 3px;
