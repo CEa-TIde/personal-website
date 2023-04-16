@@ -51,6 +51,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 html {
@@ -189,7 +190,7 @@ nav {
     width: 100%;
     box-shadow: 0 10px 10px #49494977, 0 -10px 10px var(--bg-color-teal);
     box-sizing: border-box;
-    z-index: 1;
+    z-index: 10;
     position: -webkit-sticky;
     position: sticky;
     top: 0;
@@ -714,7 +715,7 @@ section .info {
 
 .code-block {
     display: block;
-    font-family: 'Space Mono', monospace;
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
     background: var(--bg-color-darkblue);
     color: white;
     padding: 5px 5px;
@@ -729,9 +730,10 @@ section .info {
 .welcome-wrapper {
     --bg-welcome-wrapper: var(--bg-color-lighterteal);
     --bg-welcome-wrapper2: var(--bg-color-darkgrey);
+    --min-height-ww: calc(min(100vh - var(--menu-height), 50vw));
 
     width: 100%;
-    min-height: calc(100vh - var(--menu-height));
+    min-height: var(--min-height-ww);
     background: linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
     background: -o-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
     background: -webkit-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
@@ -742,7 +744,7 @@ section .info {
 }
 
 .welcome-msgbox {
-    padding: 5vw;
+    padding: calc(var(--min-height-ww) / 3) 0 0 5vw;
     width: 80vw;
     color: var(--text-color);
 }
