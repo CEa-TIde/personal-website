@@ -104,32 +104,50 @@ body {
     margin: 15px 0;
 }
 
-.announcement {
+.announcement-wrapper {
     position: absolute;
     top: var(--menu-height);
     left: 0;
     width: 100%;
     z-index: 1;
+    
+}
+
+.announcement {
     background: var(--bg-color-darkblue);
     color: white;
     border-radius: 15px;
     border: solid 3px #EEEE00;
     padding: 5px;
     font-size: 1.1em;
+    width: 100%;
 }
 
-#announcement-x {
-    border: none;
+.announcement-wrapper .x-bttn {
+    position: absolute;
+    right: 0;
+    width: 1em;
+    height: 1em;
+    padding: 0.5em;
+    margin: 0.5em;
+    box-sizing: content-box;
     color: red;
-    background: none;
     text-align: center;
-    text-decoration: none;
-    padding: 5px;
-    float: right;
+    appearance: none;
 }
 
-#announcement-x:hover {
+.announcement-wrapper .x-bttn::after {
+    content: "X";
+    display: block;
+}
+
+.announcement-wrapper .x-bttn:hover {
     color: white;
+}
+
+.x-bttn:checked,
+.x-bttn:checked + .announcement {
+    display: none;
 }
 
 /* SCROLLBAR
@@ -588,7 +606,7 @@ a.section-link {
 
 /* SECTION: media styling */
 .media-section {
-    width: 100%;
+    margin: 0 auto;
     display: flex;
     justify-content: center;
     border-top: dashed 1px var(--bg-color-darkblue);
@@ -650,6 +668,125 @@ figure.media .media-content {
 
 figure.media figcaption {
     color: var(--text-color-dark);
+}
+
+
+.slideshow {
+    --sh-width-image: 30vw;
+    --sh-height-image: 20vw;
+    --sh-padding-top: 5px;
+    --sh-padding-left: 15px;
+    --sh-size-box: 20px;
+    --sh-nav-margin: 10px;
+    --bg-color-sh-nav: var(--text-color-hl);
+    --text-color-sh-nav: #555555;
+
+    /* width of image + space for nav buttons */
+    width: calc(var(--sh-width-image) + 60px);
+    height: var(--sh-height-image);
+    padding: var(--sh-padding-top) var(--sh-padding-left);
+
+    position: relative;
+    overflow-x: hidden;
+}
+
+.slideshow > .media .media-content {
+    max-height: var(--sh-height-image);
+
+}
+
+/* default of all media: move them to the left, out of frame */
+.slideshow > .media {
+    display: none;
+    position: absolute;
+    top: var(--sh-padding-top);
+    /* left: 0; */
+    left: calc(-1 * var(--sh-width-image));
+    height: var(--sh-height-image);
+    min-height: unset;
+}
+
+/* default all nav buttons to left */
+.slideshow-nav {
+    position: absolute;
+    top: calc(var(--sh-height-image) / 2 - var(--sh-size-box));
+    left: var(--sh-nav-margin);
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    border: var(--sh-size-box) solid var(--bg-color-sh-nav);
+    appearance: none;
+    font-size: 2em;
+    transition: border 10ms ease-out, top 10ms ease-out, font-size 10ms ease-out;
+}
+
+/* Move checkbox to right if checked */
+.slideshow-nav:checked {
+    left: unset;
+    right: var(--sh-nav-margin);
+}
+
+.slideshow-nav:hover {
+    --sh-size-box: 22px;
+    --sh-nav-margin: 9px;
+    font-size: calc(2em + 2px);
+}
+
+/* Create the left arrow */
+.slideshow-nav::before {
+    content: "<";
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: var(--sh-size-box);
+    height: var(--sh-size-box);
+    top: calc(-0.5 * var(--sh-size-box));
+    left: calc(-0.5 * var(--sh-size-box));
+    text-align: center;
+    vertical-align: middle;
+    font-weight: bold;
+    color: var(--text-color-sh-nav);
+}
+
+/* Turn it into a right arrow when checked */
+.slideshow-nav:checked::before {
+    content: ">";
+}
+
+/* 
+Only one needs to be visible at any time, but they need to be all clickable.
+That's why display: none; is not possible.
+*/
+/* .slideshow-nav ~ .slideshow-nav:not(:checked) {
+    opacity: 0;
+} */
+
+/* Hide unnecessary checkmarks on right so that the right checkmark is selectable*/
+.slideshow-nav:checked ~ .slideshow-nav {
+    display: none;
+}
+
+/* 
+Select active image. Checkboxes are offset by one image to make selection possible. 
+Second line is for edge case to target first image.
+Third line is for edge case to target last image.
+*/
+.slideshow-nav:not(:checked) + .media + .slideshow:checked + .media,
+.slideshow-nav:first-child:checked + .media,
+.slideshow-nav:not(:checked) + .media + .media:last-child {
+    position: unset;
+}
+
+/* Move all other media to the right, out of frame */
+.slideshow-nav:checked + .media {
+    right: calc(-1 * var(--sh-width-image));
+    height: var(--sh-height-image);
+}
+
+.slideshow-nav:checked ~ * {
+    /* visibility: hidden; */
 }
 
 /* END: media styling */
