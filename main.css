@@ -58,13 +58,13 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 html {
     min-height: 100%;
     position: relative;
     background: var(--bg-color-darkgrey);
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 body {
@@ -567,6 +567,7 @@ section .s-title {
     padding-left: 10px;
     padding-bottom: 5px;
     margin-bottom: 20px;
+    margin-top: 20px;
     border-bottom: 1px solid var(--text-color-hl);
 }
 
@@ -718,6 +719,7 @@ figure.media figcaption {
     appearance: none;
     font-size: 2em;
     transition: border 10ms ease-out, top 10ms ease-out, font-size 10ms ease-out;
+    cursor: pointer;
 }
 
 /* Move checkbox to right if checked */
@@ -893,7 +895,8 @@ a[target="_blank"]::after {
     -webkit-filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
 }
 
-section p,
+section > p,
+section > :not(.code-block) p,
 section .info {
     color: var(--text-color);
     margin-top: 1em;
@@ -908,28 +911,30 @@ section .info {
     font-size: 1.05em;
 }
 
+.inline-code,
+.code-block {
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    color: white;
+    line-height: 1.5em;
+}
+
 .inline-code {
     display: inline-block;
-    font-family: 'Space Mono', 'Courier New', Courier, monospace;
     background: var(--bg-color-darkblue);
-    color: white;
     padding: 0 5px;
     border-radius: 5px;
-    line-height: 1.5em;
     font-size: 0.8em;
 }
 
 .code-block {
     display: block;
-    font-family: 'Space Mono', 'Courier New', Courier, monospace;
     background: var(--bg-color-darkblue);
-    color: white;
-    padding: 5px 5px;
+    padding: 5px 5px 5px 10px;
     line-height: 1.5em;
-    font-size: 0.8em;
-    border-left: solid var(--bg-color-darkblue) 5px;
+    border-left: solid var(--bg-color-lightteal) 5px;
     margin: 10px;
     border-radius: 0px 5px 5px 0px;
+    font-size: 0.8em;
 }
 
 /* SECTION: welcome message styling */
