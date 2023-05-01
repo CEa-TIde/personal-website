@@ -541,6 +541,8 @@ End footer
 }
 
 section {
+    --section-aligned-width: calc(max(60%, min(100%, 400px)));
+
     border-radius: 15px;
     background: var(--bg-color-teal);
     margin: 5px 0;
@@ -553,12 +555,12 @@ section:not(:first-child) {
 }
 
 section.align-left {
-    width: 60%;
+    width: var(--section-aligned-width);
     margin-right: auto;
 }
 
 section.align-right {
-    width: 60%;
+    width: var(--section-aligned-width);
     margin-left: auto;
 }
 
@@ -939,10 +941,41 @@ section .info {
 
 /* SECTION: welcome message styling */
 
+@keyframes slide-in {
+    from {
+        /* slide amount is defined per line */
+        margin-left: var(--slide-amount);
+        filter: blur(2px);
+        -webkit-filter: blur(2px);
+        text-shadow: 0 0 2px var(--text-color);
+        opacity: 0;
+    }
+
+    to {
+        margin-left: 0;
+        filter: none;
+        -webkit-filter: none;
+        text-shadow: none;
+        opacity: 1;
+    }
+}
+
+/* Block the hover event of the msgbox by placing an invisible pseudo-element over it */
+@keyframes block-hover {
+    to {
+        height: 0;
+    }
+}
+
 .welcome-wrapper {
     --bg-welcome-wrapper: var(--bg-color-lighterteal);
     --bg-welcome-wrapper2: var(--bg-color-darkgrey);
     --min-height-ww: calc(min(100vh - var(--menu-height), 50vw));
+    --slide-duration: 1s;
+    --slide-delay: 0.2s;
+    --slidein-animation: var(--slide-duration) ease-out var(--slide-delay) 1 slide-in;
+    --slide-amount: -10vw; /* default slide amount */
+
 
     width: 100%;
     min-height: var(--min-height-ww);
@@ -955,6 +988,22 @@ section .info {
     margin-bottom: 30px;
 }
 
+/* after element blocks the hover effect while animation is playing */
+.welcome-wrapper::after {
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+
+    /* animation puts away pseudo-element at the end
+    Extreme cubic-bezier curve to keep the element over the msg box as long as possible */
+    animation: var(--slide-duration) cubic-bezier(1, 0, 1, -1) var(--slide-delay) 1 normal forwards block-hover;
+}
+
 .welcome-msgbox {
     padding: calc(var(--min-height-ww) / 3) 0 0 5vw;
     width: 80vw;
@@ -962,6 +1011,8 @@ section .info {
 }
 
 .welcome-msg {
+    --slide-amount: -10vw;
+
     font-size: calc(min(4em, 5vw));
     font-weight: 150;
 }
@@ -973,6 +1024,8 @@ section .info {
 }
 
 .welcome-subcaption {
+    --slide-amount: -15vw;
+
     padding: 1vw 0 1vw 10vw;
     font-size: calc(min(1.2em, 1.5vw));
     font-style: italic;
@@ -984,6 +1037,8 @@ section .info {
 }
 
 .welcome-joblist {
+    --slide-amount: -20vw;
+
     padding-left: 20vw;
     font-size: calc(min(1.6em, 2vw));
 
@@ -996,6 +1051,19 @@ section .info {
     background-clip: text;
     -webkit-background-clip: text;
     -moz-background-clip: text;
+}
+
+.welcome-msg,
+.welcome-subcaption,
+.welcome-joblist {
+    animation: var(--slidein-animation);
+    transition: margin-left 0.8s ease-in-out;
+}
+
+.welcome-msgbox:hover .welcome-msg,
+.welcome-msgbox:hover .welcome-subcaption,
+.welcome-msgbox:hover .welcome-joblist {
+    margin-left: calc(var(--slide-amount) / -4);
 }
 
 .welcome-art-wrapper {
