@@ -1053,16 +1053,12 @@ section .info {
     -moz-background-clip: text;
 }
 
-.welcome-msg,
-.welcome-subcaption,
-.welcome-joblist {
+.slide-out {
     animation: var(--slidein-animation);
     transition: margin-left 0.8s ease-in-out;
 }
 
-.welcome-msgbox:hover .welcome-msg,
-.welcome-msgbox:hover .welcome-subcaption,
-.welcome-msgbox:hover .welcome-joblist {
+.welcome-msgbox:hover .slide-out {
     margin-left: calc(var(--slide-amount) / -4);
 }
 
