@@ -616,45 +616,42 @@ a.section-link {
     border-bottom: dashed 1px var(--bg-color-darkblue);
 }
 
-.media-section.align-left {
+/* .media-section.align-left {
     justify-content: left;
-}
+} */
 
-.media-section.align-right {
+/* .media-section.align-right {
     justify-content: right;
-}
+} */
 
 .media-wrapper {
-    width: 100%;
+    /* width: 100%;
     display: grid;
     grid-auto-flow: column;
     gap: 15px;
     align-items: center;
-    justify-content: space-between;
+    justify-content: space-between; */
     background: var(--bg-color-lightteal);
     border-radius: 15px;
     padding: 5px 15px;
     overflow-x: auto;
 }
 
-.media-wrapper:has(:only-child) {
-    width: initial;
-}
-
+/* .media-wrapper:has(:only-child),
 .media-wrapper.singular {
     width: initial;
-}
+} */
 
 /* Figure type */
-figure.media {
+/* figure.media {
     background: var(--bg-color-lightblue);
     padding: 5px;
     border-radius: 5px;
     display: inline-block;
-}
+} */
 
 /* Text type */
-div.media {
+/* div.media {
     background: var(--bg-color-lightblue);
     padding: 5px;
     border-radius: 5px;
@@ -662,21 +659,21 @@ div.media {
     overflow-y: auto;
     height: 100%;
     min-width: 300px;
-}
+} */
 
-figure.media .media-content {
+/* figure.media .media-content {
     display: inline-block;
     max-height: 400px;
-}
+} */
 
-figure.media figcaption {
+/* figure.media figcaption {
     color: var(--text-color-dark);
-}
+} */
 
 
 .slideshow {
-    --sh-width-image: 30vw;
-    --sh-height-image: 20vw;
+    --sh-width-image: max(40vw, min(100vw, 700px));
+    --sh-height-image: max(20vw, 300px);
     --sh-padding-top: 5px;
     --sh-padding-left: 15px;
     --sh-size-box: 20px;
@@ -685,28 +682,59 @@ figure.media figcaption {
     --text-color-sh-nav: #555555;
 
     /* width of image + space for nav buttons */
-    width: calc(var(--sh-width-image) + 60px);
+    width: var(--sh-width-image);
     height: var(--sh-height-image);
     padding: var(--sh-padding-top) var(--sh-padding-left);
 
     position: relative;
     overflow-x: hidden;
+
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-around;
 }
 
-.slideshow > .media .media-content {
+/* .slideshow .media .media-content {
     max-height: var(--sh-height-image);
-
-}
+} */
 
 /* default of all media: move them to the left, out of frame */
-.slideshow > .media {
-    display: none;
+.slideshow > .slide {
     position: absolute;
     top: var(--sh-padding-top);
-    /* left: 0; */
     left: calc(-1 * var(--sh-width-image));
-    height: var(--sh-height-image);
-    min-height: unset;
+    opacity: 0;
+    filter: blur(5px);
+    width: calc(100% - 2 * var(--sh-padding-left));
+    height: calc(100% - 2 * var(--sh-padding-top));
+    background: var(--bg-color-lighterteal);
+
+    overflow: hidden;
+    transition: left 1s ease-in-out, opacity 1s ease-in-out, filter 1s ease-in-out;
+}
+
+/* 
+Move all media after a checked nav button to the right, out of frame.
+ > the active image and all images after it are now placed on the right.
+*/
+.slideshow-nav:checked ~ .slide {
+    left: var(--sh-width-image);
+}
+
+/* 
+Select active image and move it back in view.
+Checkboxes are offset by one image to make selection possible.
+Second line is for edge case to target first image.
+Third line is for edge case to target last image.
+*/
+.slideshow-nav:not(:checked) + .slide + .slideshow-nav:checked + .slide,
+.slideshow-nav:first-child:checked + .slide,
+.slideshow-nav:not(:checked) + .slide + .slide:last-child {
+    display: flex;
+    left: var(--sh-padding-left);
+    opacity: 1;
+    filter: none;
 }
 
 /* default all nav buttons to left */
@@ -722,6 +750,7 @@ figure.media figcaption {
     font-size: 2em;
     transition: border 10ms ease-out, top 10ms ease-out, font-size 10ms ease-out;
     cursor: pointer;
+    z-index: 10;
 }
 
 /* Move checkbox to right if checked */
@@ -759,38 +788,9 @@ figure.media figcaption {
     content: ">";
 }
 
-/* 
-Only one needs to be visible at any time, but they need to be all clickable.
-That's why display: none; is not possible.
-*/
-/* .slideshow-nav ~ .slideshow-nav:not(:checked) {
-    opacity: 0;
-} */
-
 /* Hide unnecessary checkmarks on right so that the right checkmark is selectable*/
 .slideshow-nav:checked ~ .slideshow-nav {
     display: none;
-}
-
-/* 
-Select active image. Checkboxes are offset by one image to make selection possible. 
-Second line is for edge case to target first image.
-Third line is for edge case to target last image.
-*/
-.slideshow-nav:not(:checked) + .media + .slideshow:checked + .media,
-.slideshow-nav:first-child:checked + .media,
-.slideshow-nav:not(:checked) + .media + .media:last-child {
-    position: unset;
-}
-
-/* Move all other media to the right, out of frame */
-.slideshow-nav:checked + .media {
-    right: calc(-1 * var(--sh-width-image));
-    height: var(--sh-height-image);
-}
-
-.slideshow-nav:checked ~ * {
-    /* visibility: hidden; */
 }
 
 /* END: media styling */
