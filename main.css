@@ -27,6 +27,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     --text-color-hl: #99bbbb;
     --text-color-dark: #555555;
     --text-color-purple: #9f18fa;
+    --text-color-magenta: #bd4afd;
     --text-color-pink: #fa6cff;
 
     --bg-color-darkblue: #002839;
@@ -432,6 +433,8 @@ Side menu styling:
 ***********/
 
 aside {
+    --burger-menu-size: 32px;
+
     overflow-y: auto;
     width: 200px;
     min-width: 200px;
@@ -463,6 +466,62 @@ aside .toc-title {
     padding: 10px;
     color: var(--text-color);
 }
+
+/* Burger menu styling */
+
+.burger-menu {
+    position: absolute;
+    appearance: none;
+    width: var(--burger-menu-size);
+    height: var(--burger-menu-size);
+    background: red;
+    opacity: 0.7;
+}
+
+.burger-menu + svg {
+    width: var(--burger-menu-size);
+    height: var(--burger-menu-size);
+}
+
+.burger-menu + svg line {
+    transition-duration: 0.5s;
+    transition-property: stroke, opacity, transform;
+    transition-timing-function: cubic-bezier(0.9, 0, 0.1, 1);
+}
+
+.burger-menu + svg line:nth-of-type(1) {
+    stroke: var(--text-color-purple);
+    transform-origin: center 6px;
+    -webkit-transform-origin: center 6px;
+}
+
+.burger-menu + svg line:nth-of-type(2) {
+    stroke: var(--text-color-magenta);
+    transform-origin: center 12px;
+    -webkit-transform-origin: center 12px;
+}
+
+.burger-menu + svg line:nth-of-type(3) {
+    stroke: var(--text-color-pink);
+    transform-origin: center 18px;
+    -webkit-transform-origin: center 18px;
+}
+
+.burger-menu:checked + svg line:nth-of-type(1) {
+    transform: translate(0, 6px) rotate(45deg);
+}
+
+.burger-menu:checked + svg line:nth-of-type(2) {
+    opacity: 0;
+    transform: scale(0.2);
+}
+
+.burger-menu:checked + svg line:nth-of-type(3) {
+    transform: translate(0, -6px) rotate(-45deg);
+    stroke: var(--text-color-purple);
+}
+
+/* End burger menu styling */
 
 
 /***********
