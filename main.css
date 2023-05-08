@@ -70,6 +70,7 @@ html {
 
 body {
     margin-bottom: var(--footer-height);
+    overflow-x: hidden;
 }
 
 .page-wrapper {
@@ -189,10 +190,13 @@ header {
     background: var(--bg-color-darkblue);
     width: 100%;
     white-space: nowrap;
+    overflow-x: hidden;
 
     /* z-index added so that it is above the nav bar logo that appears on scroll */
     position: relative;
     z-index: 11;
+
+    box-shadow: inset 0 -20px 10px -10px var(--bg-color-teal);
 }
 
 .logo,
@@ -217,9 +221,10 @@ nav .logo > img {
 .title {
     font-size: max(3vw, 2em);
     font-size: clamp(2em, 3vw, 4em);
-    width: 80%;
+    width: calc(100% - min(var(--logo-width), var(--logo-max-width)));
     margin-left: 20px;
     padding: 20px;
+    padding-right: 0;
     display: inline-block;
     word-wrap: break-word;
     white-space: normal;
@@ -238,7 +243,6 @@ Dropdown menu styling:
 
 nav {
     width: 100%;
-    box-shadow: 0 10px 10px #49494977, 0 -10px 10px var(--bg-color-teal);
     box-sizing: border-box;
     z-index: 10;
     position: -webkit-sticky;
@@ -247,6 +251,8 @@ nav {
     display: flex;
     height: var(--menu-height);
     background: var(--bg-color-teal);
+    box-shadow: 0 5px 10px var(--bg-color-darkblue);
+
 }
 
 /* logo that shows up when nav is sticky to the top */
@@ -432,17 +438,46 @@ End dropdown
 Side menu styling:
 ***********/
 
-aside {
-    --burger-menu-size: 32px;
+.aside-wrapper {
+    position: relative;
+    top: 0;
+    width: 0;
+    z-index: 30;
+}
 
-    overflow-y: auto;
-    width: 200px;
-    min-width: 200px;
+aside {
+    --burger-menu-size: 40px;
+    --burger-menu-animation-duration: 0.5s;
+    --aside-menu-bg-color: #696969;
+    --aside-menu-width: 200px;
+
+    position: sticky;
+    position: -webkit-sticky;
+    top: var(--menu-height);
+    left: 0;
 }
 
 .aside-content {
+    width: var(--aside-menu-width);
     padding-bottom: 5px;
-    background: #696969;
+    background: var(--aside-menu-bg-color);
+    box-shadow: 0 calc(-1 * var(--burger-menu-size)) 0 0 var(--aside-menu-bg-color);
+    position: relative;
+
+    /* Move out of frame by default (burger menu opens it) */
+    transform: translate(-100%, var(--burger-menu-size));
+    transition: transform var(--burger-menu-animation-duration) cubic-bezier(0.9, 0, 0.1, 1);
+}
+
+/* block closing the menu above the content next to the x button */
+.aside-content::before {
+    content: "";
+    display: block;
+    width: calc(var(--aside-menu-width) - var(--burger-menu-size));
+    height: var(--burger-menu-size);
+    position: absolute;
+    left: var(--burger-menu-size);
+    top: calc(-1 * var(--burger-menu-size));
 }
 
 aside ul {
@@ -471,22 +506,34 @@ aside .toc-title {
 
 .burger-menu {
     position: absolute;
+    top: 0;
+    left: 0;
     appearance: none;
     width: var(--burger-menu-size);
     height: var(--burger-menu-size);
-    background: red;
-    opacity: 0.7;
+    background: transparent;
+}
+
+.burger-menu:checked {
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.2);
 }
 
 .burger-menu + svg {
+    position: absolute;
     width: var(--burger-menu-size);
     height: var(--burger-menu-size);
+    pointer-events: none;
+    z-index: 1;
+    background: var(--bg-color-lighterteal);
+    transition: background-color var(--burger-menu-animation-duration) cubic-bezier(1, 0, 0, 1);
 }
 
 .burger-menu + svg line {
-    transition-duration: 0.5s;
-    transition-property: stroke, opacity, transform;
-    transition-timing-function: cubic-bezier(0.9, 0, 0.1, 1);
+    transition-duration: var(--burger-menu-animation-duration);
+    transition-property: stroke, transform;
+    transition-timing-function: cubic-bezier(0.7, 0.5, 0.5, 0.7);
 }
 
 .burger-menu + svg line:nth-of-type(1) {
@@ -512,13 +559,21 @@ aside .toc-title {
 }
 
 .burger-menu:checked + svg line:nth-of-type(2) {
-    opacity: 0;
+    stroke: transparent;
     transform: scale(0.2);
 }
 
 .burger-menu:checked + svg line:nth-of-type(3) {
     transform: translate(0, -6px) rotate(-45deg);
     stroke: var(--text-color-purple);
+}
+
+.burger-menu:checked ~ .aside-content {
+    transform: translate(0, var(--burger-menu-size));
+}
+
+.burger-menu:checked + svg {
+    background: transparent;
 }
 
 /* End burger menu styling */
@@ -963,7 +1018,7 @@ p a:focus::before {
 }
 
 a[target="_blank"]::after {
-    background-image: url('/media/external-link.webp');
+    background-image: url('./media/external-link.webp');
     background-size: 1em 1em;
     display: inline-block;
     margin-left: 3px;
