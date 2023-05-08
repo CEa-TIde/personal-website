@@ -442,7 +442,7 @@ Side menu styling:
     position: relative;
     top: 0;
     width: 0;
-    z-index: 30;
+    z-index: 9;
 }
 
 aside {
@@ -515,6 +515,7 @@ aside .toc-title {
 }
 
 .burger-menu:checked {
+    position: fixed;
     width: 100vw;
     height: 100vh;
     background: rgba(0, 0, 0, 0.2);
