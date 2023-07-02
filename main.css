@@ -1083,7 +1083,6 @@ section .info {
         filter: blur(2px);
         -webkit-filter: blur(2px);
         text-shadow: 0 0 2px var(--text-color);
-        opacity: 0;
     }
 
     to {
@@ -1091,6 +1090,15 @@ section .info {
         filter: none;
         -webkit-filter: none;
         text-shadow: none;
+    }
+}
+
+@keyframes slide-in-opacity {
+    from {
+        opacity: 0;
+    }
+
+    to {
         opacity: 1;
     }
 }
@@ -1108,7 +1116,7 @@ section .info {
     --min-height-ww: calc(min(100vh - var(--menu-height), 50vw));
     --slide-duration: 1s;
     --slide-delay: 0.2s;
-    --slidein-animation: var(--slide-duration) ease-out var(--slide-delay) 1 slide-in;
+    --slidein-animation: var(--slide-duration) ease-out var(--slide-delay) 1 slide-in, var(--slide-duration) ease-out var(--slide-delay) 1 normal forwards slide-in-opacity;
     --slide-amount: -10vw; /* default slide amount */
 
 
@@ -1192,6 +1200,7 @@ section .info {
 .slide-out {
     animation: var(--slidein-animation);
     transition: margin-left 0.8s ease-in-out;
+    opacity: 0;
 }
 
 .welcome-msgbox:hover .slide-out {
