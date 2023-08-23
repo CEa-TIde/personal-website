@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="keywords" content="CEa_TIde, Cyana, personal website, trans, transgender, pronouns, pronoun closet"/>
+        <meta name="description" content="Pronouns closet. Try out new pronouns in example sentences."/>
+        <meta name="author" content="CEa_TIde"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!--style sheet with site-wide style rules-->
+        <link rel="stylesheet" href="pronouncloset.css?v=0">
+        <link rel="shortcut icon" type="image/png" href="media/favicon.png">
+        <title>Pronoun closet</title>
+    </head>
+    <body>
+        <header>
+            <!-- Title and introduction-->
+            <h1>Pronoun Closet</h1>
+            <p>This is the Pronoun Closet. You can try out </p>
+        </header>
+        <main>
+            <div class="settings-view">
+                <div>
+                    <p>Added pronouns</p>
+                    <ul id="added-pronouns-list">
+                        <li><span>she</span>/<span>her</span>/<span>her</span>/<span>hers</span>/<span>herself</span></li>
+                        <li><span>he</span>/<span>him</span>/<span>his</span>/<span>his</span>/<span>hisself</span></li>
+                        <li><span>they</span>/<span>them</span>/<span>their</span>/<span>theirs</span>/<span>theirself</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="output-view">
+                <ul class="sentence-list">
+                    <li class="sentence-wrapper">
+                        <p class="sentence">This is an example sentence.</p>
+                        <input type="button" class="editbttn" value="Edit" title="Edit this sentence."/>
+                        <input type="button" class="delbttn" value="Delete" title="Remove this sentence."/>
+                    </li>
+                </ul>
+                <input type="button" id="addsentence" value="Add sentence"/>
+            </div>
+        </main>
+        <footer>
+            <p>
+                This page uses local storage to store your pronoun sets, and custom sentences. Press the button on the right to delete that and to reload the page.
+            </p>
+            <input type="button" value="Reset" id="resetls"/>
+        </footer>
+    </body>
+</html>
