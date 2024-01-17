@@ -25,12 +25,13 @@
                     <label for="preset-pronouns-dropdown">Pick a pronoun:</label>
                     <select id="preset-pronouns-dropdown">
                         <option value="">--Select a preset pronoun set--</option>
-                        <option value="1">she/her/her/hers/herself</option>
-                        <option value="2">he/him/his/his/himself</option>
-                        <option value="3">they/them/their/theirs/themself</option>
-                        <option value="4">xe/xem/xyr/xyrs/xemself</option>
-                        <option value="5">ae/aer/aer/aers/aerself</option>
-                        <option value="6">ze/hir/hir/hirs/hirself</option>
+                        <option value="she/her/her/hers/herself">she/her/her/hers/herself</option>
+                        <option value="he/him/his/his/himself">he/him/his/his/himself</option>
+                        <option value="they/them/their/theirs/themself">they/them/their/theirs/themself</option>
+                        <option value="xe/xem/xyr/xyrs/xemself">xe/xem/xyr/xyrs/xemself</option>
+                        <option value="ae/ae/aes/aes/aeself">ae/ae/aes/aes/aeself</option>
+                        <option value="ze/hir/hir/hirs/hirself">ze/hir/hir/hirs/hirself</option>
+                        <option value="it/it/its/its/itself">it/it/its/its/itself</option>
                     </select>
                     <form class="pronoun-form" autocomplete="off">
                         <label for="input-pronoun-sub">Subject:</label>
@@ -48,14 +49,22 @@
 
                         <input type="submit" value="Add pronoun set"/>
                     </form>
+                    <select id="selected-pronouns" multiple="">
+                        <option id="she/her/her/hers/herself/-" value="she/her/her/hers/herself/-">she/her/her/hers/herself/-</option>
+                    </select>
+                    <input type="button" value="Remove selected set"/>
                 </div>
                 <div class="name-selection-panel">
                     <form class="name-form" autocomplete="off">
                         <label for="input-name">Name:</label>
                         <input type="text" id="input-name" required/>
 
-                        <input type="submit" value="Add pronoun set"/>
+                        <input type="submit" value="Add name"/>
                     </form>
+                    <select id="selected-names" multiple="">
+                        <option id="Cyana" value="Cyana">Cyana</option>
+                    </select>
+                    <input type="button" value="Remove selected name"/>
                 </div>
                 <div class="rules-panel">
                     <fieldset id="pronounrandomness">
@@ -63,7 +72,7 @@
                         <div>
                             <div class="option" title="Pronouns are chosen randomly per pronoun.">
                                 <input type="radio" name="pronounrandomness" id="pronounrandom1" checked value="random"/>
-                                <label for="pronounrandom1">Pronoun/Random</label>    
+                                <label for="pronounrandom1">Pronoun (random)</label>    
                             </div>
                             <div class="option" title="Pronouns are chosen randomly per sentence. Within a sentence pronouns will be the same."/>
                                 <input type="radio" name="pronounrandomness" id="pronounrandom2" value="sentence">
@@ -80,7 +89,7 @@
                         <div>
                             <div class="option" title="Names are chosen randomly per pronoun.">
                                 <input type="radio" name="namerandomness" id="namerandom1" checked value="random"/>
-                                <label for="namerandom1">Name/Random</label>
+                                <label for="namerandom1">Name (random)</label>
                             </div>
                             <div class="option" title="Names are chosen randomly per sentence. Within a sentence pronouns will be the same.">
                                 <input type="radio" name="namerandomness" id="namerandom2" value="sentence"/>

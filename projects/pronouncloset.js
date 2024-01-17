@@ -20,6 +20,7 @@ function init() {
 
     document.querySelector('.pronoun-form').addEventListener('submit', ev => handleSubmitPronounForm());
     document.querySelector('.name-form').addEventListener('submit', ev => handleSubmitNameForm());
+    document.querySelector('#preset-pronouns-dropdown').addEventListener('change', ev => handleSelectPreset(ev));
 }
 
 const parser = new Parser();
@@ -213,12 +214,52 @@ function handleReloadAllBlocks() {
     });
 }
 
+function handleSelectPreset(event) {
+    let pronounString = event.target.value;
+    if (pronounString != '') {
+        let pronounSet = pronounString.split('/');
+        let pronounElems = document.querySelectorAll('.pronoun-form input[type=text]');
+        // Set all of the values of the pronoun form to their respective pronoun conjugation.
+        for (let i = 0; i < pronounSet.length; i++) {
+            pronounElems[i].value = pronounSet[i];
+        }
+    }
+}
+
 function handleSubmitPronounForm() {
-    console.log('submitted pronouns');
+    let sub = document.querySelector('#input-pronoun-sub')?.value;
+    let obj = document.querySelector('#input-pronoun-obj')?.value;
+    let pod = document.querySelector('#input-pronoun-pod')?.value;
+    let pop = document.querySelector('#input-pronoun-pop')?.value;
+    let ref = document.querySelector('#input-pronoun-ref')?.value;
+    let name = document.querySelector('#input-pronoun-name')?.value;
+    let pronounList = document.querySelector('#selected-pronouns');
+    if (sub && obj && pod && pop && ref && pronounList) {
+        let string;
+        if (name) {
+            string = `${sub}/${obj}/${pod}/${pop}/${ref}|${name}`;
+        }
+        else {
+            string = `${sub}/${obj}/${pod}/${pop}/${ref}`;
+        }
+        submitFormEntry(pronounList, string);
+    }
 }
 
 function handleSubmitNameForm() {
-    console.log('submitted name');
+    let name = document.querySelector('#input-name')?.value;
+    let nameList = document.querySelector('#selected-names');
+    if (name && nameList) {
+        submitFormEntry(nameList, name);
+    }
+}
+
+function submitFormEntry(listElem, formattedString) {
+    let option = document.createElement('OPTION');
+    option.id = formattedString;
+    option.value = formattedString;
+    option.innerText = formattedString;
+    listElem.append(option);
 }
 
 /**
