@@ -20,6 +20,92 @@
         </header>
         <main>
             <div class="settings-view">
+                <p>Explanation blah blah blah</p>
+                <div class="pronoun-selection-panel">
+                    <label for="preset-pronouns-dropdown">Pick a pronoun:</label>
+                    <select id="preset-pronouns-dropdown">
+                        <option value="">--Select a preset pronoun set--</option>
+                        <option value="1">she/her/her/hers/herself</option>
+                        <option value="2">he/him/his/his/himself</option>
+                        <option value="3">they/them/their/theirs/themself</option>
+                        <option value="4">xe/xem/xyr/xyrs/xemself</option>
+                        <option value="5">ae/aer/aer/aers/aerself</option>
+                        <option value="6">ze/hir/hir/hirs/hirself</option>
+                    </select>
+                    <form class="pronoun-form" autocomplete="off">
+                        <label for="input-pronoun-sub">Subject:</label>
+                        <input type="text" id="input-pronoun-sub" required/>
+                        <label for="input-pronoun-obj">Object:</label>
+                        <input type="text" id="input-pronoun-obj" required/>
+                        <label for="input-pronoun-pod">Possessive determiner:</label>
+                        <input type="text" id="input-pronoun-pod" required/>
+                        <label for="input-pronoun-pop">Possessive pronoun:</label>
+                        <input type="text" id="input-pronoun-pop" required/>
+                        <label for="input-pronoun-ref">Reflexive:</label>
+                        <input type="text" id="input-pronoun-ref" required/>
+                        <label for="input-pronoun-name">Linked name (Optional)</label>
+                        <input type="text" id="input-pronoun-name"/>
+
+                        <input type="submit" value="Add pronoun set"/>
+                    </form>
+                </div>
+                <div class="name-selection-panel">
+                    <form class="name-form" autocomplete="off">
+                        <label for="input-name">Name:</label>
+                        <input type="text" id="input-name" required/>
+
+                        <input type="submit" value="Add pronoun set"/>
+                    </form>
+                </div>
+                <div class="rules-panel">
+                    <fieldset id="pronounrandomness">
+                        <legend>Choose pronouns per:</legend>
+                        <div>
+                            <div class="option" title="Pronouns are chosen randomly per pronoun.">
+                                <input type="radio" name="pronounrandomness" id="pronounrandom1" checked value="random"/>
+                                <label for="pronounrandom1">Pronoun/Random</label>    
+                            </div>
+                            <div class="option" title="Pronouns are chosen randomly per sentence. Within a sentence pronouns will be the same."/>
+                                <input type="radio" name="pronounrandomness" id="pronounrandom2" value="sentence">
+                                <label for="pronounrandom2">Sentence</label>
+                            </div>
+                            <div class="option" title="Pronouns are chosen randomly per block. Within a block pronouns will be the same.">
+                                <input type="radio" name="pronounrandomness" id="pronounrandom3" value="block"/>
+                                <label for="pronounrandom3">Block</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset id="namerandomness">
+                        <legend>Choose names per:</legend>
+                        <div>
+                            <div class="option" title="Names are chosen randomly per pronoun.">
+                                <input type="radio" name="namerandomness" id="namerandom1" checked value="random"/>
+                                <label for="namerandom1">Name/Random</label>
+                            </div>
+                            <div class="option" title="Names are chosen randomly per sentence. Within a sentence pronouns will be the same.">
+                                <input type="radio" name="namerandomness" id="namerandom2" value="sentence"/>
+                                <label for="namerandom2">Sentence</label>
+                            </div>
+                            <div class="option" title="Names are chosen randomly per block. Within a block pronouns will be the same.">
+                                <input type="radio" name="namerandomness" id="namerandom3" value="block"/>
+                                <label for="namerandom3">Block</label>
+                            </div>
+                        </div>
+                    </fieldset>
+                    <fieldset id="options">
+                        <legend>Options</legend>
+                        <div class="option" title="No pronouns are used. The names are used instead.">
+                            <input type="checkbox" id="setting-usenameonly"/>
+                            <label for="setting-usenameonly">Use no pronouns</label>
+                        </div>
+                        <div class="option" title="Use the names linked to specific pronoun sets, if the name is set. 
+If not available, the regular list of names is used.
+Note that this setting has no effect if no pronouns are used.">
+                            <input type="checkbox" id="setting-linkednames"/>
+                            <label for="setting-linkednames">Use names linked to pronoun sets</label>
+                        </div>
+                    </fieldset>
+                </div>
                 <div>
                     <p>Added pronouns</p>
                     <ul id="added-pronouns-list">
@@ -28,23 +114,36 @@
                         <li><span>they</span>/<span>them</span>/<span>their</span>/<span>theirs</span>/<span>theirself</span></li>
                     </ul>
                 </div>
+                <div class="wide-button-wrapper">
+                    <input type="button" id="reload" class="wide-button" value="Reload" title="Reload all blocks with current settings."/>
+                </div>
             </div>
             <div class="output-view">
                 <ul class="sentence-list">
-                    <li class="sentence-wrapper">
-                        <p class="sentence">This is an example sentence.</p>
-                        <input type="button" class="editbttn" value="Edit" title="Edit this sentence."/>
-                        <input type="button" class="delbttn" value="Delete" title="Remove this sentence."/>
+                    <li class="message-block">
+                        <p class="text-field">This is her example sentence.</p>
+                        <textarea class="edit-field onlyedit">This is {pod} example sentence.</textarea>
+                        <div class="controls">
+                            <span class="filler"></span>
+                            <input type="button" class="editbttn" value="Edit" title="Edit this sentence."/>
+                            <input type="button" class="applybttn onlyedit" value="Apply" title="Apply the changes."/>
+                            <input type="button" class="cancelbttn onlyedit" value="Cancel" title="Cancel any changes made."/>
+                            <input type="button" class="delbttn" value="Delete" title="Remove this sentence."/>
+                        </div>
+                        
                     </li>
                 </ul>
-                <input type="button" id="addsentence" value="Add sentence"/>
+                <div class="wide-button-wrapper">
+                    <input type="button" id="addsentence" class="wide-button" value="Add sentence"/>
+                </div>
             </div>
         </main>
         <footer>
             <p>
-                This page uses local storage to store your pronoun sets, and custom sentences. Press the button on the right to delete that and to reload the page.
+                This page uses local storage to store your pronoun sets, names, and custom sentences. Press the button on the right to delete that and to reload the page.
             </p>
             <input type="button" value="Reset" id="resetls"/>
         </footer>
+        <script src="pronouncloset.js"></script>
     </body>
 </html>

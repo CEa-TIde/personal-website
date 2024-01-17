@@ -1,3 +1,17 @@
+:root {
+    
+    --header-background: #555555;
+    --footer-background: #333333;
+    --main-background: lightgreen;
+    --settings-background: goldenrod;
+    --sentence-list-background: lightcoral;
+    --message-block-background: #DD7733;
+
+    --outputview-border-color: #CC5533;
+    --message-block-border-color: #AA3322;
+
+}
+
 * {
     box-sizing: border-box;
     margin: 0;
@@ -16,14 +30,14 @@ body {
 
 header {
     width: 100%;
-    background: #555555;
+    background: var(--header-background);
 }
 
 main {
     width: 100%;
     flex: 1;
     overflow: auto;
-    background: lightgreen;
+    background: var(--main-background);
     display: flex;
     flex-flow: row;
 }
@@ -34,28 +48,102 @@ ul {
 
 .settings-view {
     width: 300px;
-    background: goldenrod;
+    background: var(--settings-background);
 }
 
 .output-view {
     flex: 1;
-    background: lightcoral;
+    background: var(--sentence-list-background);
+    border: 3px solid var(--outputview-border-color);
+    margin: 30px;
+}
+
+.sentence-list {
+    padding: 5px;
+}
+
+.message-block {
+    min-height: 30px;
+    margin: 5px 0;
+    background: var(--message-block-background);
+    border: 1px solid var(--message-block-border-color);
+}
+
+.message-block .text-field {
+    display: block;
+    padding: 5px;
+}
+
+/* Only set display to none of edit-elements when not editing */
+.message-block:not(.editing) .onlyedit {
+    display: none;
+}
+
+.message-block .edit-field {
+    width: 100%;
+    padding: 5px;
+    resize: vertical;
+}
+
+.message-block.editing .text-field,
+.message-block.editing .editbttn {
+    display: none;
+}
+
+.message-block .controls {
+    width: 100%;
+    display: flex;
+    flex-flow: row;
+    padding: 10px 5px;
+}
+
+.controls {
+    display: flex;
+    flex-flow: row;
+}
+
+.controls span.filler {
+    flex: 1;
+}
+
+.controls input[type=button] {
+    margin: 0 5px;
+}
+
+.option {
+    display: block;
+}
+
+.wide-button-wrapper {
+    padding: 4px;
+}
+
+.wide-button {
+    display: block;
+    width: 100%;
+    padding: 5px;
+    border-radius: 0;
+    border: none;
+}
+
+form > * {
+    display: block;
 }
 
 footer {
     width: 100%;
-    background: #333333;
-    min-height: 50px;
-    /* position: absolute;
-    bottom: 0; */
+    background: var(--footer-background);
+    display: flex;
+    flex-flow: row;
 }
 
 footer p {
     padding: 5px 20px;
     display: inline-block;
+    flex: 1;
 }
 
 footer #resetls {
     display: inline-block;
-    margin: 5px;
+    margin: auto 5px;
 }
