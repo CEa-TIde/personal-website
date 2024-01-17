@@ -18,8 +18,8 @@ function init() {
 
     document.querySelector('#reload').addEventListener('click', ev => handleReloadAllBlocks());
 
-    document.querySelector('.pronoun-form').addEventListener('submit', ev => handleSubmitPronounForm());
-    document.querySelector('.name-form').addEventListener('submit', ev => handleSubmitNameForm());
+    document.querySelector('.pronoun-form').addEventListener('submit', ev => handleSubmitPronounForm(ev));
+    document.querySelector('.name-form').addEventListener('submit', ev => handleSubmitNameForm(ev));
     document.querySelector('#preset-pronouns-dropdown').addEventListener('change', ev => handleSelectPreset(ev));
 }
 
@@ -226,7 +226,8 @@ function handleSelectPreset(event) {
     }
 }
 
-function handleSubmitPronounForm() {
+function handleSubmitPronounForm(ev) {
+    ev.preventDefault();
     let sub = document.querySelector('#input-pronoun-sub')?.value;
     let obj = document.querySelector('#input-pronoun-obj')?.value;
     let pod = document.querySelector('#input-pronoun-pod')?.value;
@@ -246,7 +247,8 @@ function handleSubmitPronounForm() {
     }
 }
 
-function handleSubmitNameForm() {
+function handleSubmitNameForm(ev) {
+    ev.preventDefault();
     let name = document.querySelector('#input-name')?.value;
     let nameList = document.querySelector('#selected-names');
     if (name && nameList) {
