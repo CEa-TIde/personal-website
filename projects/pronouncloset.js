@@ -21,6 +21,8 @@ function init() {
     document.querySelector('.pronoun-form').addEventListener('submit', ev => handleSubmitPronounForm(ev));
     document.querySelector('.name-form').addEventListener('submit', ev => handleSubmitNameForm(ev));
     document.querySelector('#preset-pronouns-dropdown').addEventListener('change', ev => handleSelectPreset(ev));
+    document.querySelector('#remove-pronouns').addEventListener('click', ev => handleRemovePronounSet(ev));
+    document.querySelector('#remove-name').addEventListener('click', ev => handleRemoveName(ev));
 }
 
 const parser = new Parser();
@@ -253,6 +255,24 @@ function handleSubmitNameForm(ev) {
     let nameList = document.querySelector('#selected-names');
     if (name && nameList) {
         submitFormEntry(nameList, name);
+    }
+}
+
+function handleRemovePronounSet(ev) {
+    let pronounsList = document.querySelector('#selected-pronouns');
+    removeSelectOptions(pronounsList);
+}
+
+function handleRemoveName(ev) {
+    let nameList = document.querySelector('#selected-names');
+    removeSelectOptions(nameList);
+}
+
+function removeSelectOptions(selElem) {
+    if (selElem.selectedOptions) {
+        for (let set of selElem.selectedOptions) {
+            set.remove();
+        }
     }
 }
 
