@@ -113,37 +113,32 @@ function createControls() {
     let controls = document.createElement('DIV');
     controls.classList.add('controls');
 
-    let editBttn = document.createElement('INPUT');
-    editBttn.classList.add('editbttn');
-    editBttn.value = 'Edit';
-    editBttn.title = 'Edit this sentence.';
-    editBttn.type = 'button';
-    editBttn.addEventListener('click', ev => handleStartEditSentence(ev));
-
-    let applyBttn = document.createElement('INPUT');
-    applyBttn.className = 'applybttn onlyedit';
-    applyBttn.value = 'Apply';
-    applyBttn.title = 'Apply the changes.';
-    applyBttn.type = 'button';
-    applyBttn.addEventListener('click', ev => handleStopEditSentence(ev, true));
-
-    let cancelBttn = document.createElement('INPUT');
-    cancelBttn.className = 'cancelbttn onlyedit';
-    cancelBttn.value = 'Cancel';
-    cancelBttn.title = 'Cancel any changes made.';
-    cancelBttn.type = 'button';
-    cancelBttn.addEventListener('click', ev => handleStopEditSentence(ev, false));
-
-    let delBttn = document.createElement('INPUT');
-    delBttn.classList.add('delbttn');
-    delBttn.value = 'Delete';
-    delBttn.title = 'Remove this sentence';
-    delBttn.type = 'button';
-    delBttn.addEventListener('click', ev => handleDeleteSentence(ev));
+    let editBttn = createButton('editbttn', 'Edit', 'Edit this sentence.', ev => handleStartEditSentence(ev));
+    let applyBttn = createButton('applybttn onlyedit', 'Apply', 'Apply the changes.', ev => handleStopEditSentence(ev, true));
+    let cancelBttn = createButton('cancelbttn onlyedit', 'Cancel', 'Cancel any changes made.', ev => handleStopEditSentence(ev, false));
+    let delBttn = createButton('delBttn', 'Delete', 'Remove this sentence', ev => handleDeleteSentence(ev));
 
     controls.append(applyBttn, cancelBttn, editBttn, delBttn);
 
     return controls;
+}
+
+/**
+ * 
+ * @param {String} className the class to attach to the button
+ * @param {String} value the display value
+ * @param {String} title the title text
+ * @param {Function} callback click event callback function
+ * @returns the created button
+ */
+function createButton(className, value, title, callback) {
+    let bttn = document.createElement('INPUT');
+    bttn.type = 'button';
+    bttn.className = className;
+    bttn.value = value;
+    bttn.title = title;
+    bttn.addEventListener('click', ev => callback(ev));
+    return bttn;
 }
 
 /**
