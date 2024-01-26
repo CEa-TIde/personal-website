@@ -50,7 +50,7 @@
                         <input type="submit" value="Add pronoun set"/>
                     </form>
                     <select id="selected-pronouns" multiple="">
-                        <option id="she/her/her/hers/herself/-" value="she/her/her/hers/herself/-">she/her/her/hers/herself/-</option>
+                        <option id="she/her/her/hers/herself/-" value="she/her/her/hers/herself/-">she/her/her/hers/herself</option>
                     </select>
                     <input type="button" id="remove-pronouns" value="Remove selected set(s)"/>
                 </div>
@@ -115,14 +115,6 @@ Note that this setting has no effect if no pronouns are used.">
                         </div>
                     </fieldset>
                 </div>
-                <div>
-                    <p>Added pronouns</p>
-                    <ul id="added-pronouns-list">
-                        <li><span>she</span>/<span>her</span>/<span>her</span>/<span>hers</span>/<span>herself</span></li>
-                        <li><span>he</span>/<span>him</span>/<span>his</span>/<span>his</span>/<span>hisself</span></li>
-                        <li><span>they</span>/<span>them</span>/<span>their</span>/<span>theirs</span>/<span>theirself</span></li>
-                    </ul>
-                </div>
                 <div class="wide-button-wrapper">
                     <input type="button" id="reload" class="wide-button" value="Reload" title="Reload all blocks with current settings."/>
                 </div>
@@ -132,6 +124,19 @@ Note that this setting has no effect if no pronouns are used.">
                     <li class="message-block">
                         <p class="text-field">This is her example sentence.</p>
                         <textarea class="edit-field onlyedit">This is {pod} example sentence.</textarea>
+                        <div class="controls">
+                            <span class="filler"></span>
+                            <input type="button" class="editbttn" value="Edit" title="Edit this sentence."/>
+                            <input type="button" class="applybttn onlyedit" value="Apply" title="Apply the changes."/>
+                            <input type="button" class="cancelbttn onlyedit" value="Cancel" title="Cancel any changes made."/>
+                            <input type="button" class="delbttn" value="Delete" title="Remove this sentence."/>
+                        </div>
+                        
+                    </li>
+
+                    <li class="message-block">
+                        <p class="text-field">Hello! Today I met a person who goes by Cyana. she has a wonderful personality. That smile of hers really makes me happy. I could talk to her all day although she doesn't talk about herself much. I wonder if her day has been wonderful. I hope so!</p>
+                        <textarea class="edit-field onlyedit">Hello! Today I met a person who goes by {name}. {sub} has a wonderful personality. That smile of {pop} really makes me happy. I could talk to {obj} all day although {sub} doesn't talk about {ref} much. I wonder if {pod} day has been wonderful. I hope so!.</textarea>
                         <div class="controls">
                             <span class="filler"></span>
                             <input type="button" class="editbttn" value="Edit" title="Edit this sentence."/>
