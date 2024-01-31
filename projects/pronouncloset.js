@@ -2,8 +2,10 @@ window.onload = () => init();
 
 function init() {
     console.log('init');
+
     // Load all data (names, pronouns, message blocks) from local storage, and if not available, use defaults instead.
-    loadOrUseDefault();
+    // set the UI and parser to the loaded data.
+    LocalStorage.loadOrUseDefault();
 
     // load pronoun sets, names, and rules into parser
     parser.initSettings();
@@ -30,21 +32,42 @@ function init() {
 
 class PronounSet {
     /**
-     * Create a pronoun set.
-     * @param {String} sub Subjective pronoun
+     * Create a pronoun set. If only first param set, use that as object. \
+     * in that case, subOrPronouns: \
+     * { \
+     *      sub: "xe", \
+     *      obj: "xer", \
+     *      pod: "xer", \
+     *      pop: "xers", \
+     *      ref: "xerself", \
+     *      name: null \
+     * }
+     * @param {*} subOrPronouns Subjective pronoun or if the rest is null/'', it is an object that holds all information
      * @param {String} obj Objective pronoun
      * @param {String} pod Possessive determiner
      * @param {String} pop Possessive pronoun
      * @param {String} ref reflexive pronoun
      * @param {String} name name
      */
-    constructor(sub, obj, pod, pop, ref, name = null) {
-        this.subject = sub;
-        this.object = obj;
-        this.possessiveDeterminer = pod;
-        this.possessivePronoun = pop;
-        this.reflexive = ref;
-        this.name = name;
+    constructor(subOrPronouns, obj = '', pod = '', pop = '', ref = '', name = null) {
+        if (!obj) {
+            // subOrPronouns holds all conjugations, name, etc.
+            this.subject = subOrPronouns.sub;
+            this.object = subOrPronouns.obj;
+            this.possessiveDeterminer = subOrPronouns.pod;
+            this.possessivePronoun = subOrPronouns.pop;
+            this.reflexive = subOrPronouns.ref;
+            this.name = subOrPronouns.name;
+        }
+        else {
+            this.subject = subOrPronouns;
+            this.object = obj;
+            this.possessiveDeterminer = pod;
+            this.possessivePronoun = pop;
+            this.reflexive = ref;
+            this.name = name;
+        }
+        
     }
 
     /**
@@ -58,6 +81,17 @@ class PronounSet {
         else {
             return `${this.subject}/${this.object}/${this.possessiveDeterminer}/${this.possessivePronoun}/${this.reflexive}`;
         }
+    }
+
+    toObj() {
+        return {
+            sub: this.subject,
+            obj: this.object,
+            pod: this.possessiveDeterminer,
+            pop: this.possessivePronoun,
+            ref: this.reflexive,
+            name: this.name
+        };
     }
 
     /**
@@ -83,6 +117,251 @@ class PronounSet {
         }
         return new PronounSet(sub, obj, pod, pop, ref, name);
     }
+}
+
+
+class UIInteraction {
+
+    /**
+     * Create a new sentence block.
+     * @returns {HTMLElement} the newly created sentence block
+     */
+    static createNewBlock(formatText = '') {
+        let sentenceWrapper = document.createElement('LI');
+        sentenceWrapper.classList.add('message-block');
+
+        let text = document.createElement('P');
+        text.className = 'text-field';
+        // set to format text. The block needs to be parsed later
+        text.value = formatText;
+
+        let editField = document.createElement('TEXTAREA');
+        editField.className = 'edit-field onlyedit';
+        editField.innerText = formatText || '';
+        editField.placeholder = 'Write a couple of sentences using the syntax explained in the left panel...';
+
+        let controls = this.createBlockControls();
+
+        sentenceWrapper.append(text, editField, controls);
+
+        return sentenceWrapper;
+    }
+
+    /**
+     * Creates all the controls needed and attaches event handlers to them.
+     * @returns element with all the controls attached to it.
+     */
+    static createBlockControls() {
+        let controls = document.createElement('DIV');
+        controls.classList.add('controls');
+
+        let filler = document.createElement('SPAN');
+        filler.classList.add('filler');
+
+        let editBttn = this.createButton('editbttn', 'Edit', 'Edit this sentence.', ev => handleStartEditSentence(ev));
+        let applyBttn = this.createButton('applybttn onlyedit', 'Apply', 'Apply the changes.', ev => handleStopEditSentence(ev, true));
+        let cancelBttn = this.createButton('cancelbttn onlyedit', 'Cancel', 'Cancel any changes made.', ev => handleStopEditSentence(ev, false));
+        let delBttn = this.createButton('delBttn', 'Delete', 'Remove this sentence', ev => handleDeleteSentence(ev));
+
+        controls.append(filler, applyBttn, cancelBttn, editBttn, delBttn);
+
+        return controls;
+    }
+
+    /**
+     * 
+     * @param {String} className the class to attach to the button
+     * @param {String} value the display value
+     * @param {String} title the title text
+     * @param {Function} callback click event callback function
+     * @returns the created button
+     */
+    static createButton(className, value, title, callback) {
+        let bttn = document.createElement('INPUT');
+        bttn.type = 'button';
+        bttn.className = className;
+        bttn.value = value;
+        bttn.title = title;
+        bttn.addEventListener('click', ev => callback(ev));
+        return bttn;
+    }
+
+    static addBlockToList(elem) {
+        let list = document.querySelector('.sentence-list');
+        list.append(elem);
+    }
+
+    static clearBlockList() {
+        let list = document.querySelector('.sentence-list');
+        while (list.lastChild) {
+            list.removeChild(list.lastChild);
+        }
+    }
+
+    /**
+     * Start editing block by showing the textarea.
+     * @param {Element} block the sentence element
+     */
+    static startEditBlock(block) {
+        block.classList.add('editing');
+    }
+
+    /**
+     * Stop editing sentence block, parse textarea field according to the rules, and display in paragraph.
+     * @param {Element} block the sentence block
+     * @param {Boolean} shouldApply if the edits should be applied or not
+     */
+    static stopEditBlock(block, shouldApply) {
+        if (shouldApply) {
+            UIInteraction.updateBlock(block);
+        }
+    
+        block.classList.remove('editing');
+    }
+
+
+    /**
+     * Removes the sentence block from the DOM.
+     * @param {Element} block block to delete
+     */
+    static deleteBlock(block) {
+        // TODO add confirm box
+        block.remove();
+    }
+
+
+    static submitPronounForm() {
+        let sub = document.querySelector('#input-pronoun-sub')?.value;
+        let obj = document.querySelector('#input-pronoun-obj')?.value;
+        let pod = document.querySelector('#input-pronoun-pod')?.value;
+        let pop = document.querySelector('#input-pronoun-pop')?.value;
+        let ref = document.querySelector('#input-pronoun-ref')?.value;
+        let name = document.querySelector('#input-pronoun-name')?.value;
+        let pronounList = document.querySelector('#selected-pronouns');
+        if (sub && obj && pod && pop && ref && pronounList) {
+            // Add the set to the parser list
+            let pronounSet = new PronounSet(sub, obj, pod, pop, ref, name);
+            parser.addPronounSet(pronounSet);
+
+            // Set local storage value
+
+            // Add stringified version to UI list
+            let string = pronounSet.toString();
+            this.submitFormEntry(pronounList, string);
+        }
+    }
+
+    static submitNameForm() {
+        let name = document.querySelector('#input-name')?.value;
+        let nameList = document.querySelector('#selected-names');
+        if (name && nameList) {
+            // Add name to parser list
+            parser.addName(name);
+
+            // Set local storage value
+
+
+            // Add stringified version to UI list
+            this.submitFormEntry(nameList, name);
+        }
+    }
+
+    static submitFormEntry(listElem, formattedString) {
+        let option = document.createElement('OPTION');
+        option.id = formattedString;
+        option.value = formattedString;
+        option.innerText = formattedString;
+        listElem.append(option);
+    }
+
+    static removePronounSet() {
+        let pronounsList = document.querySelector('#selected-pronouns');
+        if (pronounsList.selectedOptions) {
+            for (let set of pronounsList.selectedOptions) {
+                let pronounSet = PronounSet.fromString(set.innerText);
+                parser.removePronounSet(pronounSet);
+                set.remove();
+                // remove from Local storage
+                // TODO
+            }
+        }
+    }
+
+    static removeName() {
+        let nameList = document.querySelector('#selected-names');
+        if (nameList.selectedOptions) {
+            for (let set of nameList.selectedOptions) {
+                let name = set.innerText;
+                parser.removeName(name);
+                set.remove();
+                // remove from local storage
+                // TODO
+            }
+        }
+    }
+
+    static selectPronounPreset(ev) {
+        let pronounString = ev.target.value;
+        if (pronounString != '') {
+            let pronounSet = pronounString.split('/');
+            let pronounElems = document.querySelectorAll('.pronoun-form input[type=text]');
+            // Set all of the values of the pronoun form to their respective pronoun conjugation.
+            for (let i = 0; i < pronounSet.length; i++) {
+                pronounElems[i].value = pronounSet[i];
+            }
+        }
+    }
+
+    static reloadAllBlocks() {
+        document.querySelectorAll('.message-block').forEach(elem => {
+            this.updateBlock(elem);
+        });
+    }
+
+    /**
+     * Parse text and update block with parsed text
+     * @param {HTMLElement} block the block to parse and update the text of
+     */
+    static updateBlock(block) {
+        let template = block.querySelector('.edit-field');
+        let outputElem = block.querySelector('.text-field');
+        if (template && outputElem) {
+            let parsedText = parser.parseText(template.value);
+            outputElem.innerHTML = parsedText;
+        }
+    }
+
+    static getPronounSets() {
+        let pronounSets = [];
+        let pronounsList = document.querySelector('#selected-pronouns');
+        let children = pronounsList.children;
+        for (let i = 0; i < children.length; i++) {
+            let setElem = children[i];
+            let pronounSet = PronounSet.fromString(setElem.innerText);
+            if (null != pronounSet) {
+                pronounSets.push(pronounSet);
+            }
+        }
+        return pronounSets;
+    }
+
+    static getNames() {
+        let names = [];
+        let nameList = document.querySelector('#selected-names');
+        let children = nameList.children;
+        for (let i = 0; i < children.length; i++) {
+            let setElem = children[i];
+            let name = setElem.innerText;
+            names.push(name);
+        }
+        return names;
+    }
+
+    static getRules() {
+        // TODO
+        return {};
+    }
+    
 }
 
 class Parser {
@@ -152,62 +431,20 @@ class Parser {
         }
     }
 
-    fetchPronouns() {
-        this.pronounSets = [];
-        let pronounsList = document.querySelector('#selected-pronouns');
-        let children = pronounsList.children;
-        for (let i = 0; i < children.length; i++) {
-            let setElem = children[i];
-            let pronounSet = PronounSet.fromString(setElem.innerText);
-            if (null != pronounSet) {
-                this.pronounSets.push(pronounSet);
-            }
-        }
-
-    }
-
-    fetchNames() {
-        this.names = [];
-        let nameList = document.querySelector('#selected-names');
-        let children = nameList.children;
-        for (let i = 0; i < children.length; i++) {
-            let setElem = children[i];
-            let name = setElem.innerText;
-            this.names.push(name);
-        }
-    }
-
-    fetchRules() {
-        // TODO
-    }
-
-    initSettings() {
-        this.fetchNames();
-        this.fetchPronouns();
-        this.fetchRules();
-    }
-
-    /**
-     * Parse text and update block with parsed text
-     * @param {HTMLELement} elem the block html element to update
-     * @param {*} text the text to parse and update the block to
-     */
-    updateBlock(elem, text) {
-        let parsed = this.parseText(text, this.pronounSets, this.names, this.rules);
-        elem.innerHTML = parsed;
+    initSettings(pronounSets = null, names = null, rules = null) {
+        this.pronounSets = pronounSets || UIInteraction.getPronounSets();
+        this.names = names || UIInteraction.getNames();
+        this.setRules(rules || UIInteraction.getRules());
     }
 
 
     /**
      * Parse the given text and insert pronouns/names according to the rules.
      * @param {String} text the text to parse
-     * @param {PronounSet[]} sets the pronoun sets to choose from
-     * @param {String[]} names the names to choose from
-     * @param {*} rules the rules to follow when parsing
      * @returns the parsed text.
      */
-    parseText(text, sets, names, rules) {
-        if ((sets.length == 0 && !rules.useNameOnly) || names.length == 0) {
+    parseText(text) {
+        if ((this.pronounSets.length == 0 && !this.rules.useNameOnly) || this.names.length == 0) {
             // no pronouns (and not use name only) or no names present
             // TODO display warning/error message
             return text;
@@ -236,7 +473,7 @@ class Parser {
                     let sentence = splitByExclamation[question];
                     let parsed = '';
                     if (sentence != '') {
-                        let result = this.parseSentence(sentence, sets, names, rules, chosenSet, chosenName);
+                        let result = this.parseSentence(sentence, this.pronounSets, this.names, this.rules, chosenSet, chosenName);
                         chosenSet = result.chosenSet;
                         chosenName = result.chosenName;
                         parsed = result.parsedText;
@@ -302,7 +539,7 @@ class Parser {
                 .replace(new RegExp(/{pod}/, nFlags), `${name}'s`)
                 .replace(new RegExp(/{pop}/, nFlags), `${name}'s`)
                 .replace(new RegExp(/{ref}/, nFlags), name)
-                .replace(new RegExp(/{name}/, nFlags), name);
+                .replace(new RegExp(/{name}/, nFlags), `${name}`); // it is a bit awkward, but the best option without any context. Doesn't work with "{Sub} told me {ref}", but that one has no suitable alternative.
         }
         else {
             // Only replace the name and leave pronouns intact.
@@ -387,8 +624,106 @@ class Parser {
 
 const parser = new Parser();
 
-function loadOrUseDefault() {
+class LocalStorage {
+    static storageNameBlocks = 'blocks';
+    static storageNamePronouns = 'pronoun_sets';
+    static storageNameNames = 'names';
+    static storageNameRules = 'settings';
 
+    static defaults = {
+        blocks: [
+            "This is {pod} test. {Sub} told me {ref} that it was {pop}. I told {obj} that is fine. No problem, {name}!"
+        ],
+        pronounSets: [
+            {
+                sub: "xe",
+                obj: "xer",
+                pod: "xer",
+                pop: "xers",
+                ref: "xerself",
+                name: null
+            }
+        ],
+        names: ["Cyana"],
+        rules: {
+            // options are 'random', 'sentence', 'block'.
+            pronounRandomMode: 'random',
+            // options are 'random', 'sentence', 'block'.
+            nameRandomMode: 'random',
+            isNameLinked: false,
+            useNameOnly: false
+        }
+    };
+
+    // clear all data
+    static clear() {
+        localStorage.clear();
+    }
+
+    static loadOrUseDefault() {
+        let blocks = this.loadBlocks(this.defaults.blocks);
+        let pronounSets = this.loadPronouns(this.defaults.pronounSets);
+        let names = this.loadNames(this.defaults.names);
+        let rules = this.loadRules(this.defaults.rules);
+
+        // update UI
+        UIInteraction.clearBlockList();
+        for (let block of blocks) {
+            UIInteraction.addBlockToList(block);
+        }
+
+        // update the parser with the loaded values.
+        parser.initSettings(pronounSets, names, rules);
+
+        // re-parse all blocks
+        UIInteraction.reloadAllBlocks();
+    }
+
+    static loadBlocks(blocksDefault) {
+        let texts = localStorage.getItem(this.storageNameBlocks) || blocksDefault;
+        let blockElements = [];
+        // create a new block for each text
+        for (let textBlock of texts) {
+            let block = UIInteraction.createNewBlock(textBlock);
+            blockElements.push(block);
+        }
+        return blockElements;
+    }
+
+    static loadPronouns(pronounsDefault) {
+        let pronounSetList = localStorage.getItem(this.storageNamePronouns) || pronounsDefault;
+        let sets = [];
+        for (let setObj of pronounSetList) {
+            let pronounSet = new PronounSet(setObj);
+            sets.push(pronounSet);
+        }
+        return sets;
+    }
+
+    static loadNames(namesDefault) {
+        let names = localStorage.getItem(this.storageNameNames) || namesDefault;
+        return names;
+    }
+
+    static loadRules(rulesDefault) {
+        let rulesLS = localStorage.getItem(this.storageNameRules);
+        if (null == rulesLS) {
+            return rulesDefault;
+        }
+
+        let rules = {};
+        rules.pronounRandomMode = rulesLS.pronounRandomMode || rulesDefault.pronounRandomMode;
+        rules.nameRandomMode = rulesLS.nameRandomMode || rulesDefault.nameRandomMode;
+        rules.isNameLinked = rulesLS.isNameLinked;
+        if (typeof rulesLS.isNameLinked !== "boolean") {
+            rules.isNameLinked = rulesDefault.isNameLinked;
+        }
+        rules.useNameOnly = rulesLS.useNameOnly;
+        if (typeof rulesLS.useNameOnly !== "boolean") {
+            rules.useNameOnly = rulesDefault.useNameOnly;
+        }
+        return rules;
+    }
 }
 
 /**
@@ -419,8 +754,8 @@ function handleChangeSetting(event, type) {
     else {
         console.error('Unknown setting category. No rules changed.');
     }
-    console.log(changedRule);
     parser.setRules(changedRule);
+    // TODO set local storage value
 }
 
 /**
@@ -428,113 +763,25 @@ function handleChangeSetting(event, type) {
  */
 function handleCreateSentence() {
     console.log('handling creation sentence...');
-    let list = document.querySelector('.sentence-list');
-    let sentenceElement = createNewSentence();
-    list.append(sentenceElement);
+    let blockElement = UIInteraction.createNewBlock();
+    UIInteraction.addBlockToList(blockElement);
     // Set to edit mode
-    startEditSentence(sentenceElement);
+    UIInteraction.startEditBlock(blockElement);
 }
 
 /**
- * Create a new sentence.
- * @returns {Element} the newly created sentence
- */
-function createNewSentence(editText = '') {
-    let sentenceWrapper = document.createElement('LI');
-    sentenceWrapper.classList.add('message-block');
-
-    let text = document.createElement('P');
-    text.className = 'text-field';
-    text.value = '';
-    // if not empty, parse edit text with pronoun sets and names.
-    if (editText != '') {
-        saveSentence(text, editText);
-    }
-
-    let editField = document.createElement('TEXTAREA');
-    editField.className = 'edit-field onlyedit';
-    editField.innerText = editText || '';
-    editField.placeholder = 'Write a couple of sentences using the syntax explained in the left panel...';
-
-    let controls = createControls();
-
-    sentenceWrapper.append(text, editField, controls);
-
-    return sentenceWrapper;
-}
-
-/**
- * Creates all the controls needed and attaches event handlers to them.
- * @returns element with all the controls attached to it.
- */
-function createControls() {
-    let controls = document.createElement('DIV');
-    controls.classList.add('controls');
-
-    let editBttn = createButton('editbttn', 'Edit', 'Edit this sentence.', ev => handleStartEditSentence(ev));
-    let applyBttn = createButton('applybttn onlyedit', 'Apply', 'Apply the changes.', ev => handleStopEditSentence(ev, true));
-    let cancelBttn = createButton('cancelbttn onlyedit', 'Cancel', 'Cancel any changes made.', ev => handleStopEditSentence(ev, false));
-    let delBttn = createButton('delBttn', 'Delete', 'Remove this sentence', ev => handleDeleteSentence(ev));
-
-    controls.append(applyBttn, cancelBttn, editBttn, delBttn);
-
-    return controls;
-}
-
-/**
- * 
- * @param {String} className the class to attach to the button
- * @param {String} value the display value
- * @param {String} title the title text
- * @param {Function} callback click event callback function
- * @returns the created button
- */
-function createButton(className, value, title, callback) {
-    let bttn = document.createElement('INPUT');
-    bttn.type = 'button';
-    bttn.className = className;
-    bttn.value = value;
-    bttn.title = title;
-    bttn.addEventListener('click', ev => callback(ev));
-    return bttn;
-}
-
-/**
- * Handle editing of a sentence.
+ * Handle editing of a sentence block.
  * @param {*} event click event
  */
-function handleStartEditSentence(event) {
+function handleStartEditSentence(ev) {
     console.log('handling edit...');
-    let sentence = event.target.parentElement.parentElement;
-    startEditSentence(sentence);
+    let block = ev.target.parentElement.parentElement;
+    UIInteraction.startEditBlock(block);
 }
 
-/**
- * Start editing sentence by showing the textarea.
- * @param {Element} sentence the sentence element
- */
-function startEditSentence(sentence) {
-    sentence.classList.add('editing');
-}
-
-function handleStopEditSentence(event, shouldApply) {
-    let sentence = event.target.parentElement.parentElement;
-    stopEditSentence(sentence, shouldApply);
-}
-
-/**
- * Stop editing sentence, parse textarea field according to the rules, and display in paragraph.
- * @param {Element} sentence the sentence element
- * @param {Boolean} shouldApply if the edits should be applied or not
- */
-function stopEditSentence(sentence, shouldApply) {
-    if (shouldApply) {
-        text = sentence.querySelector('.edit-field').value;
-        pElement = sentence.querySelector('.text-field');
-        parser.updateBlock(pElement, text);
-    }
-
-    sentence.classList.remove('editing');
+function handleStopEditSentence(ev, shouldApply) {
+    let block = ev.target.parentElement.parentElement;
+    UIInteraction.stopEditBlock(block, shouldApply);
 }
 
 /**
@@ -544,101 +791,36 @@ function stopEditSentence(sentence, shouldApply) {
 function handleDeleteSentence(event) {
     console.log('handling deletion...');
     let sentence = event.target.parentElement.parentElement;
-    deleteSentence(sentence);
-}
-
-/**
- * Removes the sentence from the DOM.
- * @param {Element} sentence sentence to delete
- */
-function deleteSentence(sentence) {
-    // TODO add confirm box
-    sentence.remove();
+    UIInteraction.deleteBlock(sentence);
 }
 
 /**
  * Reload all message blocks with the current rules.
  */
 function handleReloadAllBlocks() {
-    document.querySelectorAll('.message-block').forEach(elem => {
-        let template = elem.querySelector('.edit-field');
-        let outputElem = elem.querySelector('.text-field');
-        if (template && outputElem) {
-            parser.updateBlock(outputElem, template.value);
-        }
-    });
+    UIInteraction.reloadAllBlocks();
 }
 
-function handleSelectPreset(event) {
-    let pronounString = event.target.value;
-    if (pronounString != '') {
-        let pronounSet = pronounString.split('/');
-        let pronounElems = document.querySelectorAll('.pronoun-form input[type=text]');
-        // Set all of the values of the pronoun form to their respective pronoun conjugation.
-        for (let i = 0; i < pronounSet.length; i++) {
-            pronounElems[i].value = pronounSet[i];
-        }
-    }
+function handleSelectPreset(ev) {
+    UIInteraction.selectPronounPreset(ev);
 }
 
 function handleSubmitPronounForm(ev) {
     ev.preventDefault();
-    let sub = document.querySelector('#input-pronoun-sub')?.value;
-    let obj = document.querySelector('#input-pronoun-obj')?.value;
-    let pod = document.querySelector('#input-pronoun-pod')?.value;
-    let pop = document.querySelector('#input-pronoun-pop')?.value;
-    let ref = document.querySelector('#input-pronoun-ref')?.value;
-    let name = document.querySelector('#input-pronoun-name')?.value;
-    let pronounList = document.querySelector('#selected-pronouns');
-    if (sub && obj && pod && pop && ref && pronounList) {
-        // Add the set to the parser list
-        let pronounSet = new PronounSet(sub, obj, pod, pop, ref, name);
-        parser.addPronounSet(pronounSet);
-
-        // Add stringified version to UI list
-        let string = pronounSet.toString();
-        submitFormEntry(pronounList, string);
-    }
+    UIInteraction.submitPronounForm();
 }
 
 function handleSubmitNameForm(ev) {
     ev.preventDefault();
-    let name = document.querySelector('#input-name')?.value;
-    let nameList = document.querySelector('#selected-names');
-    if (name && nameList) {
-        parser.addName(name);
-        submitFormEntry(nameList, name);
-    }
+    UIInteraction.submitNameForm();
 }
 
 function handleRemovePronounSet(ev) {
-    let pronounsList = document.querySelector('#selected-pronouns');
-    if (pronounsList.selectedOptions) {
-        for (let set of pronounsList.selectedOptions) {
-            let pronounSet = PronounSet.fromString(set.innerText);
-            parser.removePronounSet(pronounSet);
-            set.remove();
-        }
-    }
+    UIInteraction.removePronounSet();
 }
 
 function handleRemoveName(ev) {
-    let nameList = document.querySelector('#selected-names');
-    if (nameList.selectedOptions) {
-        for (let set of nameList.selectedOptions) {
-            let name = set.innerText;
-            parser.removeName(name);
-            set.remove();
-        }
-    }
-}
-
-function submitFormEntry(listElem, formattedString) {
-    let option = document.createElement('OPTION');
-    option.id = formattedString;
-    option.value = formattedString;
-    option.innerText = formattedString;
-    listElem.append(option);
+    UIInteraction.removeName();
 }
 
 /**
