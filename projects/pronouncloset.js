@@ -66,6 +66,8 @@ class PronounSet {
             this.reflexive = ref;
             this.name = name;
         }
+
+        Debug.assertNotEquals('', this.object);
         
     }
 
@@ -399,8 +401,12 @@ class UIInteraction {
 
     static removeName() {
         let nameList = document.querySelector('#selected-names');
+        let childCount = nameList.children.length;
         if (nameList.selectedOptions) {
-            for (let nameElem of nameList.selectedOptions) {
+            let selected = nameList.selectedOptions;
+            // loop over selected options. Ensure there is always at least one element left
+            for (let i = 0; i < selected.length && childCount - i > 1; i++) {
+                let nameElem = selected[i];
                 let name = nameElem.innerText;
                 Parser.removeName(name);
                 nameElem.remove();
@@ -600,8 +606,8 @@ class Parser {
                     let parsed = '';
                     if (sentence != '') {
                         let result = this.parseSentence(sentence, this.pronounSets, this.names, this.rules, chosenSet, chosenName);
-                        chosenSet = result.chosenSet;
-                        chosenName = result.chosenName;
+                        chosenSet = result.set;
+                        chosenName = result.name;
                         parsed = result.parsedText;
                     }
                     parsedText[dot][exclamation].push(parsed);
@@ -633,6 +639,7 @@ class Parser {
         let useNameOnly = rules.useNameOnly || sets.length < 1;
         let replaced = sentence;
         let isStartSentence = true;
+        // Keep parsing until sentence is fully parsed.
         do {
             // If needed set new pronoun set and name
             chosenSet = this.choosePronounSet(sets, chosenSet, rules, isStartSentence);
@@ -641,7 +648,7 @@ class Parser {
 
             sentence = replaced;
             replaced = this.replaceText(sentence, chosenSet, chosenName, useNameOnly, replaceAllPronouns, replaceAllNames);
-        } while (replaced != sentence);
+        } while (replaced != sentence && !(replaceAllNames && replaceAllPronouns));
         return { set: chosenSet, name: chosenName, parsedText: replaced };
     }
 
@@ -756,7 +763,22 @@ class LocalStorage {
 
     static defaults = {
         blocks: [
-            "This is {pod} test. {Sub} told me {ref} that it was {pop}. I told {obj} that is fine. No problem, {name}!"
+            "This is {pod} test. {Sub} told me {ref} that it was {pop}. I told {obj} that is fine. No problem, {name}!",
+
+            `{name} is just in the other room changing.<br><br>No, I don’t think {sub} forgot to bring the paintings.
+            So the other day during the heist, I saw {obj} slip the paintings into that bag of {pop}. I know {name} brought it into the car,
+            and Zoe told me {sub} saw the same bag in {pod} car. Why don’t we go ask {name} if {sub} has the paintings to be sure?<br><br>Well, why don’t you trust {name}, I trust {obj}.
+            I doubt {sub} would ever keep that painting for {ref}, {name} just isn’t that kind of person.<br><br>Oh, hi {name}, we were just talking about the paintings from Thursday.
+            Nat here was wondering if you had them in your car. Wonderful!<br><br>See Nat, we can trust {obj}. Now go and get those bloody painting so we can meet the fence.`,
+
+            `Have you heard where {name} went last Thursday? I heard some rumors {sub} went out with {pod} friends to a spa in South LA.
+            Ikr, and did you see how perfect {pod} hands look lately. We shook hands this morning and they are soooo soft. Like baby soft.
+            I really need to ask {name} where {sub} went. And what {sub} did.<br><br>Oh, hi {name}, we were just talking about you. I hope you are having a wonderful New Years.
+            We heard that you went to a place south last week and wanted to know what you had done to your hands?<br><br>No no no, they’re just so soooooft. Like, how?`,
+
+            `Did you hear about what {name} did last week? {Sub} went hiking up the nearby mountains and carried a keyboard up with {obj}.
+            Like, omg, {sub} carried an electric keyboard on {pod} back like 15 miles up the face of a cliff, camped near the top, and spent the whole bloody next day playing the Tetris theme to the wind and clouds.
+            I just hope that the keyboard is actually {pop}, that thing looks pretty banged up from being carried that far.`
         ],
         pronounSets: [
             {
@@ -1087,5 +1109,44 @@ function removeFromArray(arr, val) {
 function removeAllChildren(elem) {
     while (elem.lastChild) {
         elem.removeChild(elem.lastChild);
+    }
+    Debug.assertEquals(0, elem.children.length);
+}
+
+
+class Debug {
+
+    static debugMode = true;
+
+    static assert(bool) {
+        if (!bool) {
+            console.error(`Expected truthy, but was falsy: ${bool}`);
+        }
+    }
+
+    static assertEquals(expected, actual, strict = false) {
+        if (!this.debugMode) return;
+        if (typeof expected === 'object' || typeof actual === 'object') {
+            // compare quickly with json stringify. Values need to be in same order for this to work.
+            if (JSON.stringify(expected) !== JSON.stringify(actual)) {
+                console.error(`Assert error: Expected object ${expected}, but was object ${actual} instead. Note that values of objects need to be in the same order. Inputs:`, expected, actual);
+            }
+        }
+        else if (strict && expected !== actual || expected != actual) {
+            console.error(`Assert error: Expected ${expected}, but was ${actual} instead. Inputs:`, expected, actual);
+        }
+    }
+
+    static assertNotEquals(expected, actual, strict = false) {
+        if (!this.debugMode) return;
+        if (typeof expected === 'object' || typeof actual === 'object') {
+            // compare quickly with json stringify. Values need to be in same order for this to work.
+            if (JSON.stringify(expected) === JSON.stringify(actual)) {
+                console.error(`Assert error: Expected not to be object ${expected}, but it was the same: ${actual}. Note that values of objects need to be in the same order. Inputs:`, expected, actual);
+            }
+        }
+        else if (strict && expected === actual || expected == actual) {
+            console.error(`Assert error: Expected not to be ${expected}, but it was the same: ${actual}. Inputs:`, expected, actual);
+        }
     }
 }
