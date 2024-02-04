@@ -4,10 +4,30 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        
+        <!-- HTML Meta Tags -->
         <meta name="keywords" content="CEa_TIde, Cyana, personal website, {{ page.keys }}"/>
         <meta name="description" content="{{ page.desc }}"/>
         <meta name="author" content="CEa_TIde"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+        <!-- Facebook Meta Tags -->
+        <meta property="og:title" content="{{ page.title }}"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:image" content="{{ page.embed_image }}"/>              <!-- recommended 1200x628 -->
+        <meta property="og:image:alt" content="{{ page.embed_image_alt }}"/>
+        <meta property="og:url" content="{{ site.url }}{{ page.url }}"/>
+        <meta property="og:description" content="{{ page.desc }}"/>
+        <meta property="og:locale" content="en_GB"/>
+
+        <!-- Twitter Meta Tags -->
+        <meta name="twitter:card" content="summary_large_image"/>
+        <meta property="twitter:domain" content="{{ site.url }}"/>
+        <meta property="twitter:url" content="{{ site.url }}{{ page.url }}"/>
+        <meta name="twitter:title" content="{{ page.title }}"/>                   <!-- max 70 chars  -->
+        <meta name="twitter:description" content="{{ page.desc }}"/>              <!-- max 200 chars -->
+        <meta name="twitter:image" content="{{ page.embed_image }}"/>
+        <meta name="twitter:image:alt" content="{{ page.embed_image_alt }}"/>     <!-- max 420 chars -->
 
         <!--style sheet with site-wide style rules-->
         <link rel="stylesheet" href="main.css">
