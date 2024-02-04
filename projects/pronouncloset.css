@@ -10,6 +10,8 @@
     --outputview-border-color: #CC5533;
     --message-block-border-color: #AA3322;
 
+    --footer-height: 30px;
+
 }
 
 * {
@@ -18,14 +20,15 @@
     padding: 0;
 }
 
-html {
+/* html {
     height: 100%;
-}
+} */
 
 body {
-    display: flex;
+    /* margin-bottom: 0; */
+    /* display: flex;
     flex-flow: column;
-    height: 100%;
+    min-height: 100%; */
 }
 
 header {
@@ -134,20 +137,21 @@ form > * {
     display: block;
 }
 
-footer {
+.biscuit-msg {
     width: 100%;
     background: var(--footer-background);
+    color: var(--title-color);
     display: flex;
     flex-flow: row;
 }
 
-footer p {
+.biscuit-msg p {
     padding: 5px 20px;
     display: inline-block;
     flex: 1;
 }
 
-footer #resetls {
+.biscuit-msg #resetls {
     display: inline-block;
     margin: auto 5px;
 }

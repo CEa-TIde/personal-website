@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="keywords" content="CEa_TIde, Cyana, personal website, project, {{ page.keys }}"/>
+        <meta name="description" content="{{ page.desc }}"/>
+        <meta name="author" content="CEa_TIde"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
+
+        <!--style sheet with site-wide style rules-->
+        <link rel="stylesheet" href="../main.css"/>
+        <link rel="stylesheet" href="{{ page.style }}"/> <!-- page-specific stylesheet -->
+        <link rel="shortcut icon" type="image/png" href="../media/favicon.png"/>
+        <title>{{ page.title }}</title>
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="/"><img src="../media/Logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
+            <p class="project-text">project ></p>
+            <h1 class="title">{{ page.title }}</h1>
+        </header>
+        <div class="page-wrapper">
+            {{ content }}
+        </div>
+    </body>
+    <script type="text/javascript" src="../script.js"></script>
+</html>

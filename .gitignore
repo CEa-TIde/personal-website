@@ -1,8 +1,15 @@
 # IDEs
-.vs/
-.vscode/
-.idea/
+-.vs/
+-.vscode/
+-.idea/
+-
+-#build files
+-obj/
+-bin/
 
-#build files
-obj/
-bin/
+_site
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+

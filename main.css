@@ -53,7 +53,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     scroll-margin-top: calc(var(--menu-height) + 10vh);
     scroll-snap-margin-top: calc(var(--menu-height) + 10vh); /* alternative name used by Safari, prior version 14.1 */
     outline: none;
-  }
+}
 
 * {
     margin: 0;
@@ -71,6 +71,11 @@ html {
 body {
     margin-bottom: var(--footer-height);
     overflow-x: hidden;
+}
+
+/* style noscript tag and div.noscript inside */
+noscript, .noscript {
+    color: white;
 }
 
 .page-wrapper {
@@ -231,6 +236,16 @@ nav .logo > img {
     color: var(--title-color);
     font-style: italic;
     font-family: "Times New Roman", Times, serif;
+}
+
+/* the "project >" text on project pages */
+header > .project-text {
+    position: absolute;
+    top: calc(0.2 * var(--menu-height));
+    left: calc(20px + min(var(--logo-width), var(--logo-max-width)));
+
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    color: white;
 }
 
 /*************
