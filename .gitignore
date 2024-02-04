@@ -1,11 +1,11 @@
 # IDEs
--.vs/
--.vscode/
--.idea/
--
--#build files
--obj/
--bin/
+.vs/
+.vscode/
+.idea/
+
+#build files
+obj/
+bin/
 
 _site
 .sass-cache
