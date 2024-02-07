@@ -62,15 +62,16 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 }
 
 html {
-    min-height: 100%;
-    position: relative;
     background: var(--bg-color-darkgrey);
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 body {
-    margin-bottom: var(--footer-height);
+    min-height: 100vh;
+    position: relative;
     overflow-x: hidden;
+    display: flex;
+    flex-flow: column nowrap;
 }
 
 /* style noscript tag and div.noscript inside */
@@ -93,6 +94,15 @@ noscript, .noscript {
 /* if no sidebar, expand to full screen */
 .page-wrapper > :only-child {
     width: 100%;
+}
+
+body > * {
+    flex: none;
+}
+
+/* push the footer down to the bottom of the screen */
+.page-filler {
+    flex: 1;
 }
 
 .content-wrapper {
@@ -613,11 +623,6 @@ footer {
     background: #000002;
     width: 100%;
     min-height: var(--footer-height);
-
-    /* make the footer stick to the bottom if page is shorter than viewport height */
-    position: absolute;
-    left: 0;
-    bottom: 0;
     overflow-x: hidden;
 }
 
@@ -634,6 +639,9 @@ footer {
     color: var(--text-color);
     margin: auto 0;
     font-size: 1em;
+    /* place above image */
+    position: relative;
+    z-index: 10;
 }
 
 .footer-category {
@@ -661,6 +669,8 @@ footer {
 
 .footer-img {
     height: 300px;
+    /* allow a little overlap between links and image */
+    margin-left: -100px;
 }
 
 /***********
