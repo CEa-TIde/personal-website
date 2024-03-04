@@ -1,0 +1,18 @@
+---
+layout: project_wfooter
+title: Project Overview
+desc: project overview, projects, interactive
+
+---
+
+<main class="tile-set">
+    {% for tile in site.data.project_tiles %}
+        <a class="tile" href="{{ tile.link }}">
+            <h2 class="tile-title">{{ tile.title }}</h3>
+            <figure class="tile-figure">
+                <img src="{{ tile.img.src }}" title="{{ tile.img.alt }}" alt="{{ tile.img.alt }}"/>
+                <figcaption>{{ tile.caption }}</figcaption>
+            </figure>
+        </a>
+    {% endfor %}
+</main>

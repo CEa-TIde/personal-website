@@ -1,0 +1,28 @@
+-
+  title: Pronoun Closet
+  img:
+    src: /media/logo.png
+    alt: the logo of this website
+  caption: Try out pronouns for yourself in this pronoun closet!
+  link: /projects/pronouncloset
+-
+  title: Fractal Renderer
+  img:
+    src: /media/icons/favicon_192x192.png
+    alt: favicon
+  caption: Small fractal renderer, with step-through controls.
+  link: /projects/fractal
+-
+  title: test 2
+  img:
+    src: /media/icons/favicon_192x192.png
+    alt: favicon
+  caption: Test
+  link: /
+-
+  title: test 3
+  img:
+    src: /media/pfp4-transparent.png
+    alt: favicon
+  caption: Test
+  link: /projects/test2

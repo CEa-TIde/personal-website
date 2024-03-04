@@ -1263,3 +1263,57 @@ section .info {
 }
 
 /* END SECTION: welcome message styling */
+
+/* SECTION: Grid Tiles */
+
+.tile-set {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: center;
+}
+
+.tile {
+    display: block;
+    max-width: 400px;
+    /* max-height: 400px; */
+    width: 100%;
+    /* background: tomato; */
+    margin: 20px;
+    transition: transform 0.2s;
+    color: var(--text-color);
+    text-decoration: none;
+    /* border-top: 2px solid var(--bg-color-darkgrey); */
+    border-bottom: 2px solid var(--bg-color-darkgrey);
+
+}
+
+.tile:hover {
+    /* transform: scale(1.05); */
+}
+
+.tile-title {
+    text-align: center;
+    padding-bottom: 5px;
+}
+
+.tile-figure {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* max-height: 400px; */
+}
+
+.tile-figure img {
+    /* object-fit: scale-down; */
+    max-width: 100%;
+}
+
+.tile-figure figcaption {
+    text-align: center;
+    padding: 5px 10% 10px;
+    text-decoration: none;
+}
+
+/* END SECTION: Grid Tiles */
