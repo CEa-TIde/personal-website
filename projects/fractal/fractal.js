@@ -2,7 +2,7 @@
 
 let canvas = null;
 let currentDepth = -1;
-let depth = 11;
+
 let degrees = 90;
 let length = 300;
 let pause = false;
@@ -12,7 +12,7 @@ let startSequence = 'L';
 let invStartSequence = 'R';
 
 let currentSequence = 'L';
-let readSeqIndex = 819;
+
 
 function updateSequence(pattern) {
     inv = '';
@@ -26,6 +26,9 @@ function updateSequence(pattern) {
 
 window.onload = function() {
     let canvasObj = document.querySelector('.canvas');
+    if (!canvasObj) {
+        console.error("Canvas element not found.");
+    }
     canvas = new Canvas(canvasObj);
 
     canvas.ctx.strokeStyle = 'white';
@@ -33,6 +36,9 @@ window.onload = function() {
     canvas.ctx.font = '16px Arial';
 
     document.body.addEventListener('keydown', listenKeyDown);
+    document.body.addEventListener('keyup', listenKeyUp);
+
+    StateStorage.initState(11, 1525);
 
     tick();
 }
@@ -43,16 +49,16 @@ function tick() {
     // animDegrees();
     canvas.beginPath();
     canvas.clear();
-    if (currentDepth != depth) {
-        currentSequence = genDragonFractalSeq(depth, startSequence, invStartSequence);
-        currentDepth = depth;
+    if (currentDepth != StateStorage.depth) {
+        currentSequence = genDragonFractalSeq(StateStorage.depth, startSequence, invStartSequence);
+        currentDepth = StateStorage.depth;
     }
-    let idxGen = findIdxGen(readSeqIndex);
+    let idxGen = findIdxGen(StateStorage.idx);
     let gen = findGen(currentSequence.length);
     
-    canvas.drawDragon(currentSequence, readSeqIndex, idxGen);
+    canvas.drawDragon(currentSequence, StateStorage.idx, idxGen);
 
-    canvas.drawGenText(readSeqIndex, currentSequence, idxGen, gen);
+    canvas.drawGenText(StateStorage.idx, currentSequence, idxGen, gen);
     canvas.stroke();
 
     if (!pause)
@@ -61,19 +67,39 @@ function tick() {
 
 function listenKeyDown(ev) {
     if (ev.code == 'KeyR') {
-        readSeqIndex = 0;
+        StateStorage.setIdx(0);
     }
     else if (ev.code == 'KeyB') {
-        readSeqIndex--;
-        if (readSeqIndex < 0) {
-            readSeqIndex = 0;
+        var newidx = StateStorage.idx - 1;
+        if (newidx < 0) {
+            newidx = 0;
         }
+        StateStorage.setIdx(newidx);
     }
     else if (ev.code == 'KeyN') {
-        readSeqIndex++;
-        if (readSeqIndex >= currentSequence.length) {
-            readSeqIndex = 0;
+        var newidx = StateStorage.idx + 1;
+        if (newidx >= currentSequence.length) {
+            newidx = currentSequence.length - 1;
         }
+        StateStorage.setIdx(newidx);
+    }
+    else if (ev.code == 'KeyH') {
+        var newDepth = StateStorage.depth - 1;
+        if (newDepth < 0) {
+            newDepth = 0;
+        }
+        StateStorage.setDepth(newDepth);
+    }
+    else if (ev.code == 'KeyJ') {
+        StateStorage.setDepth(StateStorage.depth + 1);
+    }
+    
+}
+
+function listenKeyUp(ev) {
+    if (ev.code == 'KeyR' || ev.code == 'KeyB'
+        || ev.code == 'KeyN' || ev.code == 'KeyH' || ev.code == 'KeyJ') {
+        StateStorage.setQueryParams();
     }
 }
 
@@ -105,17 +131,16 @@ class Canvas {
     }
 
     drawGenText(idx, seq, idxGen, gen) {
-
-        canvas.fillText(`Index: ${idx}/${seq.length-1}. Symbol: ${seq[idx]}. Gen: ${idxGen}/${gen}.`, 200, 200);
+        canvas.fillText(`Index: ${idx}/${seq.length-1}. Symbol: ${seq[idx]}. Gen: ${idxGen}/${gen}.`, 400, 200);
     }
 
     drawDragon(seq, highlightIdx, idxGen) {
-        let len = length * Math.pow(2, -.5 * depth);
+        let len = length * Math.pow(2, -.5 * StateStorage.depth);
         let x = Math.floor(this.ctx.canvas.width / 2);
         let y = Math.floor(this.ctx.canvas.width / 2);
         let pos = new Vec2(x, y);
-        // let dir = new Vec2(len, 0);
-        let dir = new Vec2(10, 0);
+        let dir = new Vec2(len, 0);
+        // let dir = new Vec2(10, 0);
 
         this.stroke();
         this.beginPath();
@@ -233,4 +258,131 @@ function genDragonFractalSeq(depth, seq = 'L', invSeq='R') {
         // console.log(`Sequence at depth ${i}: ${seq}`);
     }
     return seq;
+}
+
+// TODO: convert class to function if needing to support ~pre-2016 browsers
+// also need to convert the above classes too
+
+// function StateStorage(defaultDepth, defaultIdx) {
+//     this._idxLSName = "fractal_index";
+//     this._idxQPName = "i";
+//     this._depthLSName = "fractal_depth";
+//     this._depthQPName = "depth";
+
+//     this.setLSIdx = function(idx) {
+//         localStorage.setItem(StateStorage.idxLSName, idx);
+//     }
+
+//     this.getLSIdx = function() {
+//         return localStorage.getItem(StateStorage.idxLSName);
+//     }
+
+//     this.setLSDepth = function(depth) {
+//         localStorage.setItem(StateStorage.depthLSName, depth);
+//     }
+
+//     this.getLSDepth = function() {
+//         return localStorage.getItem(StateStorage.depthLSName);
+//     }
+
+//     this.setQueryParams = function(depth, idx) {
+//         window.history.replaceState(null, "", `/?depth=${depth}&i=${idx}`);
+//     }
+
+//     //....
+// }
+
+/**
+ * Local storage interface for loading and saving current read index and depth
+ */
+class StateStorage {
+    static idxLSName = "fractal_index";
+    static idxQPName = "i";
+    static depthLSName = "fractal_depth";
+    static depthQPName = "depth";
+
+    static idx;
+    static depth;
+
+    static defaultIdx;
+    static defaultDepth;
+
+    static setLSIdx() {
+        localStorage.setItem(StateStorage.idxLSName, StateStorage.idx);
+    }
+
+    static getLSIdx() {
+        return localStorage.getItem(StateStorage.idxLSName);
+    }
+
+    static setLSDepth() {
+        localStorage.setItem(StateStorage.depthLSName, StateStorage.depth);
+    }
+
+    static getLSDepth() {
+        return localStorage.getItem(StateStorage.depthLSName);
+    }
+
+    static setQueryParams() {
+        if (!window.history.replaceState) {
+            console.warn("history.replaceState() not supported");
+            return;
+        }
+        const newurl = window.location.pathname + '?depth=' + StateStorage.depth + '&i=' + StateStorage.idx;
+        window.history.replaceState(null, "", newurl);
+    }
+
+    static initState(defaultDepth, defaultIdx) {
+        StateStorage.defaultDepth = defaultDepth;
+        StateStorage.defaultIdx = defaultIdx;
+
+        // load local storage values
+        StateStorage.depth = StateStorage.getLSDepth() || defaultDepth;
+        StateStorage.idx = StateStorage.getLSIdx() || defaultIdx;
+        console.log(StateStorage.depth, StateStorage.idx);
+
+
+        if ((typeof URLSearchParams !== "function") && (typeof URLSearchParams !== "object")) {
+            console.error("Query parameters not supported.");
+            return;
+        }
+        // load query parameters and if valid overwrite existing value.
+        const urlParams = new URLSearchParams(window.location.search);
+        const idxQuery = urlParams.get(StateStorage.idxQPName) || NaN;
+        const depthQuery = urlParams.get(StateStorage.depthQPName) || NaN;
+        const tempIdx = Math.floor(idxQuery);
+        const tempDepth = Math.floor(depthQuery);
+        console.log(tempIdx, tempDepth);
+        if (!isNaN(tempIdx)) {
+            StateStorage.idx = tempIdx;
+        }
+        if (!isNaN(tempDepth)) {
+            StateStorage.depth = tempDepth;
+        }
+
+        // set the query parameters with the clean values
+        StateStorage.setQueryParams();
+    }
+
+    static setIdx(idx) {
+        StateStorage.updateState(StateStorage.depth, idx);
+    }
+
+    static setDepth(depth) {
+        StateStorage.updateState(depth, StateStorage.idx);
+    }
+
+    static updateState(depth, idx) {
+        StateStorage.depth = depth;
+        StateStorage.idx = idx;
+        StateStorage.setLSDepth();
+        StateStorage.setLSIdx();
+    }
+
+    static reset() {
+        localStorage.clear();
+        StateStorage.setQueryParams(StateStorage.defaultDepth, StateStorage.defaultIdx);
+    }
+
+    
 }
