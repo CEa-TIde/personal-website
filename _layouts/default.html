@@ -24,25 +24,6 @@ layout: template
     <div class="page-wrapper">
         {{ content }}
     </div>
-    <div class="page-filler"></div>
-    <footer>
-        <div class="footer-content">
-            <div class="footer-info">
-                <div class="footer-category">
-                    <span>General</span>
-                    <div class="footer-entry"><a class="slide-hover" href="/" title="Take me Home, Country Roads">Home</a></div>
-                    <div class="footer-entry"><a class="slide-hover" href="/copyright" title="Copyright information">Copyright</a></div>
-                </div>
-                <div class="footer-category">
-                    <span>About Me</span>
-                    <div class="footer-entry"><a class="slide-hover" href="/aboutme" title="About me">About me</a></div>
-                    <div class="footer-entry"><a class="slide-hover" href="https://github.com/CEa-TIde" target="_blank" title="Link to github profile">Github</a></div>
-                    <div class="footer-entry"><a class="slide-hover" href="/aboutme#contact" title="Contact me">Contact Me</a></div>
-                    <div class="footer-entry"><a class="slide-hover" href="/portfolio" title="Minecraft Portfolio">Portfolio</a></div>
-                </div>
-            </div>
-            <img class="footer-img" src="media/jellyfish-6653502_960_720-edited.jpg"/>
-        </div>
-    </footer>
+    
+    {% include {{ page.footer_include }} %}
 </body>
-<script src="script.js"></script>

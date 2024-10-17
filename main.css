@@ -620,57 +620,66 @@ Footer styling:
 ************/
 
 footer {
-    background: #000002;
+    background: #202020;
     width: 100%;
-    min-height: var(--footer-height);
     overflow-x: hidden;
 }
 
 .footer-content {
-    display: grid;
-    grid-template-columns: auto auto;
-    grid-gap: 15px;
-    justify-content: space-between;
-    padding: 0 15px;
-    height: 100%;
+    --divider-colour: #9800a3;
+}
+
+.footer-content hr {
+    margin: 0 20px;
+    color: #9800a3;
+    color: var(--divider-colour);
 }
 
 .footer-info {
-    color: var(--text-color);
-    margin: auto 0;
     font-size: 1em;
-    /* place above image */
-    position: relative;
-    z-index: 10;
+
+    display: table;
+    margin: 20px auto;
+    border-spacing: 0;
 }
 
-.footer-category {
-    display: inline-block;
-    padding-left: 10vw;
-    padding-top: 20px;
-    vertical-align: top;
-    white-space: nowrap;
-}
-
-.footer-category > span {
-    font-size: 1.4em;
-    font-weight: 200;
-}
-
-.footer-entry {
-    display: block;
-    padding-top: 10px;
-}
-
-.footer-entry a {
+.footer-info a {
+    margin-right: 10px;
     text-decoration: none;
+}
 
+.vert-divider {
+    margin: 0 20px;
+    width: 0;
+    border-left: 2px solid #9800a3;
+    border-left: 2px solid var(--divider-colour);
+}
+
+.footer-buttons {
+    margin: 20px auto;
+    display: block; /* default fallback */
+    display: table; /* table as fallback */
+    border-spacing: 0;
+
+    display: flex;
+    display: -webkit-flex; /* Chrome 21-28, Safari 7-8, Opera 15, Safari iOS 7-8.4 */
+    display: -ms-flexbox; /* IE 8-11 */
+
+    -webkit-justify-content: center; /* Chrome 21-28, Safari iOS 7-8.4 */
+    justify-content: center;
+
+    -ms-flex-wrap: wrap; /* IE 10 */
+    -webkit-flex-wrap: wrap; /* Chrome 21-28, Safari 7-8, Opera 15, Safari iOS 7-8.4 */
+    flex-wrap: wrap;
+    
+    font-size: 0; /* remove newline spacing between buttons */
 }
 
 .footer-img {
-    height: 300px;
-    /* allow a little overlap between links and image */
-    margin-left: -100px;
+    margin-right: 40px;
+    margin-left: auto;
+    display: block;
+    height: 100px; /* also set in the height attribute because of lazyload */
 }
 
 /***********

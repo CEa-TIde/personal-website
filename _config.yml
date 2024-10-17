@@ -50,6 +50,8 @@ defaults:
       embed_image: /media/logo.png
       embed_image_alt: Logo of the website, a wave with the text CEa_TIde next to it.
 
+      footer_include: footer.html
+
       favicon_16x16: /media/icons/favicon_16x16.png
       favicon_32x32: /media/icons/favicon_32x32.png
       favicon_48x48: /media/icons/favicon_48x48.png
