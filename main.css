@@ -59,6 +59,8 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
 }
 
 html {
@@ -148,6 +150,8 @@ body > * {
     padding: 0.5em;
     margin: 0.5em;
     box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
     color: red;
     text-align: center;
     appearance: none;
@@ -275,6 +279,8 @@ Dropdown menu styling:
 nav {
     width: 100%;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     z-index: 10;
     position: -webkit-sticky;
     position: sticky;
@@ -324,6 +330,8 @@ nav > .dropdown-menu {
 .dropdown {
     height: 100%;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -427,6 +435,8 @@ li:focus > .dd-content {
     min-width: 160px;
     padding: 0 20px;
     box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
     border-bottom: 2px solid #898989;
 }
 
@@ -655,7 +665,7 @@ footer {
     border-left: 2px solid var(--divider-colour);
 }
 
-.footer-buttons {
+.footer-bttns {
     margin: 20px auto;
     display: block; /* default fallback */
     display: table; /* table as fallback */
@@ -673,6 +683,22 @@ footer {
     flex-wrap: wrap;
     
     font-size: 0; /* remove newline spacing between buttons */
+}
+
+.bttn-88x31 {
+    width: 88px;
+    height: 31px;
+    border: 2px solid transparent;
+    box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    -webkit-box-sizing: content-box;
+    
+}
+.bttn-88x31:hover {
+    border-color: white; /* variable fallback */
+    border-color: var(--divider-colour);
+    box-shadow: 0 4px 4px -4px white; /* variable fallback */
+    box-shadow: 0 6px 4px -4px var(--divider-colour);
 }
 
 .footer-img {

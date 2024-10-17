@@ -6,13 +6,13 @@
         <base href="{{ site.url }}"/> <!-- fix all paths relative to domain url -->
         
         <!-- HTML Meta Tags -->
-        <meta name="keywords" content="CEa_TIde, Cyana, personal website, {{ page.keys }}"/>
+        <meta name="keywords" content="CEa_TIde, ceatide, cea, tide, Cyana, personal website, {{ page.keys }}"/>
         <meta name="description" content="{{ page.desc }}"/>
         <meta name="author" content="CEa_TIde"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>{{ page.title }} - CEa_TIde</title>
 
-        <!-- Facebook Meta Tags -->
+        <!-- Facebook Open Graph Meta Tags -->
         <meta property="og:title" content="{{ page.title }}"/>
         <meta property="og:type" content="website"/>
         <meta property="og:image" content="{{ page.embed_image }}"/>              <!-- recommended 1200x628 -->
@@ -25,6 +25,7 @@
         <meta property="og:see_also" content="/portfolio"/>
 
         <!-- Twitter Meta Tags -->
+        <!-- See: https://developer.x.com/en/docs/x-for-websites/cards/overview/markup -->
         <meta name="twitter:card" content="summary_large_image"/>
         <meta property="twitter:domain" content="{{ site.url }}"/>
         <meta property="twitter:url" content="{{ site.url }}{{ page.url }}"/>
