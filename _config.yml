@@ -51,6 +51,7 @@ defaults:
       embed_image_alt: Logo of the website, a wave with the text CEa_TIde next to it.
 
       footer_include: footer.html
+      head_include: htmlheaders.html
 
       favicon_16x16: /media/icons/favicon_16x16.png
       favicon_32x32: /media/icons/favicon_32x32.png
@@ -68,8 +69,8 @@ defaults:
       favicon_192x192: /media/icons/favicon_192x192.png
       favicon_ico: /favicon.ico
       favicon_manifest: /media/icons/manifest.json
-      favicon_tilecolor: dad9ff
-      favicon_tileimage: /media/icons/favicon_144x144.png
+      favicon_mstilecolor: dad9ff
+      favicon_mstileimage: /media/icons/favicon_144x144.png
       favicon_themecolor: dad9ff
   -
     scope:

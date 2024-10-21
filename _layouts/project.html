@@ -1,15 +1,21 @@
----
-layout: template
----
-    <link rel="stylesheet" href="/projects/{{ page.style }}"/> <!-- page-specific stylesheet -->
-</head>
-<body>
-    <header>
-        <a class="logo" href="/"><img src="/media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-        <a class="project-text" href="/projects/">projects &gt;</a>
-        <h1 class="title">{{ page.title }}</h1>
-    </header>
-    <div class="page-wrapper">
-        {{ content }}
-    </div>
-</body>
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include {{ page.head_include }} %}
+
+        {% if page.style %}
+        <!-- page-specific stylesheet -->
+        <link rel="stylesheet" href="/projects/{{ page.style }}"/>
+        {% endif %}
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="/"><img src="/media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
+            <a class="project-text" href="/projects/">projects &gt;</a>
+            <h1 class="title">{{ page.title }}</h1>
+        </header>
+        <div class="page-wrapper">
+            {{ content }}
+        </div>
+    </body>
+</html>

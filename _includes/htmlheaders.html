@@ -1,0 +1,128 @@
+<meta charset="UTF-8">
+
+<base href="{{ site.url }}"/> <!-- fix all paths relative to domain url -->
+
+<!-- HTML Meta Tags -->
+{% if page.keys %}
+<meta name="keywords" content="CEa_TIde, ceatide, cea, tide, Cyana, personal website, {{ page.keys }}"/>
+{% else %}
+<meta name="keywords" content="CEa_TIde, ceatide, cea, tide, Cyana, personal website"/>
+{% endif %}
+
+{% if page.desc %}
+<meta name="description" content="{{ page.desc }}"/>
+{% endif %}
+
+<meta name="author" content="CEa_TIde"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+{% if page.title %}
+<title>{{ page.title }} - CEa_TIde</title>
+{% else %}
+<title>{{ site.url }}</title>
+{% endif %}
+
+<!-- Facebook Open Graph Meta Tags -->
+{% if page.title %}
+<meta property="og:title" content="{{ page.title }}"/>
+{% endif %}
+
+<meta property="og:type" content="website"/>
+
+{% if page.embed_image %}
+<meta property="og:image" content="{{ page.embed_image }}"/>              <!-- recommended 1200x628 -->
+    {% if page.embed_image_alt %}
+    <meta property="og:image:alt" content="{{ page.embed_image_alt }}"/>
+    {% endif %}
+{% endif %}
+
+<meta property="og:url" content="{{ site.url }}{{ page.url }}"/>
+
+{% if page.desc %}
+<meta property="og:description" content="{{ page.desc }}"/>
+{% endif %}
+<meta property="og:locale" content="en_GB"/>
+
+<meta property="og:see_also" content="/projects"/>
+<meta property="og:see_also" content="/portfolio"/>
+
+<!-- Twitter Meta Tags -->
+<!-- See: https://developer.x.com/en/docs/x-for-websites/cards/overview/markup -->
+    
+<!-- TODO: Liquid check for image availability should probably set to a different card type? -->
+<meta name="twitter:card" content="summary_large_image"/>
+<meta property="twitter:domain" content="{{ site.url }}"/>
+<meta property="twitter:url" content="{{ site.url }}{{ page.url }}"/>
+
+{% if page.title %}
+<meta name="twitter:title" content="{{ page.title }}"/>                   <!-- max 70 chars  -->
+{% endif %}
+
+{% if page.desc %}
+<meta name="twitter:description" content="{{ page.desc }}"/>              <!-- max 200 chars -->
+{% endif %}
+
+{% if page.embed_image %}
+<meta property="twitter:image" content="{{ page.embed_image }}"/>              <!-- recommended 1200x628 -->
+    {% if page.embed_image_alt %}
+    <meta property="twitter:image:alt" content="{{ page.embed_image_alt }}"/>  <!-- max 420 chars -->
+    {% endif %}
+{% endif %}
+
+<!-- Favicons -->
+{% if page.favicon_57x57 %}
+<link rel="apple-touch-icon" sizes="57x57" href="{{ page.favicon_57x57 }}"/>
+{% endif %}
+{% if page.favicon_60x60 %}
+<link rel="apple-touch-icon" sizes="60x60" href="{{ page.favicon_60x60 }}"/>
+{% endif %}
+{% if page.favicon_72x72 %}
+<link rel="apple-touch-icon" sizes="72x72" href="{{ page.favicon_72x72 }}"/>
+{% endif %}
+{% if page.favicon_76x76 %}
+<link rel="apple-touch-icon" sizes="76x76" href="{{ page.favicon_76x76 }}"/>
+{% endif %}
+{% if page.favicon_114x114 %}
+<link rel="apple-touch-icon" sizes="114x114" href="{{ page.favicon_114x114 }}"/>
+{% endif %}
+{% if page.favicon_120x120 %}
+<link rel="apple-touch-icon" sizes="120x120" href="{{ page.favicon_120x120 }}"/>
+{% endif %}
+{% if page.favicon_144x144 %}
+<link rel="apple-touch-icon" sizes="144x144" href="{{ page.favicon_144x144 }}"/>
+{% endif %}
+{% if page.favicon_152x152 %}
+<link rel="apple-touch-icon" sizes="152x152" href="{{ page.favicon_152x152 }}"/>
+{% endif %}
+{% if page.favicon_180x180 %}
+<link rel="apple-touch-icon" sizes="180x180" href="{{ page.favicon_180x180 }}"/>
+{% endif %}
+{% if page.favicon_192x192 %}
+<link rel="icon" type="image/png" sizes="192x192"  href="{{ page.favicon_192x192 }}"/>
+{% endif %}
+{% if page.favicon_96x96 %}
+<link rel="icon" type="image/png" sizes="96x96" href="{{ page.favicon_96x96 }}"/>
+{% endif %}
+{% if page.favicon_48x48 %}
+<link rel="icon" type="image/png" sizes="48x48" href="{{ page.favicon_48x48 }}"/>
+{% endif %}
+{% if page.favicon_32x32 %}
+<link rel="icon" type="image/png" sizes="32x32" href="{{ page.favicon_32x32 }}"/>
+{% endif %}
+{% if page.favicon_16x16 %}
+<link rel="icon" type="image/png" sizes="16x16" href="{{ page.favicon_16x16 }}"/>
+{% endif %}
+{% if page.favicon_manifest %}
+<link rel="manifest" href="{{ page.favicon_manifest }}"/>
+{% endif %}
+{% if page.favicon_mstilecolor %}
+<meta name="msapplication-TileColor" content="#{{ page.favicon_mstilecolor }}"/>
+{% endif %}
+{% if page.favicon_mstileimage %}
+<meta name="msapplication-TileImage" content="{{ page.favicon_mstileimage }}"/>
+{% endif %}
+{% if page.favicon_themecolor %}
+<meta name="theme-color" content="#{{ page.favicon_themecolor }}"/>
+{% endif %}
+
+<!--style sheet with site-wide style rules-->
+<link rel="stylesheet" href="main.css"/>

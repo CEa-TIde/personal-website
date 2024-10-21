@@ -20,7 +20,15 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
         url('fonts/gv/GreatVibes-Wmr4.ttf') format('truetype');
 }
 
-:root {
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+
+html {
     /* global variables */
     --title-color: #dddddd;
     --text-color: #aaaaaa;
@@ -39,13 +47,22 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 
     --bg-color-important: #DD2222;
     --bg-color-warn: #DDDD22;
+    /* --bg-color-info: */
 
     --menu-height: 60px;
-    --footer-height: 300px;
 
     --logo-width: 20%;
     --logo-max-width: 250px;
+
+    --divider-color: #9800a3;
     /* end global variables */
+
+
+
+
+
+    background: var(--bg-color-darkgrey);
+    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* This is added so that the element the URI fragment links to, is not hidden under the nav bar */
@@ -53,19 +70,6 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
     scroll-margin-top: calc(var(--menu-height) + 10vh);
     scroll-snap-margin-top: calc(var(--menu-height) + 10vh); /* alternative name used by Safari, prior version 14.1 */
     outline: none;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-}
-
-html {
-    background: var(--bg-color-darkgrey);
-    font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 body {
@@ -216,6 +220,12 @@ header {
     z-index: 11;
 
     box-shadow: inset 0 -20px 10px -10px var(--bg-color-teal);
+}
+
+hr.page-divider {
+    margin: 0 20px;
+    color: #9800a3;
+    color: var(--divider-color);
 }
 
 .logo,
@@ -635,34 +645,26 @@ footer {
     overflow-x: hidden;
 }
 
-.footer-content {
-    --divider-colour: #9800a3;
-}
-
-.footer-content hr {
-    margin: 0 20px;
-    color: #9800a3;
-    color: var(--divider-colour);
-}
-
 .footer-info {
     font-size: 1em;
 
     display: table;
     margin: 20px auto;
     border-spacing: 0;
+    line-height: 2em;
 }
 
 .footer-info a {
     margin-right: 10px;
     text-decoration: none;
+    white-space: nowrap;
 }
 
 .vert-divider {
     margin: 0 20px;
     width: 0;
     border-left: 2px solid #9800a3;
-    border-left: 2px solid var(--divider-colour);
+    border-left: 2px solid var(--divider-color);
 }
 
 .footer-bttns {
@@ -696,16 +698,15 @@ footer {
 }
 .bttn-88x31:hover {
     border-color: white; /* variable fallback */
-    border-color: var(--divider-colour);
+    border-color: var(--divider-color);
     box-shadow: 0 4px 4px -4px white; /* variable fallback */
-    box-shadow: 0 6px 4px -4px var(--divider-colour);
+    box-shadow: 0 6px 4px -4px var(--divider-color);
 }
 
 .footer-img {
     margin-right: 40px;
     margin-left: auto;
     display: block;
-    height: 100px; /* also set in the height attribute because of lazyload */
 }
 
 /***********

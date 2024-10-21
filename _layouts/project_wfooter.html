@@ -1,30 +1,31 @@
----
-layout: template
----
-
-</head>
-<body>
-    <header>
-        <a class="logo" href="/"><img src="media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-        <a class="project-text" href="/projects/">projects &gt;</a>
-        <h1 class="title">{{ page.title }}</h1>
-    </header>
-    <nav>
-        <ul class="dropdown-menu">
-            <li class="dropdown dd-link"><a href="/buildadvice">Build advice</a></li>
-            <li class="dropdown dd-link"><a href="/worldedit">World edit tutorial</a></li>
-        </ul>
-    </nav>
-    <a class="sticky-logo" href="/"><img src="media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-    <div class="announcement-wrapper">
-        <input type="checkbox" class="x-bttn"/>
-        <div class="announcement">
-            This website is currently under construction. Expect changes to be made, and there may be outages at certain times.
+<!DOCTYPE html>
+<html>
+    <head>
+        {% include {{ page.head_include }} %}
+    </head>
+    <body>
+        <header>
+            <a class="logo" href="/"><img src="media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
+            <a class="project-text" href="/projects/">projects &gt;</a>
+            <h1 class="title">{{ page.title }}</h1>
+        </header>
+        <nav>
+            <ul class="dropdown-menu">
+                <li class="dropdown dd-link"><a href="/buildadvice">Build advice</a></li>
+                <li class="dropdown dd-link"><a href="/worldedit">World edit tutorial</a></li>
+            </ul>
+        </nav>
+        <a class="sticky-logo" href="/"><img src="media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
+        <div class="announcement-wrapper">
+            <input type="checkbox" class="x-bttn"/>
+            <div class="announcement">
+                This website is currently under construction. Expect changes to be made, and there may be outages at certain times.
+            </div>
         </div>
-    </div>
-    <div class="page-wrapper">
-        {{ content }}
-    </div>
-    
-    {% include {{ page.footer_include }} %}
-</body>
+        <div class="page-wrapper">
+            {{ content }}
+        </div>
+        
+        {% include {{ page.footer_include }} %}
+    </body>
+</html>
