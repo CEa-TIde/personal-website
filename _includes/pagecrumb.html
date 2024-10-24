@@ -1,0 +1,38 @@
+{%- comment -%} <!-- NOTE: THIS DOES NOT WORK FOR POSTS; ONLY PAGES. --> {%- endcomment -%}
+{%- capture breadcrumb -%}
+{{ page.dir }}
+{%- endcapture -%}
+{%- capture pagename -%}
+{{ page.name }}
+{%- endcapture -%}
+{%- assign pagename = pagename | split: "." -%}
+{%- assign pagename = pagename[0] -%}
+
+{%- if pagename != "index" -%}
+    {%- assign breadcrumb = breadcrumb | append: pagename %}
+{%- endif -%}
+{%- assign breadcrumb = breadcrumb | split: "/" | compact -%}
+{%- assign len = breadcrumb.size | minus: 1 -%}
+{%- assign breadcrumb = breadcrumb | slice: 1, len -%}
+
+{%- comment -%} <!-- capture each link path in a list --> {%- endcomment -%}
+{%- assign breadcrumb_html = "> " -%}
+{%- assign current_path = "/" -%}
+
+{%- for b in breadcrumb -%}
+    {%- capture current_path -%}
+        {{ current_path }}{{ b }}/
+    {%- endcapture -%}
+
+    {%- capture breadcrumb_html -%}
+        {{ breadcrumb_html }}
+        <a class="slide-hover" href="{{ current_path }}">{{ b }}</a> > 
+    {%- endcapture -%}
+    
+{%- endfor -%}
+
+
+<span class="breadcrumb">
+    <a class="slide-hover" href="/">Home</a>
+    {{ breadcrumb_html }}
+</span>

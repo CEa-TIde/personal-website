@@ -1,5 +1,13 @@
-:root {
-    
+/* TODO: title attribute is not widely supported. Alternative needs to be used, like a description text underneath */
+
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
     --header-background: #555555;
     --footer-background: #333333;
     --main-background: lightgreen;
@@ -11,24 +19,6 @@
     --message-block-border-color: #AA3322;
 
     --footer-height: 30px;
-
-}
-
-* {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-}
-
-/* html {
-    height: 100%;
-} */
-
-body {
-    /* margin-bottom: 0; */
-    /* display: flex;
-    flex-flow: column;
-    min-height: 100%; */
 }
 
 header {
@@ -51,6 +41,10 @@ ul {
 
 *[title], *[title] * {
     cursor: help;
+}
+
+.logo * {
+    cursor: unset;
 }
 
 .settings-view {

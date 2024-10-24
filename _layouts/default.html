@@ -1,39 +1,28 @@
+<!-- TODO: look into quirks mode, and if it is needed for older browsers -->
 <!DOCTYPE html>
 <html>
     <head>
         {% include {{ page.head_include }} %}
     </head>
     <body>
-        <header>
-            <a class="logo" href="/"><img src="media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-            <h1 class="title">{{ page.title }}</h1>
+        <header class="header">
+            <a class="logo" href="/"><img src="/media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
+            <h2 class="title">{{ page.title }}</h2>
+
+            {% include {{ page.pagecrumb_include }} %}
         </header>
-        <nav>
-            <ul class="dropdown-menu">
-                <li class="dropdown dd-link"><a href="/buildadvice">Build advice</a></li>
-                <li class="dropdown dd-link"><a href="/worldedit">World edit tutorial</a></li>
-            </ul>
-        </nav>
-        <a class="sticky-logo" href="/"><img src="media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-        <div class="announcement-wrapper">
-            <input type="checkbox" class="x-bttn"/>
-            <div class="announcement">
-                This website is currently under construction. Expect changes to be made, and there may be outages at certain times.
+        <div class="bg-wrapper">
+            <div class="page-wrapper centered-div">
+                <!-- Adds the nav page-box -->
+                <nav class="nav page-box">
+                    {% include {{ page.nav_include }} %}
+                </nav>
+    
+                <div class="page-box">
+                    {{ content }}
+                </div>
             </div>
         </div>
-        <div class="page-wrapper">
-            {{ content }}
-        </div>
-
-        <!-- <div>
-            <h1 class="title">{{ page.title }}</h1>
-        </div>
-        <hr class="page-divider"/>
-
-        <div class="page-wrapper">
-            {\{ content }\}
-        </div> -->
-        
         {% include {{ page.footer_include }} %}
     </body>
 </html>

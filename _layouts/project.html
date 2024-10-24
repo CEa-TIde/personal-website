@@ -9,10 +9,16 @@
         {% endif %}
     </head>
     <body>
-        <header>
+        <header class="header">
             <a class="logo" href="/"><img src="/media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-            <a class="project-text" href="/projects/">projects &gt;</a>
-            <h1 class="title">{{ page.title }}</h1>
+            <h2 class="title">{{ page.title }}</h2>
+
+            <nav class="nav centered-div">
+                {% include {{ page.pagecrumb_include }} %}
+                <span class="nav-inline">
+                    {% include {{ page.navinline_include }} %}
+                </span>     
+            </nav>
         </header>
         <div class="page-wrapper">
             {{ content }}

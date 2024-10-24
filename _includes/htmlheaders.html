@@ -1,7 +1,5 @@
 <meta charset="UTF-8">
 
-<base href="{{ site.url }}"/> <!-- fix all paths relative to domain url -->
-
 <!-- HTML Meta Tags -->
 {% if page.keys %}
 <meta name="keywords" content="CEa_TIde, ceatide, cea, tide, Cyana, personal website, {{ page.keys }}"/>
@@ -18,7 +16,7 @@
 {% if page.title %}
 <title>{{ page.title }} - CEa_TIde</title>
 {% else %}
-<title>{{ site.url }}</title>
+<title>{{ site.url }}{{ page.url }}</title>
 {% endif %}
 
 <!-- Facebook Open Graph Meta Tags -->
@@ -125,4 +123,4 @@
 {% endif %}
 
 <!--style sheet with site-wide style rules-->
-<link rel="stylesheet" href="main.css"/>
+<link rel="stylesheet" href="/main.css"/>

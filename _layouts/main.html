@@ -3,26 +3,20 @@
     <head>
         {% include {{ page.head_include }} %}
     </head>
-    <!-- layout for the index page
-        the header is removed and the logo is moved into the nav bar -->
     <body>
-        <nav>
-            <a class="logo" href="/"><img src="media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
-            <ul class="dropdown-menu">
-                <li class="dropdown dd-link"><a href="/buildadvice">Build advice</a></li>
-                <li class="dropdown dd-link"><a href="/worldedit">World edit tutorial</a></li>
-            </ul>
-        </nav>
-        <div class="announcement-wrapper">
-            <input type="checkbox" class="x-bttn"/>
-            <div class="announcement">
-                This website is currently under construction. Expect changes to be made, and there may be outages at certain times.
+        
+        <div class="bg-wrapper">
+            <div class="page-wrapper centered-div">
+                <!-- Adds the nav page-box -->
+                <nav class="nav page-box">
+                    {% include {{ page.nav_include }} %}
+                </nav>
+    
+                <div class="page-box">
+                    {{ content }}
+                </div>
             </div>
         </div>
-        <div class="page-wrapper">
-            {{ content }}
-        </div>
-        
         {% include {{ page.footer_include }} %}
     </body>
 </html>

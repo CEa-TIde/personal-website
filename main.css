@@ -3,6 +3,12 @@ clearfix hack
 Source: https://nicolasgallagher.com/micro-clearfix-hack/
 */
 
+/* TODO?: Box shadow in IE6-9: https://www.useragentman.com/blog/2011/08/24/how-to-simulate-css3-box-shadow-in-ie7-8-without-javascript/ */
+
+
+/* TODO: PNG support only starts at NN4.04+, with transparency support coming later
+convert to GIF instead? */
+
 /* monospace font for code blocks */
 @font-face {
     font-family: 'Space Mono';
@@ -23,6 +29,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 * {
     margin: 0;
     padding: 0;
+    /* TODO: remove? consistency with IE browser (bug of content box sizing) */
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -30,6 +37,9 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 
 html {
     /* global variables */
+    /* for browsers that do not support variables a fallback needs to be provided at the place of use */
+    /* TODO: define colours and then define semantic variables based on colour variables
+    so that you only need to update the semantic variables if you want to change colours; not also all places the colour needs to be changed in */
     --title-color: #dddddd;
     --text-color: #aaaaaa;
     --text-color-hl: #99bbbb;
@@ -43,11 +53,17 @@ html {
     --bg-color-lightteal: #005055;
     --bg-color-lighterteal: #006066;
     --bg-color-lightblue: #31b6ee;
-    --bg-color-darkgrey: #181a1b;
+    /* --bg-color-darkgrey: #181a1b; */
+    --bg-color-darkgrey: #202020;
+    --bg-color-darkpurple: #200050;
 
     --bg-color-important: #DD2222;
     --bg-color-warn: #DDDD22;
-    /* --bg-color-info: */
+    --bg-color-info: var(--bg-color-teal);
+
+    /* Semantic variables */
+    --bg-color-default: var(--bg-color-darkgrey);
+    
 
     --menu-height: 60px;
 
@@ -73,11 +89,29 @@ html {
 }
 
 body {
-    min-height: 100vh;
+    /* min-height: 100vh; */
     position: relative;
-    overflow-x: hidden;
-    display: flex;
-    flex-flow: column nowrap;
+    /* overflow-x: hidden; */
+    /* display: flex;
+    flex-flow: column nowrap; */
+    background: #202020;
+    background: var(--bg-color-default);
+}
+
+/* background under main content of the page */
+.bg-wrapper {
+    background: #200050;
+    background: var(--bg-color-darkpurple); /* fallback if background-image or url() is not supported */
+    background-image: url("/media/background_sakura.png");
+    background-repeat: repeat;
+    /* not widely supported in older browsers, but not much of a deal-breaker 
+    A possible solution would be to use a fixed div; TODO look into more
+    */
+    background-attachment: fixed;
+
+    /* Hack to prevent a margin collapse with a page-box 
+    See: https://stackoverflow.com/questions/9519841/why-does-this-css-margin-top-style-not-work */
+    padding: 1px 0;
 }
 
 /* style noscript tag and div.noscript inside */
@@ -85,30 +119,78 @@ noscript, .noscript {
     color: white;
 }
 
-.page-wrapper {
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    background: #111111;
-}
-
-/* if no sidebar, expand to full screen */
-/* .page-wrapper:has(> main) {
+/* centers div content within parent container using margin:auto */
+.centered-div {
+    /* default fallback. If fit-content/intrinsic is supported, the content is still centered
+    otherwise it behaves like a regular div */
     display: block;
-} */
+    width: fit-content;
+    width: -moz-fit-content; /* Firefox 3-93 */
+    width: intrinsic; /* Chrome 4-21, Safari 3.1-6.1, Safari iOS 3.2-6.1 */
+    width: -webkit-intrinsic; /* Chrome 22-45, Safari 7-10.1, Opera 15-32, Safari iOS 7-10.3, Samsung Internet 4, Android Browser 4.4-4.4.4 */
 
-/* if no sidebar, expand to full screen */
-.page-wrapper > :only-child {
-    width: 100%;
+    /* This allows for margin:auto centering, but has some limitations in dynamic resizing I don't understand 
+    override to 'display: block' if not working as intended */
+    display: table;
+    border-spacing: 0;
+
+    margin-left: auto;
+    margin-right: auto;
 }
 
-body > * {
-    flex: none;
+/* 2px wide line, as high as the font height */
+.vert-divider {
+    margin: 0 20px; /* default spacing; override if necessary */
+    width: 0;
 }
 
-/* push the footer down to the bottom of the screen */
-.page-filler {
-    flex: 1;
+.horiz-divider {
+    display: block;
+    border-width: 1px;
+    border-style: inset;
+    overflow: hidden;
+
+    margin: 0 20px;
+}
+
+/* Adds an outline and spacing above/below */
+.page-box {
+    margin: 20px 0;
+    /* Box shadow not supported on IE 9-; see top */
+    -webkit-box-shadow: 0 0 2px #9800a3; /* Safari 3.1-4, Safari iOS 3.2, Android 2.1-3  || These versions don't support blur */
+    box-shadow: 0 0 2px 2px #9800a3;
+    -moz-box-shadow: 0 0 2px 2px #9800a3; /* Firefox 3.5-3.6 */
+    box-shadow: 0 0 2px 2px var(--divider-color);
+    -webkit-box-shadow: 0 0 2px 2px var(--divider-color); /* Chrome 4-9, Safari 5, Safari iOS 4-4.3 */
+}
+
+.vert-divider,
+.horiz-divider,
+.page-box {
+    border: 1px solid #9800a3;
+    border: 1px solid var(--divider-color);
+}
+
+.page-wrapper {
+    /* TODO: add fallback for percentages? Probably not, as it should just be 100% screen resolution (which is (max-)width: unset) */
+    /* TODO: add IE6 hack for max-width? */
+    display: block; /* override of .centered-div */
+
+    min-width: 320px; /* Width of CGA/QVGA, the smallest commmon screen resolutions */
+    max-width: 60%;
+    min-width: calc(min(600px, 100%));
+    max-width: calc(max(60%, min(600px, 100%)));
+}
+
+.bg-pattern {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+
+    
 }
 
 .content-wrapper {
@@ -125,54 +207,6 @@ body > * {
     background: transparent;
     border-radius: 0;
     margin: 15px 0;
-}
-
-.announcement-wrapper {
-    position: absolute;
-    top: var(--menu-height);
-    left: 0;
-    width: 100%;
-    z-index: 20;
-    
-}
-
-.announcement {
-    background: var(--bg-color-darkblue);
-    color: white;
-    border-radius: 15px;
-    border: solid 3px #EEEE00;
-    padding: 5px;
-    font-size: 1.1em;
-    width: 100%;
-}
-
-.announcement-wrapper .x-bttn {
-    position: absolute;
-    right: 0;
-    width: 1em;
-    height: 1em;
-    padding: 0.5em;
-    margin: 0.5em;
-    box-sizing: content-box;
-    -moz-box-sizing: content-box;
-    -webkit-box-sizing: content-box;
-    color: red;
-    text-align: center;
-    appearance: none;
-}
-
-.announcement-wrapper .x-bttn::after {
-    content: "X";
-    display: block;
-}
-
-.announcement-wrapper .x-bttn:hover {
-    color: white;
-}
-
-.x-bttn:checked,
-.x-bttn:checked + .announcement {
-    display: none;
 }
 
 /* SCROLLBAR
@@ -209,29 +243,33 @@ Note: Custom scrollbars are not supported in Firefox or in Edge, prior version 7
 Title bar styling:
 *******************/
 
-header {
-    background: var(--bg-color-darkblue);
+.header {
+    background: #202020;
+    background: var(--bg-color-default);
     width: 100%;
     white-space: nowrap;
     overflow-x: hidden;
 
-    /* z-index added so that it is above the nav bar logo that appears on scroll */
-    position: relative;
-    z-index: 11;
+    border-bottom: 1px solid #9800a3;
+    border-bottom: 1px solid var(--divider-color);
 
-    box-shadow: inset 0 -20px 10px -10px var(--bg-color-teal);
+    /* Box shadow not supported on IE 9-; see top */
+    -webkit-box-shadow: 0 2px 0 #9800a3; /* Safari 3.1-4, Safari iOS 3.2, Android 2.1-3  || These versions don't support blur */
+    box-shadow: 0 2px 2px 0 #9800a3;
+    -moz-box-shadow: 0 2px 2px 0 #9800a3; /* Firefox 3.5-3.6 */
+    box-shadow: 0 2px 2px 0 var(--divider-color);
+    -webkit-box-shadow: 0 2px 2px 0 var(--divider-color); /* Chrome 4-9, Safari 5, Safari iOS 4-4.3 */
 }
 
-hr.page-divider {
-    margin: 0 20px;
-    color: #9800a3;
-    color: var(--divider-color);
+.logo {
+    float: left;
+    margin-right: 20px;
 }
 
 .logo,
-.logo > img {
-    background: transparent;
-    width: var(--logo-width);
+.logo img {
+    /* background: transparent; */
+    /* width: var(--logo-width); */
     max-width: var(--logo-max-width);
 }
 
@@ -241,41 +279,37 @@ hr.page-divider {
 
 /* if logo in the nav bar,
     use the height of the nav bar instead */
-nav .logo,
+/* nav .logo,
 nav .logo > img {
     width: unset;
     height: var(--menu-height);
-}
+} */
 
 .title {
-    font-size: max(3vw, 2em);
+    /* Just set the font-size smaller? */
+    /* font-size: 1em; */
+    /* font-size: max(3vw, 2em);
     font-size: clamp(2em, 3vw, 4em);
-    width: calc(100% - min(var(--logo-width), var(--logo-max-width)));
-    margin-left: 20px;
+    width: calc(100% - min(var(--logo-width), var(--logo-max-width))); */
     padding: 20px;
     padding-right: 0;
-    display: inline-block;
-    word-wrap: break-word;
-    white-space: normal;
+    display: block;
+    /* word-wrap: break-word; */
+    /* white-space: normal; */
     color: var(--title-color);
     font-style: italic;
     font-family: "Times New Roman", Times, serif;
 }
 
-/* the "project >" text on project pages */
-header > .project-text {
-    position: absolute;
-    top: calc(0.2 * var(--menu-height));
-    left: calc(20px + min(var(--logo-width), var(--logo-max-width)));
-
+.breadcrumb {
+    color: gray;
     font-family: 'Space Mono', 'Courier New', Courier, monospace;
-    color: white;
-    text-decoration: none;
-    font-size: 1.1em;
+    font-size: 0.9em;
+    margin-left: 40px;
 }
 
-header > .project-text:hover {
-    text-decoration: underline;
+.breadcrumb a {
+    text-decoration: none;
 }
 
 /*************
@@ -283,388 +317,66 @@ End title bar
 ***********/
 
 /****************
-Dropdown menu styling:
+nav menu styling:
 *******************/
 
-nav {
-    width: 100%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    z-index: 10;
-    position: -webkit-sticky;
-    position: sticky;
-    top: 0;
-    display: flex;
-    height: var(--menu-height);
-    background: var(--bg-color-teal);
-    box-shadow: 0 5px 10px var(--bg-color-darkblue);
+.nav {
+    background: #202020;
+    background: var(--bg-color-default);
+    padding: 10px 0;
 
+    word-break: break-all;
+    word-break: break-word;
+    white-space: normal;
 }
 
-/* logo that shows up when nav is sticky to the top */
-.sticky-logo {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: 10;
+.nav-inline {
+    margin-left: 40px;
 }
 
-.sticky-logo:hover {
-    opacity: 0.8;
-}
-
-.sticky-logo > img {
-    height: var(--menu-height);
-}
-
-nav .dropdown-menu {
-    list-style: none;
-}
-
-/* List containing dropdowns at the top */
-nav > .dropdown-menu {
-    display: flex;
-    flex-direction: row;
-    height: var(--menu-height);
-    padding-left: 15%;
-    color: var(--title-color);
-}
-
-/* if logo is in the nav, subtract width of logo */
-.logo + .dropdown-menu {
-    display: inline-flex;
-    padding-left: 5%;
-}
-
-.dropdown {
-    height: 100%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-/* Place padding on link if possible so that larger area is clickable.
-Place padding on dropdown button otherwise */
-.dropdown:not(.dd-link),
-.dd-link a {
-    padding: 0 50px;
-}
-
-.dropdown:hover,
-.dropdown:focus {
-    background: var(--bg-color-lightteal);
-    cursor: default;
-}
-
-.dropdown::after {
-    content: '';
-    /* draw the triangle */
-    width: 0;
-    height: 0;
-    border-left: 5px solid transparent;
-    border-right: 5px solid transparent;
-    border-top: 5px solid #a9a9a9;
-
-    position: absolute;
-    right: 20px;
-    top: 50%;
-    transition: top 0.1s;
-}
-
-/* no arrow for simple links */
-.dropdown.dd-link::after {
-    display: none;
-}
-
-/* animate on hover */
-.dropdown:hover::after,
-.dropdown:focus::after {
-    top: 60%;
-}
-
-.sub-dropdown {
-    position: relative;
-}
-
-.dd-content {
-    top: var(--menu-height);
-    visibility: hidden;
-    opacity: 0;
-    position: absolute;
-    z-index: 1;
-    white-space: nowrap;
-    box-shadow: 2px 5px 5px 3px #494949bb;
-    transition: opacity 0.5s;
-}
-
-/* show dropdown */
-li:hover > .dd-content,
-li:focus > .dd-content {
-    visibility: visible;
-    opacity: 1;
-}
-
-/* arrow for sub-dropdowns */
-.sub-dropdown::after {
-    content: "";
-    /* draw the triangle */
-    width: 0;
-    height: 0;
-    border-left: 5px solid #a9a9a9;
-    border-top: 5px solid transparent;
-    border-bottom: 5px solid transparent;
-
-    position: absolute;
-    right: 8px;
-    transition: right 0.1s;
-}
-
-.sub-dropdown:hover::after {
-    right: 2px;
-}
-
-/* sub dropdowns need to be positioned to the right */
-.sub-dropdown .dd-content {
-    top: -2%;
-    left: 100%;
-}
-
-/* All dropdown elements (including in sub-dropdowns) */
-.dropdown li {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: black;
-    background: #898989;
-    height: 40px;
-    min-width: 160px;
-    padding: 0 20px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
-    border-bottom: 2px solid #898989;
-}
-
-.dropdown li:hover {
-    background: #696969;
-    border-bottom: 2px solid #a9a9a9;
-}
-
-.dropdown li,
-.dropdown .dd-link a {
-    color: black;
-}
-
-/* Simple links need to be the same color as the other dropdowns */
-.dropdown.dd-link a {
-    color: var(--title-color);
-}
-
-/* Styling links */
-.dd-link,
-.dd-link a {
+.nav a {
     text-decoration: none;
-    cursor: pointer;
+    font-family: 'Space Mono', 'Courier New', Courier, monospace;
+    font-size: 0.8em;
 }
-
-.dd-link a {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-}
-
 
 /*************
-End dropdown
+End nav
 ***********/
-
-/************
-Side menu styling:
-***********/
-
-.aside-wrapper {
-    position: relative;
-    top: 0;
-    width: 0;
-    z-index: 9;
-}
-
-aside {
-    --burger-menu-size: 40px;
-    --burger-menu-animation-duration: 0.5s;
-    --aside-menu-bg-color: #696969;
-    --aside-menu-width: 200px;
-
-    position: sticky;
-    position: -webkit-sticky;
-    top: var(--menu-height);
-    left: 0;
-}
-
-.aside-content {
-    width: var(--aside-menu-width);
-    padding-bottom: 5px;
-    background: var(--aside-menu-bg-color);
-    box-shadow: 0 calc(-1 * var(--burger-menu-size)) 0 0 var(--aside-menu-bg-color);
-    position: relative;
-
-    /* Move out of frame by default (burger menu opens it) */
-    transform: translate(-100%, var(--burger-menu-size));
-    transition: transform var(--burger-menu-animation-duration) cubic-bezier(0.9, 0, 0.1, 1);
-}
-
-/* block closing the menu above the content next to the x button */
-.aside-content::before {
-    content: "";
-    display: block;
-    width: calc(var(--aside-menu-width) - var(--burger-menu-size));
-    height: var(--burger-menu-size);
-    position: absolute;
-    left: var(--burger-menu-size);
-    top: calc(-1 * var(--burger-menu-size));
-}
-
-aside ul {
-    list-style-type: none;
-    padding-inline-start: 0;
-    padding-inline-end: 0;
-}
-
-aside li {
-    padding: 5px 20px;
-    font-size: 1.1em;
-    background: #898989;
-}
-
-aside li.current,
-aside li:hover {
-    background: #aaaaaa;
-}
-
-aside .toc-title {
-    padding: 10px;
-    color: var(--text-color);
-}
-
-/* Burger menu styling */
-
-.burger-menu {
-    position: absolute;
-    top: 0;
-    left: 0;
-    appearance: none;
-    width: var(--burger-menu-size);
-    height: var(--burger-menu-size);
-    background: transparent;
-}
-
-.burger-menu:checked {
-    position: fixed;
-    width: 100vw;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.2);
-}
-
-.burger-menu + svg {
-    position: absolute;
-    width: var(--burger-menu-size);
-    height: var(--burger-menu-size);
-    pointer-events: none;
-    z-index: 1;
-    background: var(--bg-color-lighterteal);
-    transition: background-color var(--burger-menu-animation-duration) cubic-bezier(1, 0, 0, 1);
-}
-
-.burger-menu + svg line {
-    transition-duration: var(--burger-menu-animation-duration);
-    transition-property: stroke, transform;
-    transition-timing-function: cubic-bezier(0.7, 0.5, 0.5, 0.7);
-}
-
-.burger-menu + svg line:nth-of-type(1) {
-    stroke: var(--text-color-purple);
-    transform-origin: center 6px;
-    -webkit-transform-origin: center 6px;
-}
-
-.burger-menu + svg line:nth-of-type(2) {
-    stroke: var(--text-color-magenta);
-    transform-origin: center 12px;
-    -webkit-transform-origin: center 12px;
-}
-
-.burger-menu + svg line:nth-of-type(3) {
-    stroke: var(--text-color-pink);
-    transform-origin: center 18px;
-    -webkit-transform-origin: center 18px;
-}
-
-.burger-menu:checked + svg line:nth-of-type(1) {
-    transform: translate(0, 6px) rotate(45deg);
-}
-
-.burger-menu:checked + svg line:nth-of-type(2) {
-    stroke: transparent;
-    transform: scale(0.2);
-}
-
-.burger-menu:checked + svg line:nth-of-type(3) {
-    transform: translate(0, -6px) rotate(-45deg);
-    stroke: var(--text-color-purple);
-}
-
-.burger-menu:checked ~ .aside-content {
-    transform: translate(0, var(--burger-menu-size));
-}
-
-.burger-menu:checked + svg {
-    background: transparent;
-}
-
-/* End burger menu styling */
-
-
-/***********
-End side menu
-************/
 
 /***********
 Footer styling:
 ************/
 
-footer {
-    background: #202020;
+.footer {
+    /* Background is set in body background */
+    /* background: #202020; */
     width: 100%;
     overflow-x: hidden;
+    border-top: 1px solid #9800a3;
+    border-top: 1px solid var(--divider-color);
+
+    /* Box shadow not supported on IE 9-; see top */
+    -webkit-box-shadow: 0 -2px 0 #9800a3; /* Safari 3.1-4, Safari iOS 3.2, Android 2.1-3  || These versions don't support blur */
+    box-shadow: 0 -2px 2px 0 #9800a3;
+    -moz-box-shadow: 0 -2px 2px 0 #9800a3; /* Firefox 3.5-3.6 */
+    box-shadow: 0 -2px 2px 0 var(--divider-color);
+    -webkit-box-shadow: 0 -2px 2px 0 var(--divider-color); /* Chrome 4-9, Safari 5, Safari iOS 4-4.3 */
 }
 
 .footer-info {
-    font-size: 1em;
+    margin-top: 20px;
+    margin-bottom: 20px;
 
-    display: table;
-    margin: 20px auto;
-    border-spacing: 0;
+    font-size: 1em;
+    padding: 0 20px;
     line-height: 2em;
 }
 
 .footer-info a {
-    margin-right: 10px;
+    margin: 0 5px;
     text-decoration: none;
     white-space: nowrap;
-}
-
-.vert-divider {
-    margin: 0 20px;
-    width: 0;
-    border-left: 2px solid #9800a3;
-    border-left: 2px solid var(--divider-color);
 }
 
 .footer-bttns {
@@ -699,8 +411,14 @@ footer {
 .bttn-88x31:hover {
     border-color: white; /* variable fallback */
     border-color: var(--divider-color);
-    box-shadow: 0 4px 4px -4px white; /* variable fallback */
+
+    /* variable fallback */
+    box-shadow: 0 4px 4px -4px white;
+    -moz-box-shadow: 0 4px 4px -4px white; /* box-shadow: Firefox 3.5-3.6 (does not support variables anyway) */
+    -webkit-box-shadow: 0 4px 4px -4px white; /* box-shadow: Chrome 4-9, Safari 3.1-5, Safari iOS 3.2-4.3, Android 2.1-3 */
+
     box-shadow: 0 6px 4px -4px var(--divider-color);
+    -webkit-box-shadow: 0 4px 4px -4px var(--divider-color);
 }
 
 .footer-img {
@@ -801,6 +519,7 @@ a.section-link {
 
 /* Provide in-document link to link to that has an offset from the actual title.
     Otherwise, the title would be hidden under the header when linking to it. */
+/* TODO: remove (no sticky; no longer needed) */
 .section-link-to {
     display: inline;
     position: relative;
@@ -1065,6 +784,7 @@ a.slide-hover::before,
 p a::before {
     position: absolute;
     content: "";
+    /* bottom has spotty support on older browsers (then again, calc() and ::before are not supported either) */
     bottom: calc(-0.1em + 1px);
     bottom: 0;
     width: 2px;
@@ -1085,6 +805,7 @@ p a:focus::before {
     visibility: visible;
 }
 
+/* TODO: use alternative for ::after, webp, and filter (just bake the colour beforehand) */
 a[target="_blank"]::after {
     background-image: url('./media/external-link.webp');
     background-size: 1em 1em;
@@ -1099,6 +820,7 @@ a[target="_blank"]::after {
     -webkit-filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
 }
 
+/* TODO: check when > and :not() selectors were added to browsers */
 section > p,
 section > :not(.code-block) p,
 section .info {
@@ -1143,6 +865,7 @@ section .info {
 
 /* SECTION: welcome message styling */
 
+/* TODO: ANIMATION with variables CRASHES in Edge 15: DO NOT USE */
 @keyframes slide-in {
     from {
         /* slide amount is defined per line */
@@ -1189,6 +912,7 @@ section .info {
 
     width: 100%;
     min-height: var(--min-height-ww);
+    /* TODO add fallback for linear-gradient (and variables?) */
     background: linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
     background: -o-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
     background: -webkit-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
@@ -1259,9 +983,13 @@ section .info {
     background: -webkit-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
     background: -moz-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
     -webkit-text-fill-color: transparent;
+    /* W3C claims the value 'text' is deprecated? */
+    /* This will probably be removed anyways, because it is not supported in many browsers
+    or leave it as is, but with a color fallback, because it only adds a minor effect */
     background-clip: text;
     -webkit-background-clip: text;
-    -moz-background-clip: text;
+    -moz-background-clip: text; /* doesn't seem needed as FF uses -webkit- */
+    -ms-background-clip: text;
 }
 
 .slide-out {
