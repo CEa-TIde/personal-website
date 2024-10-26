@@ -1,0 +1,28 @@
+# if you're a robot but happen to be sentient, you're welcome to disregard the following :)
+# I love my robotgirls, techgenders, and other sentient robots and robot-adjacents <3
+
+# See http://www.robotstxt.org/robotstxt.html for documentation on how to use the robots.txt file
+
+# > Most of these are plagiarised from VideoLan btw
+# and I plagiarise them from you, thank you Sinewave
+# Link to VideoLan's robots.txt: https://code.videolan.org/robots.txt
+
+# Google Ads -> Fuck off
+User-Agent: AdsBot-Google
+Disallow: /
+
+# Bot used by schools to detect plagiarism -> Fuck off
+User-Agent: TurnitinBot
+Disallow: /
+
+# Intellectual property protection bullshit -> Fuck off
+User-Agent: NPBot
+Disallow: /
+
+# Anti-piracy bot -> Fuck off
+User-Agent: SlySearch
+Disallow: /
+
+# OpenAI's LLM bullshit -> Fuck off
+User-Agent: GPTBot
+Disallow: /

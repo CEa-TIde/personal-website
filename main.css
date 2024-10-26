@@ -413,9 +413,9 @@ Footer styling:
     border-color: var(--divider-color);
 
     /* variable fallback */
-    box-shadow: 0 4px 4px -4px white;
-    -moz-box-shadow: 0 4px 4px -4px white; /* box-shadow: Firefox 3.5-3.6 (does not support variables anyway) */
-    -webkit-box-shadow: 0 4px 4px -4px white; /* box-shadow: Chrome 4-9, Safari 3.1-5, Safari iOS 3.2-4.3, Android 2.1-3 */
+    box-shadow: 0 4px 4px -4px #9800a3;
+    -moz-box-shadow: 0 4px 4px -4px #9800a3; /* box-shadow: Firefox 3.5-3.6 (does not support variables anyway) */
+    -webkit-box-shadow: 0 4px 4px -4px #9800a3; /* box-shadow: Chrome 4-9, Safari 3.1-5, Safari iOS 3.2-4.3, Android 2.1-3 */
 
     box-shadow: 0 6px 4px -4px var(--divider-color);
     -webkit-box-shadow: 0 4px 4px -4px var(--divider-color);
@@ -424,6 +424,7 @@ Footer styling:
 .footer-img {
     margin-right: 40px;
     margin-left: auto;
+    float: right;
     display: block;
 }
 
