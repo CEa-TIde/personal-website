@@ -6,16 +6,16 @@
     <body>
         
         <div class="bg-wrapper">
-            <div class="page-wrapper centered-div">
+            <div class="centered-div">
                 <!-- Adds the nav page-box -->
                 <nav class="nav page-box">
                     {% include {{ page.nav_include }} %}
                 </nav>
-    
-                <div class="page-box">
-                    {{ content }}
-                </div>
             </div>
+    
+            <!-- <div class="page-box"> -->
+                {{ content }}
+            <!-- </div> -->
         </div>
         {% include {{ page.footer_include }} %}
     </body>

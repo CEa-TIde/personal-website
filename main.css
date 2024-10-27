@@ -25,6 +25,8 @@ convert to GIF instead? */
     src: url('fonts/gv/GreatVibes-A7yL.otf') format('opentype'),
         url('fonts/gv/GreatVibes-Wmr4.ttf') format('truetype');
 }
+/* TODO: check out font: 'Fira Code'; https://fonts.google.com/specimen/Fira+Code */
+
 
 * {
     margin: 0;
@@ -33,6 +35,14 @@ convert to GIF instead? */
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+
+    /* Enable font ligatures (if available) */
+    font-variant-ligatures: common-ligatures;
+    -webkit-font-variant-ligatures: common-ligatures;
+    /* font-variant-ligatures: discretionary-ligatures;
+    font-variant-ligatures: historical-ligatures;
+    font-variant-ligatures: contextual; */
+
 }
 
 html {
@@ -40,48 +50,63 @@ html {
     /* for browsers that do not support variables a fallback needs to be provided at the place of use */
     /* TODO: define colours and then define semantic variables based on colour variables
     so that you only need to update the semantic variables if you want to change colours; not also all places the colour needs to be changed in */
-    --title-color: #dddddd;
-    --text-color: #aaaaaa;
-    --text-color-hl: #99bbbb;
-    --text-color-dark: #555555;
-    --text-color-purple: #9f18fa;
-    --text-color-magenta: #bd4afd;
-    --text-color-pink: #fa6cff;
+    --color-lightgrey: #dddddd;
+    --color-grey: #aaaaaa;
+    --color-celestecyan: #99bbbb;
+    --color-darkgrey: #555555;
+    --color-purple: #9f18fa;
+    --color-violet: #9800a3;
+    --color-orchid: #bd4afd;
+    --color-pink: #fa6cff;
 
+    /* TODO: add semantic variables for all that use these colours
+    Since colour palette is changing still; I left these alone */
     --bg-color-darkblue: #002839;
     --bg-color-teal: #004039;
     --bg-color-lightteal: #005055;
     --bg-color-lighterteal: #006066;
     --bg-color-lightblue: #31b6ee;
-    /* --bg-color-darkgrey: #181a1b; */
-    --bg-color-darkgrey: #202020;
-    --bg-color-darkpurple: #200050;
 
-    --bg-color-important: #DD2222;
-    --bg-color-warn: #DDDD22;
-    --bg-color-info: var(--bg-color-teal);
+    --color-charcoal: #202020;
+    --color-darkpurple: #200050;
+
+    --color-red: #DD2222;
+    --color-yellow: #DDDD22;
 
     /* Semantic variables */
-    --bg-color-default: var(--bg-color-darkgrey);
-    
+    --bg-color-default: var(--color-charcoal);
+    --bg-color-body: var(--color-darkpurple);
 
+    --text-color-default: var(--color-grey);
+    --text-color-hl: var(--color-celestecyan);
+    --text-color-dark: var(--color-darkgrey);
+
+    --title-color: var(--color-lightgrey);
+
+    --color-error: var(--color-red);
+    --color-warn: var(--color-yellow);
+    --color-info: var(--bg-color-teal);
+
+    --divider-color: var(--color-violet);
+    
+    /* TODO: to be removed when link-to has been removed */
     --menu-height: 60px;
 
     --logo-width: 20%;
     --logo-max-width: 250px;
-
-    --divider-color: #9800a3;
     /* end global variables */
 
 
 
 
 
-    background: var(--bg-color-darkgrey);
+    background: var(--color-charcoal);
+    /* TODO: use different default font */
     font-family: Georgia, 'Times New Roman', Times, serif;
 }
 
 /* This is added so that the element the URI fragment links to, is not hidden under the nav bar */
+/* TODO: remove? */
 :target {
     scroll-margin-top: calc(var(--menu-height) + 10vh);
     scroll-snap-margin-top: calc(var(--menu-height) + 10vh); /* alternative name used by Safari, prior version 14.1 */
@@ -101,11 +126,11 @@ body {
 /* background under main content of the page */
 .bg-wrapper {
     background: #200050;
-    background: var(--bg-color-darkpurple); /* fallback if background-image or url() is not supported */
+    background: var(--bg-color-body); /* fallback if background-image or url() is not supported */
     background-image: url("/media/background_sakura.png");
     background-repeat: repeat;
     /* not widely supported in older browsers, but not much of a deal-breaker 
-    A possible solution would be to use a fixed div; TODO look into more
+    A possible solution would be to use a fixed div but that will break if position:fixed not supported; TODO look into more
     */
     background-attachment: fixed;
 
@@ -323,7 +348,7 @@ nav menu styling:
 .nav {
     background: #202020;
     background: var(--bg-color-default);
-    padding: 10px 0;
+    padding: 10px;
 
     word-break: break-all;
     word-break: break-word;
@@ -437,7 +462,7 @@ End footer
     font-family: "Times New Roman", Times, serif;
     width: 100%;
     text-align: center;
-    color: var(--text-color);
+    color: var(--text-color-default);
 
 }
 
@@ -728,11 +753,11 @@ Third line is for edge case to target last image.
 }
 
 .info.important {
-    border-left: solid var(--bg-color-important) 5px;
+    border-left: solid var(--color-error) 5px;
 }
 
 .info.warn {
-    border-left: solid var(--bg-color-warn) 5px;
+    border-left: solid var(--color-warn) 5px;
 }
 
 .info.icon {
@@ -825,7 +850,7 @@ a[target="_blank"]::after {
 section > p,
 section > :not(.code-block) p,
 section .info {
-    color: var(--text-color);
+    color: var(--text-color-default);
     margin-top: 1em;
     margin-bottom: 1em;
     line-height: 1.5em;
@@ -866,164 +891,161 @@ section .info {
 
 /* SECTION: welcome message styling */
 
-/* TODO: ANIMATION with variables CRASHES in Edge 15: DO NOT USE */
+/* Animation with variables crashes in Edge 15: DO NOT USE VARIABLES */
+
+/* slide-in animation of the welcome splash screen text */
 @keyframes slide-in {
     from {
-        /* slide amount is defined per line */
-        margin-left: var(--slide-amount);
+        margin-left: 0;
+        /* Safari <13.1.3 possibly does not apply filter during animation (but might be only for child elements)
+        See: https://bugs.webkit.org/show_bug.cgi?id=219729 */
         filter: blur(2px);
         -webkit-filter: blur(2px);
-        text-shadow: 0 0 2px var(--text-color);
-    }
-
-    to {
-        margin-left: 0;
-        filter: none;
-        -webkit-filter: none;
-        text-shadow: none;
-    }
-}
-
-@keyframes slide-in-opacity {
-    from {
         opacity: 0;
     }
 
     to {
+        margin-left: 50px;
+        margin-left: 5vw;
+        filter: none;
+        -webkit-filter: none;
         opacity: 1;
     }
 }
 
-/* Block the hover event of the msgbox by placing an invisible pseudo-element over it */
-@keyframes block-hover {
-    to {
-        height: 0;
-    }
-}
-
 .welcome-wrapper {
-    --bg-welcome-wrapper: var(--bg-color-lighterteal);
-    --bg-welcome-wrapper2: var(--bg-color-darkgrey);
-    --min-height-ww: calc(min(100vh - var(--menu-height), 50vw));
-    --slide-duration: 1s;
-    --slide-delay: 0.2s;
-    --slidein-animation: var(--slide-duration) ease-out var(--slide-delay) 1 slide-in, var(--slide-duration) ease-out var(--slide-delay) 1 normal forwards slide-in-opacity;
-    --slide-amount: -10vw; /* default slide amount */
+    --bg-welcome-wrapper-hl: var(--divider-color);
+    --bg-welcome-wrapper-default: var(--bg-color-default);
 
 
     width: 100%;
-    min-height: var(--min-height-ww);
-    /* TODO add fallback for linear-gradient (and variables?) */
-    background: linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
-    background: -o-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
-    background: -webkit-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
-    background: -moz-linear-gradient(to right, var(--bg-welcome-wrapper2) 60%, var(--bg-welcome-wrapper));
+    min-height: 50vw;
+    min-height: calc(min(100vh, 50vw));
+
+    /* Linear gradient fallback */
+    background: #202020;
+    background: var(--bg-color-default);
+
+    /* Linear gradient on right side of welcome splash screen */
+    background: linear-gradient(to right, #202020 80%, #9800a3);
+    background: -o-linear-gradient(to right, #202020 80%, #9800a3);
+    background: -webkit-linear-gradient(to right, #202020 80%, #9800a3);
+    background: -moz-linear-gradient(to right, #202020 80%, #9800a3);
+
+    background: linear-gradient(to right, var(--bg-welcome-wrapper-default) 80%, var(--bg-welcome-wrapper-hl));
+    background: -o-linear-gradient(to right, var(--bg-welcome-wrapper-default) 80%, var(--bg-welcome-wrapper-hl));
+    background: -webkit-linear-gradient(to right, var(--bg-welcome-wrapper-default) 80%, var(--bg-welcome-wrapper-hl));
+    background: -moz-linear-gradient(to right, var(--bg-welcome-wrapper-default) 80%, var(--bg-welcome-wrapper-hl));
+    
     /* anchor for art to position relative to */
-    position: relative;
+    /* position: relative; */
+
     margin-bottom: 30px;
 }
 
-/* after element blocks the hover effect while animation is playing */
-.welcome-wrapper::after {
-    content: "";
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    background: transparent;
-
-    /* animation puts away pseudo-element at the end
-    Extreme cubic-bezier curve to keep the element over the msg box as long as possible */
-    animation: var(--slide-duration) cubic-bezier(1, 0, 1, -1) var(--slide-delay) 1 normal forwards block-hover;
-}
-
 .welcome-msgbox {
-    padding: calc(var(--min-height-ww) / 3) 0 0 5vw;
-    width: 80vw;
-    color: var(--text-color);
+    padding: 100px 0 0 100px;
+    padding: 10vh 0 0 5vw;
+
+
+    color: var(--text-color-default);
 }
 
 .welcome-msg {
-    --slide-amount: -10vw;
-
-    font-size: calc(min(4em, 5vw));
+    /* TODO change font */
+    font-size: 3.5em;
     font-weight: 150;
 }
 
 .welcome-msg span {
-    color: var(--text-color-purple);
+    color: var(--color-purple);
     font-family: 'Great Vibes', cursive;
     font-weight: 100;
 }
 
 .welcome-subcaption {
-    --slide-amount: -15vw;
-
-    padding: 1vw 0 1vw 10vw;
-    font-size: calc(min(1.2em, 1.5vw));
+    padding: 1vw 0;
+    font-size: 1.2em;
     font-style: italic;
 }
 
 .welcome-subcaption span {
-    color: var(--text-color-pink);
+    /* TODO change font */
+    color: var(--color-pink);
     font-style: normal;
 }
 
-.welcome-joblist {
-    --slide-amount: -20vw;
+.welcome-occupations {
+    /* TODO: change font */
+    font-size: 1.4em;
 
-    padding-left: 20vw;
-    font-size: calc(min(1.6em, 2vw));
-
-    /* colour gradient */
-    background: linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
-    background: -o-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
-    background: -webkit-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
-    background: -moz-linear-gradient(to right, var(--text-color-purple), var(--text-color-pink));
-    -webkit-text-fill-color: transparent;
-    /* W3C claims the value 'text' is deprecated? */
-    /* This will probably be removed anyways, because it is not supported in many browsers
-    or leave it as is, but with a color fallback, because it only adds a minor effect */
-    background-clip: text;
-    -webkit-background-clip: text;
-    -moz-background-clip: text; /* doesn't seem needed as FF uses -webkit- */
-    -ms-background-clip: text;
+    color: var(--color-orchid);
 }
 
-.slide-out {
-    animation: var(--slidein-animation);
-    transition: margin-left 0.8s ease-in-out;
-    opacity: 0;
+.welcome-slide {
+    /* animation end state (possibly overridden below) */
+    margin-left: 50px;
+    margin-left: 5vw;
+    opacity: 1;
+
+    /* Set individual properties for graceful fallback */
+    animation-name: slide-in;
+    -moz-animation-name: slide-in;
+    -webkit-animation-name: slide-in;
+    -o-animation-name: slide-in;
+
+    animation-duration: 1s;
+    -moz-animation-duration: 1s;
+    -webkit-animation-duration: 1s;
+    -o-animation-duration: 1s;
+
+    animation-delay: 0.2s;
+    -moz-animation-delay: 0.2s;
+    -webkit-animation-delay: 0.2s;
+    -o-animation-delay: 0.2s;
+
+    animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    -webkit-animation-fill-mode: forwards;
+    -o-animation-fill-mode: forwards;
+
+    animation-timing-function: ease-out;
+    -moz-animation-timing-function: ease-out;
+    -webkit-animation-timing-function: ease-out;
+    -o-animation-timing-function: ease-out;
+
+    /* Same animation as above */
+    /* animation: 1s ease-out 0.2s 1 normal forwards slide-in; */
 }
 
-.welcome-msgbox:hover .slide-out {
-    margin-left: calc(var(--slide-amount) / -4);
+/* Flicker may appear in browsers that support animation but not @supports */
+@supports (animation-name: test, test1) and (animation-fill-mode: forwards) {
+    /* only set to animation begin state if animations and animation fill mode are supported
+    otherwise, at the end of the animation, or if animation at all not supported, it hides the text.
+    Set to begin state to avoid loading flicker */
+    .welcome-slide {
+        opacity: 0;
+        margin-left: 0;
+    }
 }
 
 .welcome-art-wrapper {
-    position: absolute;
+    /* position: absolute;
     right: 2vw;
-    bottom: 0;
+    bottom: 0; */
+
+    display: block;
+    margin-left: auto;
+    padding-left: 100px; /* only used if width:fit-content is not supported */
+    /* TODO width: the intrinsic width of the image (image to be changed) */
+    width: fit-content;
+    width: -moz-fit-content; /* Firefox 3-93 */
+    width: intrinsic; /* Chrome 4-21, Safari 3.1-6.1, Safari iOS 3.2-6.1 */
+    width: -webkit-intrinsic; /* Chrome 22-45, Safari 7-10.1, Opera 15-32, Safari iOS 7-10.3, Samsung Internet 4, Android Browser 4.4-4.4.4 */
 }
 
-/* .welcome-art-wrapper::after {
-    content: "";
-    display: block;
-    position: absolute;
-    width: 100%;
-    height: 5%;
-    background: linear-gradient(to top, var(--bg-welcome-wrapper), transparent);
-    background: -webkit-linear-gradient(to top, var(--bg-welcome-wrapper), transparent);
-    background: -o-linear-gradient(to top, var(--bg-welcome-wrapper), transparent);
-    background: -moz-linear-gradient(to top, var(--bg-welcome-wrapper), transparent);
-    bottom: 0;
-    left: 0;
-} */
-
 .welcome-art {
+    /* TODO add fallback? */
     width: 20vw;
 }
 
@@ -1045,10 +1067,10 @@ section .info {
     /* background: tomato; */
     margin: 20px;
     transition: transform 0.2s;
-    color: var(--text-color);
+    color: var(--text-color-default);
     text-decoration: none;
     /* border-top: 2px solid var(--bg-color-darkgrey); */
-    border-bottom: 2px solid var(--bg-color-darkgrey);
+    border-bottom: 2px solid var(--color-charcoal);
 
 }
 
