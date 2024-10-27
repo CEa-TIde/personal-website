@@ -103,14 +103,9 @@ html {
     background: var(--color-charcoal);
     /* TODO: use different default font */
     font-family: Georgia, 'Times New Roman', Times, serif;
-}
 
-/* This is added so that the element the URI fragment links to, is not hidden under the nav bar */
-/* TODO: remove? */
-:target {
-    scroll-margin-top: calc(var(--menu-height) + 10vh);
-    scroll-snap-margin-top: calc(var(--menu-height) + 10vh); /* alternative name used by Safari, prior version 14.1 */
-    outline: none;
+
+    /* TODO: set default text color */
 }
 
 body {
@@ -141,7 +136,17 @@ body {
 
 /* style noscript tag and div.noscript inside */
 noscript, .noscript {
-    color: white;
+    color: #aaaaaa;
+    color: var(--text-color-default);
+    padding: 10px;
+}
+
+.noscript p {
+    padding: 5px;
+}
+
+.noscript img {
+    display: block;
 }
 
 /* centers div content within parent container using margin:auto */
@@ -180,6 +185,12 @@ noscript, .noscript {
 
 /* Adds an outline and spacing above/below */
 .page-box {
+
+    /* Default background colour */
+    background: #202020;
+    background: var(--bg-color-default);
+
+
     margin: 20px 0;
     /* Box shadow not supported on IE 9-; see top */
     -webkit-box-shadow: 0 0 2px #9800a3; /* Safari 3.1-4, Safari iOS 3.2, Android 2.1-3  || These versions don't support blur */
@@ -316,6 +327,7 @@ nav .logo > img {
     /* font-size: max(3vw, 2em);
     font-size: clamp(2em, 3vw, 4em);
     width: calc(100% - min(var(--logo-width), var(--logo-max-width))); */
+    /* TODO: change font */
     padding: 20px;
     padding-right: 0;
     display: block;
@@ -527,29 +539,6 @@ section .sub-title {
 a.section-link {
     color: var(--text-color-hl);
     text-decoration: none;
-}
-
-/* a.section-link::after {
-    background-image: url('../media/chain-link-icon.png');
-    background-size: 1em 1em;
-    display: inline-block;
-    margin-left: 3px;
-    width: 1em;
-    height: 1em;
-    content: "";
-    /* Generated using: https://codepen.io/sosuke/pen/Pjoqqp 
-        A code snippet that generates the filters needed to convert from a black image to any desired HEX colour value (approximately).*\/
-    filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
-    -webkit-filter: invert(46%) sepia(94%) saturate(615%) hue-rotate(153deg) brightness(91%) contrast(104%);
-} */
-
-/* Provide in-document link to link to that has an offset from the actual title.
-    Otherwise, the title would be hidden under the header when linking to it. */
-/* TODO: remove (no sticky; no longer needed) */
-.section-link-to {
-    display: inline;
-    position: relative;
-    top: calc(-1 * var(--menu-height) - 50px);
 }
 
 /* END: section title styling */

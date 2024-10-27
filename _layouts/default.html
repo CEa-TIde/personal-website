@@ -21,6 +21,23 @@
                 <div class="page-box">
                     {{ content }}
                 </div>
+
+                <noscript>
+                    <!-- No classes on the noscript tag, as the browser removes them -->
+                    <div class="noscript page-box">
+                        <p>
+                            Yay! Someone else who doesn't use Javascript c:
+                            <br/>
+                            <br/>
+                            But note, if you see the following image, websites can still track that you turned off JS,
+                            because it is only loaded when JS is disabled.
+                        </p>
+                        <img src="/media/you_wouldnt_download_a_blahaj_resized.png" width="237" height="107" alt="You wouldn't download a blahaj" title="I would"/>
+                        <p>
+                            Sandbox projects do require Javascript to run; enable JS if you wish to use them.
+                        </p>
+                    </div>
+                </noscript>
             </div>
         </div>
         {% include {{ page.footer_include }} %}
