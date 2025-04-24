@@ -5,7 +5,7 @@ desc: project overview, projects, interactive, sandbox
 
 ---
 
-<main class="tile-set">
+<!-- <main class="tile-set">
     {% for tile in site.data.project_tiles %}
         <a class="tile" href="{{ tile.link }}">
             <h2 class="tile-title">{{ tile.title }}</h3>
@@ -15,4 +15,19 @@ desc: project overview, projects, interactive, sandbox
             </figure>
         </a>
     {% endfor %}
+</main> -->
+
+<main class="project-list">
+    {%- assign x = 0 -%}
+    {%- for tile in site.data.project_tiles -%}
+        {%- if x == 0 -%}
+            {%- assign x = 1 -%}
+        {%- else -%}
+            <hr class="horiz-divider"/>
+        {%- endif -%}
+        <hgroup class="project-tile">
+            <a href="{{ tile.link }}"><h2 class="project-tile-title">{{ tile.title }}</h2></a>
+            <p>{{ tile.caption }}</p>
+        </hgroup>
+    {%- endfor -%}
 </main>

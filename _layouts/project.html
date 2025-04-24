@@ -9,6 +9,8 @@
         {% endif %}
     </head>
     <body>
+        <!-- Hidden by default unless focus is on the link -->
+        <a href="#nav-skip" class="nav-skip-link">Skip to Main content</a>
         <header class="header">
             <a class="logo" href="/"><img src="/media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
             <h2 class="title">{{ page.title }}</h2>
@@ -20,7 +22,7 @@
                 </span>     
             </nav>
         </header>
-        <div class="page-wrapper">
+        <div class="page-wrapper" id="nav-skip">
             {{ content }}
         </div>
     </body>

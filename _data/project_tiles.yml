@@ -10,7 +10,7 @@
   img:
     src: /media/icons/favicon_192x192.png
     alt: favicon
-  caption: Small fractal renderer, with step-through controls.
+  caption: Small dragon fractal renderer, with step-through controls.
   link: /projects/fractal
 -
   title: test 2

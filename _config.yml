@@ -72,9 +72,10 @@ defaults:
       favicon_192x192: /media/icons/favicon_192x192.png
       favicon_ico: /favicon.ico
       favicon_manifest: /media/icons/manifest.json
-      favicon_mstilecolor: dad9ff
+      favicon_mstilecolor: "dad9ff"
       favicon_mstileimage: /media/icons/favicon_144x144.png
-      favicon_themecolor: dad9ff
+
+      themecolor: "200050"
   -
     scope:
       path: "projects"

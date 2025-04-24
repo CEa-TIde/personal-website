@@ -1,4 +1,8 @@
-<meta charset="UTF-8">
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta name="referrer" content="no-referrer"/>
+<meta name="color-scheme" content="dark"/>
 
 <!-- HTML Meta Tags -->
 {% if page.keys %}
@@ -12,7 +16,7 @@
 {% endif %}
 
 <meta name="author" content="CEa_TIde"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+
 {% if page.title %}
 <title>{{ page.title }} - CEa_TIde</title>
 {% else %}
@@ -64,6 +68,10 @@
     {% if page.embed_image_alt %}
     <meta property="twitter:image:alt" content="{{ page.embed_image_alt }}"/>  <!-- max 420 chars -->
     {% endif %}
+{% endif %}
+
+{% if page.themecolor %}
+<meta name="theme-color" content="#{{ page.themecolor }}"/>
 {% endif %}
 
 <!-- Favicons -->
@@ -118,9 +126,9 @@
 {% if page.favicon_mstileimage %}
 <meta name="msapplication-TileImage" content="{{ page.favicon_mstileimage }}"/>
 {% endif %}
-{% if page.favicon_themecolor %}
-<meta name="theme-color" content="#{{ page.favicon_themecolor }}"/>
-{% endif %}
+
+<!-- TODO: add webmanifest for Android Chrome -->
+ <!-- TODO: add SVG favicon -->
 
 <!--style sheet with site-wide style rules-->
 <link rel="stylesheet" href="/main.css"/>
