@@ -2,46 +2,30 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% include {{ page.head_include }} %}
+        {% include {{ page.includes.head }} %}
     </head>
     <body>
-        <!-- Hidden by default unless focus is on the link -->
-        <a href="#nav-skip" class="nav-skip-link">Skip to Main content</a>
+        {% include {{ page.includes.navskip }} %}
         <header class="header">
             <a class="logo" href="/"><img src="/media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
             <h2 class="title centered-div">{{ page.title }}</h2>
 
-            {% include {{ page.pagecrumb_include }} %}
+            {% include {{ page.includes.pagecrumb }} %}
         </header>
         <div class="bg-wrapper">
             <div class="page-wrapper centered-div">
                 <!-- Adds the nav page-box -->
                 <nav class="nav page-box">
-                    {% include {{ page.nav_include }} %}
+                    {% include {{ page.includes.nav }} %}
                 </nav>
     
                 <div class="page-box" id="nav-skip">
                     {{ content }}
                 </div>
 
-                <noscript>
-                    <!-- No classes on the noscript tag, as the browser removes them -->
-                    <div class="noscript page-box">
-                        <p>
-                            Yay! Someone else who doesn't use Javascript c:
-                            <br/>
-                            <br/>
-                            But note, if you see the following image, websites can still track that you turned off JS,
-                            because it is only loaded when JS is disabled.
-                        </p>
-                        <img src="/media/you_wouldnt_download_a_blahaj_resized.png" width="237" height="107" alt="You wouldn't download a blahaj" title="I would"/>
-                        <p>
-                            Sandbox projects do require Javascript to run; enable JS if you wish to use them.
-                        </p>
-                    </div>
-                </noscript>
+                {% include {{ page.includes.noscript }} %}
             </div>
         </div>
-        {% include {{ page.footer_include }} %}
+        {% include {{ page.includes.footer }} %}
     </body>
 </html>

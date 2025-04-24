@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        {% include {{ page.head_include }} %}
+        {% include {{ page.includes.head }} %}
     </head>
     <body>
         
@@ -9,14 +9,16 @@
             <div class="centered-div">
                 <!-- Adds the nav page-box -->
                 <nav class="nav page-box">
-                    {% include {{ page.nav_include }} %}
+                    {% include {{ page.includes.nav }} %}
                 </nav>
+
+                {% include {{ page.includes.noscript }} %}
             </div>
     
             <!-- <div class="page-box"> -->
                 {{ content }}
             <!-- </div> -->
         </div>
-        {% include {{ page.footer_include }} %}
+        {% include {{ page.includes.footer }} %}
     </body>
 </html>
