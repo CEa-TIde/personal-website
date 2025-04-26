@@ -50,6 +50,9 @@ defaults:
       embed_image: /media/logo.png
       embed_image_alt: Logo of the website, a wave with the text CEa_TIde next to it.
 
+      # set this to true for a page to change the noscript message
+      require-js: false
+
       includes:
         head: htmlheaders.html
         nav: nav.html
@@ -87,6 +90,7 @@ defaults:
       type: "pages"
     values:
       layout: "project"
+      require-js: true
 
 # Exclude from processing.
 # The following items will not be processed, by default.

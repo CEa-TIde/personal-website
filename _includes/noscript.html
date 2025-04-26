@@ -1,22 +1,57 @@
+{%- comment -%}
 <!-- to be inserted in a main layout -->
 
 <!-- TODO: add a Liquid check on a variable to include for pages that REQUIRE JS -->
 <!-- TODO: add styling to highlight some words -->
 
+<!-- 
+Paremeters:
+- bool require-js: if current page requires Javascript. Can also be set as a page variable.
+
+
+-->
+
+{%- endcomment -%}
+
 <noscript>
     <!-- No classes on the noscript tag, as the browser removes them -->
     <div class="noscript page-box">
-        <p>
-            <span>Yay!</span> Someone else who doesn't use Javascript c:
-            <br/>
-            <br/>
-            But note, if you see the following image, websites can possibly still track that you turned off JS,
-            because it is only loaded when JS is disabled.<br/>
-            Download the firefox extension <a href="https://addons.mozilla.org/en-GB/firefox/addon/noscript/" target="_blank" rel="noreferrer noopener">NoScript</a>, also pre-installed with the Tor project, to also be able to block noscript tags.
-        </p>
-        <img src="/media/you_wouldnt_download_a_blahaj_resized.png" width="237" height="107" alt="You wouldn't download a blahaj" title="I would"/>
-        <p>
-            Some projects do require Javascript to run; enable JS if you wish to use them.
-        </p>
+        <section>
+            <h4 class="sub-title"><span>Yay!</span> Someone else who doesn't use Javascript c:</h4>
+            <p>
+                <span>But note</span>, if you see the following image, websites can possibly still track that you turned off JS,
+                because it is only loaded when JS is disabled.<br/>
+                Download the firefox extension <a href="https://addons.mozilla.org/en-GB/firefox/addon/noscript/" target="_blank" rel="noreferrer noopener">NoScript</a>,
+                also pre-installed with the Tor project, to also be able to block noscript tags.
+            </p>
+            <img src="/media/you_wouldnt_download_a_blahaj_resized.png" width="237" height="107" alt="You wouldn't download a blahaj" title="I would"/>
+            
+            {% if page.require-js or include.require-js %}
+            <p><span>This page requires Javascript to function fully!</span></p>
+            <p>Enable it (temporarily) to use all the features on this page.</p>
+            {% else %}
+            <p>This page is Javacript free. Some projects do require Javascript to run; enable JS if you wish to use them.</p>
+            {% endif %}
+            <div class="info">
+                How to enable Javascript:
+                <ul>
+                    <li><a class="slide-hover" href="https://support.mozilla.org/en-US/kb/javascript-settings-for-interactive-web-pages" target="_blank" rel="noreferrer noopener">On Firefox</a></li>
+                    <li><a class="slide-hover" href="https://www.enablejavascript.io/en/how-to-enable-javascript-on-google-chrome" target="_blank" rel="noreferrer noopener">On Chrome</a></li>
+                    <li><a class="slide-hover" href="https://www.enablejavascript.io/en/how-to-enable-javascript-on-apple-safari-ipad-iphone-ios" target="_blank" rel="noreferrer noopener">On Safari</a></li>
+                    <li>Most other browsers are Chromium browsers, so you can try following the steps for Chrome, or searching "<span class="inline-code">how to enable javascript [your browser name]</span>".</li>
+                </ul>
+            </div>
+        </section>
+        
+
     </div>
+
+    <style>
+        /* Hide elements that require Javascript to function
+        The element will only show if JS is enabled, or if the noscript tag is blocked too */
+
+        .js-only {
+            display: none;
+        }
+    </style>
 </noscript>
