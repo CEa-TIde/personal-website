@@ -4,6 +4,7 @@
 Parameters:
 int offset: Buttons to skip; 0 if missing
 int limit: Limit of buttons to be rendered; render all if 0 or missing.
+bool noflash: don't add buttons marked as flashing
 -->
 {%- endcomment -%}
 
@@ -21,40 +22,46 @@ int limit: Limit of buttons to be rendered; render all if 0 or missing.
             {%- break -%}
         {%- endif -%}
 
-        {%- if item.img.alt != empty -%}
-            {%- capture altval %}alt="{{ item.img.alt }}" {% endcapture -%}
-        {%- else -%}
-            {%- assign altval = "" -%}
-        {%- endif -%}
-        {%- if item.title != empty -%}
-            {%- capture titleval %}title="{{ item.title }}" {% endcapture -%}
-        {%- else -%}
-            {%- assign titleval = "" -%}
-        {%- endif -%}
 
-        {%- if item.w -%}
-            {%- capture w -%}
-                {{ item.w }}
-            {%- endcapture -%}
-        {%- else -%}
-            {%- assign w = 88 -%}
-        {%- endif -%}
-        {%- if item.h -%}
-            {%- capture w -%}
-                {{ item.w }}
-            {%- endcapture -%}
-        {%- else -%}
-            {%- assign h = 31 -%}
-        {%- endif -%}
+        {%- comment -%} <!-- optionally skip flashing gifs --> {%- endcomment -%}
+        {%- unless include.noflash == true and item.flashing == true -%}
 
-        {%- if item.href -%}
-            <a class="bttn-88x31" href="{{ item.href }}">
-                <img {{ altval }}{{ titleval }}src="{{ item.img.src }}" loading="lazy" width="{{ w }}" height="{{ h }}"/>
-            </a>
-        {%- else -%}
-            <span class="bttn-88x31">
-                <img {{ altval }}{{ titleval }}src="{{ item.img.src }}" loading="lazy" width="{{ w }}" height="{{ h }}"/>
-            </span>
-        {%- endif -%}
+            {%- if item.img.alt != empty -%}
+                {%- capture altval %}alt="{{ item.img.alt }}" {% endcapture -%}
+            {%- else -%}
+                {%- assign altval = "" -%}
+            {%- endif -%}
+            {%- if item.title != empty -%}
+                {%- capture titleval %}title="{{ item.title }}" {% endcapture -%}
+            {%- else -%}
+                {%- assign titleval = "" -%}
+            {%- endif -%}
+
+            {%- if item.w -%}
+                {%- capture w -%}
+                    {{ item.w }}
+                {%- endcapture -%}
+            {%- else -%}
+                {%- assign w = 88 -%}
+            {%- endif -%}
+            {%- if item.h -%}
+                {%- capture w -%}
+                    {{ item.w }}
+                {%- endcapture -%}
+            {%- else -%}
+                {%- assign h = 31 -%}
+            {%- endif -%}
+
+            {%- if item.href -%}
+                <a class="bttn-88x31" href="{{ item.href }}">
+                    <img {{ altval }}{{ titleval }}src="{{ item.img.src }}" loading="lazy" width="{{ w }}" height="{{ h }}"/>
+                </a>
+            {%- else -%}
+                <span class="bttn-88x31">
+                    <img {{ altval }}{{ titleval }}src="{{ item.img.src }}" loading="lazy" width="{{ w }}" height="{{ h }}"/>
+                </span>
+            {%- endif -%}
+            
+        {%- endunless -%}
     {%- endfor -%}
 </div>
