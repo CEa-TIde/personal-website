@@ -21,6 +21,8 @@ concurrency:
   group: "pages"
   cancel-in-progress: false
 
+
+
 jobs:
   # Build job
   build:
@@ -29,18 +31,19 @@ jobs:
       - name: Start build
         run: echo Starting build...
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Build with Jekyll
+        uses: actions/configure-pages@v5
+      - name: Build
         uses: actions/jekyll-build-pages@v1
         with:
           source: ./
           destination: ./_site
       - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
       - name: End build
         run: echo Finished creating build.
+        
 
   # Deployment job
   deploy:
@@ -54,6 +57,7 @@ jobs:
         run: echo Start deploying build...
       - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v2
+        uses: actions/deploy-pages@v4
       - name: End Deployment
         run: echo Finished deploying build.\nVisit ${{ steps.deployment.outputs.page_url }} to view the build.
+    
