@@ -438,7 +438,7 @@ Footer styling:
     white-space: nowrap;
 }
 
-.footer-bttns {
+.bttns-container {
     margin: 20px auto;
     display: block; /* default fallback */
     display: table; /* table as fallback */

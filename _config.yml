@@ -63,6 +63,7 @@ defaults:
         navskip: navskip.html
         hdivider: hdivider.html
         vdivider: vdivider.html
+        buttons: buttons.html
 
       favicon_16x16: /media/icons/favicon_16x16.png
       favicon_32x32: /media/icons/favicon_32x32.png
