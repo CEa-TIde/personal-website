@@ -3,14 +3,14 @@
         <a class="slide-hover" href="/" title="Take me Home, Country Roads">Home</a>
         <a class="slide-hover" href="/copyright" title="Copyright information">Copyright</a>
 
-        <span class="vert-divider"></span>
+        {% include {{ page.includes.vdivider }} %}
 
         <a class="slide-hover" href="/aboutme" title="About me">About Me</a>
         <a class="slide-hover" href="/aboutme#contact" title="Contact me">Contact Me</a>
         <a class="slide-hover" href="/portfolio" title="Minecraft Portfolio">Portfolio</a>
         <a class="slide-hover" href="https://github.com/CEa-TIde" target="_blank" title="Link to github profile">Github</a>
     </div>
-    <hr class="horiz-divider"/>
+    {% include {{ page.includes.hdivider }} %}
     <div class="footer-bttns">
         <a class="bttn-88x31" href="https://archive.org/">
             <img alt="Internet Archive" src="/media/bttn/88x31_internetarchive.gif" loading="lazy" width="88" height="31"/>

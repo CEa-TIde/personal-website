@@ -3,6 +3,9 @@ layout: default
 title: Project Overview
 desc: project overview, projects, interactive, sandbox
 
+itemimg_width: 32px
+itemimg_height: 32px
+
 ---
 
 <!-- <main class="tile-set">
@@ -17,17 +20,24 @@ desc: project overview, projects, interactive, sandbox
     {% endfor %}
 </main> -->
 
-<main class="project-list">
-    {%- assign x = 0 -%}
-    {%- for tile in site.data.project_tiles -%}
-        {%- if x == 0 -%}
-            {%- assign x = 1 -%}
-        {%- else -%}
-            <hr class="horiz-divider"/>
-        {%- endif -%}
-        <hgroup class="project-tile">
-            <a href="{{ tile.link }}"><h2 class="project-tile-title">{{ tile.title }}</h2></a>
-            <p>{{ tile.caption }}</p>
-        </hgroup>
-    {%- endfor -%}
+<main>
+    <ul class="project-list">
+        {%- assign x = 0 -%}
+        {%- for item in site.data.project_tiles -%}
+            {%- if x == 0 -%}
+                {%- assign x = 1 -%}
+            {%- else -%}
+                {% include {{ page.includes.hdivider }} %}
+            {%- endif -%}
+            <li class="project-item" role="listitem">
+                <a href="{{ item.link }}">
+                    <img src="{{ item.img.src }}" alt="{{ item.img.alt }}" width="{{ page.itemimg_width }}" height="{{ page.itemimg_height }}"/>
+                    <hgroup class="project-item-text">
+                        <h2 class="project-item-title">{{ item.title }}</h2>
+                        <p>{{ item.caption }}</p>
+                    </hgroup>
+                </a>
+            </li>
+        {%- endfor -%}
+    </ul>
 </main>

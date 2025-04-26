@@ -58,6 +58,8 @@ defaults:
         footer: footer.html
         noscript: noscript.html
         navskip: navskip.html
+        hdivider: hdivider.html
+        vdivider: vdivider.html
 
       favicon_16x16: /media/icons/favicon_16x16.png
       favicon_32x32: /media/icons/favicon_32x32.png
