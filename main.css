@@ -157,7 +157,7 @@ body {
 }
 
 /* div.noscript inside noscript tag */
-.noscript {
+/* .noscript {
     color: #aaaaaa;
     color: var(--text-color-default);
     padding: 10px;
@@ -169,6 +169,32 @@ body {
 
 .noscript img {
     display: block;
+} */
+
+/* if the noscript is already loaded, this separate block doesn't need to be. */
+/* TODO/NOTE: :has not widely supported in old browsers, IE */
+/* \ Behaviour then: if .ifno-noscript is always shown when js disabled, regardless if noscript blocked */
+/* noscript:has(> .noscript) + .ifno-noscript {
+    display: none;
+} */
+/* THIS BEHAVIOUR HAS BEEN MOVED TO noscript.css */
+
+
+/* Any content inside a .nojs-content block is hidden when javascript can be executed.
+Note that this is different from putting it in a Noscript block, as that can be blocked from loading with the NoScript addon */
+/* .js-enabled class applied by a JS script */
+body.js-enabled .nojs-content {
+    display: none;
+}
+
+/* Similarly any content in a .js-content block is hidden when javascript can NOT be executed. */
+/* :not is not supported in lots of old browsers */
+/* body:not(.js-enabled) .js-content {
+    display: none;
+} */
+/* Instead .js-disabled is set by default and changed with a JS script */
+body.js-disabled .js-content {
+    display: none;
 }
 
 /* centers div content within parent container using margin:auto */

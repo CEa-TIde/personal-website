@@ -3,22 +3,26 @@
     <head>
         {% include {{ page.includes.head }} %}
     </head>
-    <body>
-        
+    <!-- DO NOT ADD EXTRA CLASS TO BODY (unless you change logic in ondomload.js) -->
+    <body class="js-disabled">
+        {% include {{ page.includes.navskip }} %}
         <div class="bg-wrapper">
             <div class="centered-div">
                 <!-- Adds the nav page-box -->
                 <nav class="nav page-box">
                     {% include {{ page.includes.nav }} %}
                 </nav>
-
-                {% include {{ page.includes.noscript }} %}
             </div>
     
             <!-- <div class="page-box"> -->
+            <div id="nav-skip">
                 {{ content }}
-            <!-- </div> -->
+            </div>
+            {% include {{ page.includes.noscript }} %}
         </div>
         {% include {{ page.includes.footer }} %}
+        {%- if page.has-js -%}
+        <script src="/scripts/ondomload.js"></script>
+        {%- endif -%}
     </body>
 </html>

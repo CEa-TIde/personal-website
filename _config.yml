@@ -52,6 +52,8 @@ defaults:
 
       # set this to true for a page to change the noscript message
       require-js: false
+      # set this to true for a page to load the js script
+      has-js: false
 
       includes:
         head: htmlheaders.html
@@ -60,6 +62,7 @@ defaults:
         pagecrumb: pagecrumb.html
         footer: footer.html
         noscript: noscript.html
+        noscript_body: noscript_body.html
         navskip: navskip.html
         hdivider: hdivider.html
         vdivider: vdivider.html

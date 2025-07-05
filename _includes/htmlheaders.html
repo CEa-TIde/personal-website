@@ -9,9 +9,9 @@
 <meta name="keywords" content="CEa_TIde, ceatide, cea, tide, Cyana, personal website, {{ page.keys }}"/>
 {% else %}
 <meta name="keywords" content="CEa_TIde, ceatide, cea, tide, Cyana, personal website"/>
-{% endif %}
+{% endif -%}
 
-{% if page.desc %}
+{%- if page.desc %}
 <meta name="description" content="{{ page.desc }}"/>
 {% endif %}
 
@@ -55,80 +55,85 @@
 <meta property="twitter:domain" content="{{ site.url }}"/>
 <meta property="twitter:url" content="{{ site.url }}{{ page.url }}"/>
 
-{% if page.title %}
+{%- if page.title %}
 <meta name="twitter:title" content="{{ page.title }}"/>                   <!-- max 70 chars  -->
-{% endif %}
+{% endif -%}
 
-{% if page.desc %}
+{%- if page.desc %}
 <meta name="twitter:description" content="{{ page.desc }}"/>              <!-- max 200 chars -->
-{% endif %}
+{% endif -%}
 
-{% if page.embed_image %}
+{%- if page.embed_image %}
 <meta property="twitter:image" content="{{ page.embed_image }}"/>              <!-- recommended 1200x628 -->
-    {% if page.embed_image_alt %}
+    {% if page.embed_image_alt -%}
     <meta property="twitter:image:alt" content="{{ page.embed_image_alt }}"/>  <!-- max 420 chars -->
-    {% endif %}
-{% endif %}
+    {%- endif -%}
+{%- endif -%}
 
-{% if page.themecolor %}
+{%- if page.themecolor %}
 <meta name="theme-color" content="#{{ page.themecolor }}"/>
-{% endif %}
+{%- endif %}
 
 <!-- Favicons -->
 {% if page.favicon_57x57 %}
 <link rel="apple-touch-icon" sizes="57x57" href="{{ page.favicon_57x57 }}"/>
-{% endif %}
-{% if page.favicon_60x60 %}
+{% endif -%}
+{%- if page.favicon_60x60 %}
 <link rel="apple-touch-icon" sizes="60x60" href="{{ page.favicon_60x60 }}"/>
-{% endif %}
-{% if page.favicon_72x72 %}
+{% endif -%}
+{%- if page.favicon_72x72 %}
 <link rel="apple-touch-icon" sizes="72x72" href="{{ page.favicon_72x72 }}"/>
-{% endif %}
-{% if page.favicon_76x76 %}
+{% endif -%}
+{%- if page.favicon_76x76 %}
 <link rel="apple-touch-icon" sizes="76x76" href="{{ page.favicon_76x76 }}"/>
-{% endif %}
-{% if page.favicon_114x114 %}
+{% endif -%}
+{%- if page.favicon_114x114 %}
 <link rel="apple-touch-icon" sizes="114x114" href="{{ page.favicon_114x114 }}"/>
-{% endif %}
-{% if page.favicon_120x120 %}
+{% endif -%}
+{%- if page.favicon_120x120 %}
 <link rel="apple-touch-icon" sizes="120x120" href="{{ page.favicon_120x120 }}"/>
-{% endif %}
-{% if page.favicon_144x144 %}
+{% endif -%}
+{%- if page.favicon_144x144 %}
 <link rel="apple-touch-icon" sizes="144x144" href="{{ page.favicon_144x144 }}"/>
-{% endif %}
-{% if page.favicon_152x152 %}
+{% endif -%}
+{%- if page.favicon_152x152 %}
 <link rel="apple-touch-icon" sizes="152x152" href="{{ page.favicon_152x152 }}"/>
-{% endif %}
-{% if page.favicon_180x180 %}
+{% endif -%}
+{%- if page.favicon_180x180 %}
 <link rel="apple-touch-icon" sizes="180x180" href="{{ page.favicon_180x180 }}"/>
-{% endif %}
-{% if page.favicon_192x192 %}
+{% endif -%}
+{%- if page.favicon_192x192 %}
 <link rel="icon" type="image/png" sizes="192x192"  href="{{ page.favicon_192x192 }}"/>
-{% endif %}
-{% if page.favicon_96x96 %}
+{% endif -%}
+{%- if page.favicon_96x96 %}
 <link rel="icon" type="image/png" sizes="96x96" href="{{ page.favicon_96x96 }}"/>
-{% endif %}
-{% if page.favicon_48x48 %}
+{% endif -%}
+{%- if page.favicon_48x48 %}
 <link rel="icon" type="image/png" sizes="48x48" href="{{ page.favicon_48x48 }}"/>
-{% endif %}
-{% if page.favicon_32x32 %}
+{% endif -%}
+{%- if page.favicon_32x32 %}
 <link rel="icon" type="image/png" sizes="32x32" href="{{ page.favicon_32x32 }}"/>
-{% endif %}
-{% if page.favicon_16x16 %}
+{% endif -%}
+{%- if page.favicon_16x16 %}
 <link rel="icon" type="image/png" sizes="16x16" href="{{ page.favicon_16x16 }}"/>
-{% endif %}
-{% if page.favicon_manifest %}
+{% endif -%}
+{%- if page.favicon_manifest %}
 <link rel="manifest" href="{{ page.favicon_manifest }}"/>
-{% endif %}
-{% if page.favicon_mstilecolor %}
+{% endif -%}
+{%- if page.favicon_mstilecolor %}
 <meta name="msapplication-TileColor" content="#{{ page.favicon_mstilecolor }}"/>
-{% endif %}
-{% if page.favicon_mstileimage %}
+{% endif -%}
+{%- if page.favicon_mstileimage %}
 <meta name="msapplication-TileImage" content="{{ page.favicon_mstileimage }}"/>
 {% endif %}
 
 <!-- TODO: add webmanifest for Android Chrome -->
- <!-- TODO: add SVG favicon -->
+<!-- TODO: add SVG favicon -->
 
 <!--style sheet with site-wide style rules-->
 <link rel="stylesheet" type="text/css" href="/main.css"/>
+<!-- noscript exclusive style rules -->
+<noscript>
+    <!-- This only loads when noscript is loaded (js disabled and noscript tag not blocked) -->
+    <link rel="stylesheet" type="text/css" href="/noscript.css"/>
+</noscript>

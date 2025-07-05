@@ -9,7 +9,7 @@
 {%- assign pagename = pagename | split: "." -%}
 {%- assign pagename = pagename[0] -%}
 
-{%- if pagename != "index" -%}
+{%- if pagename != "index" and pagename != "404" -%}
     {%- assign breadcrumb = breadcrumb | append: pagename %}
 {%- endif -%}
 {%- assign breadcrumb = breadcrumb | split: "/" | compact -%}

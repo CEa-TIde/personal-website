@@ -1,0 +1,6 @@
+
+/* This CSS rule is only loaded when noscript is rendered in the head tag.
+Thus the fallback can be disabled. */
+body.js-disabled noscript + .ifno-noscript {
+    display: none;
+}

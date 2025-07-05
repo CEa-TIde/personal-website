@@ -8,7 +8,8 @@
         <link rel="stylesheet" type="text/css" href="/projects/{{ page.style }}"/>
         {% endif %}
     </head>
-    <body>
+    <!-- DO NOT ADD EXTRA CLASS TO BODY (unless you change logic in ondomload.js) -->
+    <body class="js-disabled">
         {% include {{ page.includes.navskip }} %}
         <header class="header">
             <a class="logo" href="/"><img src="/media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
@@ -24,5 +25,8 @@
         <div class="page-wrapper" id="nav-skip">
             {{ content }}
         </div>
+        {%- if page.has-js -%}
+        <script src="/scripts/ondomload.js"></script>
+        {%- endif -%}
     </body>
 </html>

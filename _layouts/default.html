@@ -3,7 +3,8 @@
     <head>
         {% include {{ page.includes.head }} %}
     </head>
-    <body>
+    <!-- DO NOT ADD EXTRA CLASS TO BODY (unless you change logic in ondomload.js) -->
+    <body class="js-disabled">
         {% include {{ page.includes.navskip }} %}
         <header class="header">
             <a class="logo" href="/"><img src="/media/logo.png" alt="Logo of CEa_TIde" title="Go to the homepage"/></a>
@@ -25,5 +26,8 @@
             </div>
         </div>
         {% include {{ page.includes.footer }} %}
+        {%- if page.has-js -%}
+        <script src="/scripts/ondomload.js"></script>
+        {%- endif -%}
     </body>
 </html>
