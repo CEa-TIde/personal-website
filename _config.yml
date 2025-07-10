@@ -50,10 +50,13 @@ defaults:
       embed_image: /media/logo.png
       embed_image_alt: Logo of the website, a wave with the text CEa_TIde next to it.
 
-      # set this to true for a page to change the noscript message
+      # set this to true for a page to change the noscript message; this will also possibly show the fallback noscript message
       require-js: false
       # set this to true for a page to load the js script
       has-js: false
+
+      is-indexed: false # pages need to be explicitly included in the sitemap
+      category-list: [general, sandbox, minecraft, webtrinkets]
 
       includes:
         head: htmlheaders.html
@@ -67,6 +70,7 @@ defaults:
         hdivider: hdivider.html
         vdivider: vdivider.html
         buttons: buttons.html
+        parsedurl: parsedurl.html
 
       favicon_16x16: /media/icons/favicon_16x16.png
       favicon_32x32: /media/icons/favicon_32x32.png
