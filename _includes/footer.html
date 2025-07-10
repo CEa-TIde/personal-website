@@ -2,6 +2,7 @@
     <div class="footer-info centered-div">
         <a class="slide-hover" href="/" title="Take me Home, Country Roads">Home</a>
         <a class="slide-hover" href="/copyright" title="Copyright information">Copyright</a>
+        <a class="slide-hover" href="/sitemap" title="Human-readable sitemap">Sitemap</a>
 
         {% include {{ page.includes.vdivider }} %}
 
@@ -12,6 +13,7 @@
     </div>
     {% include {{ page.includes.hdivider }} %}
     {% include {{ page.includes.buttons }} limit=0 noflash=true %}
+    <div class="centered-div"><p class="small-footer-text">Site built with Jekyll ({{ jekyll.version }}) and hosted with Github Pages. No Analytics are collected&mdash;I have no use for them :]</p></div>
     <!-- transparent footer image right-bottom of the screen/footer
     Width and height attr necessary for lazy loading
     TODO: add srcset/sizes for different viewports -->

@@ -1,0 +1,23 @@
+---
+title: Sitemap
+desc: Sitemap. Handy links to useful parts of this website.
+keys: sitemap, site map, info, guide
+---
+
+<main class="content-wrapper">
+    {%- for cat in page.category-list -%}
+    <h1>{{ cat }}</h1>
+    <ul>
+        {% for resource in site.pages %}
+            {% if resource.is-indexed == true %}
+                {% for pcat in resource.page-categories %}
+                    {% if pcat == cat %}
+                    <li><a href="{% include {{ page.includes.parsedurl }} page=resource %}">{{ resource.title }}</a></li>
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endfor %}
+    </ul>
+    {%- endfor -%}
+</main>
+

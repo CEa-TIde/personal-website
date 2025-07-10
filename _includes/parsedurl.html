@@ -1,0 +1,24 @@
+{%- comment -%}
+<!-- parse url -->
+<!-- if it is a .html page, remove the extension, otherwise leave untouched -->
+{%- endcomment -%}
+
+{%- if include.page != nil -%}
+{%- assign inputpage = include.page -%}
+{%- else -%}
+{%- assign inputpage = page -%}
+{%- endif -%}
+
+
+{%- comment -%} remove_last filter is not yet supported in the current Liquid version (4.0.0/4.0.4) installed with Jekyll/GH pages {%- endcomment -%}
+{%- assign pext = inputpage.name | split: "." | last -%}
+{%- assign purl_dotsplit = inputpage.url | split: "." -%}
+{%- assign purl_splitlen = purl_dotsplit | size | minus: 1 -%}
+{%- assign purl = purl_dotsplit | slice: 0, {{ purl_splitlen }} | join: "." -%}
+
+
+{%- if pext == 'html' -%}
+    {{ purl }}
+{%- else -%}
+    {{ inputpage.url }}
+{%- endif -%}

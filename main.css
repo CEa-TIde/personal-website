@@ -464,6 +464,13 @@ Footer styling:
     white-space: nowrap;
 }
 
+.small-footer-text {
+    font-size: 0.6em;
+    color: #fa6cff;
+    color: var(--color-pink);
+    color: var(--color-grey);
+}
+
 .bttns-container {
     margin: 20px auto;
     display: block; /* default fallback */
