@@ -471,6 +471,16 @@ Footer styling:
     color: var(--color-grey);
 }
 
+.kofi-footer-text {
+    font-size: 0.7em;
+    color: #fa6cff;
+    color: var(--color-pink);
+}
+
+.kofi-footer-text a {
+    text-decoration: none;
+}
+
 .bttns-container {
     margin: 20px auto;
     display: block; /* default fallback */
@@ -854,7 +864,7 @@ a.slide-hover::before,
 p a::before {
     position: absolute;
     content: "";
-    /* bottom has spotty support on older browsers (then again, calc() and ::before are not supported either) */
+    /* TODO: bottom has spotty support on older browsers (then again, calc() and ::before are not supported either) */
     bottom: calc(-0.1em + 1px);
     bottom: 0;
     width: 2px;
