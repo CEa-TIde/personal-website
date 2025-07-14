@@ -4,6 +4,7 @@ Source: https://nicolasgallagher.com/micro-clearfix-hack/
 */
 
 /* TODO?: Box shadow in IE6-9: https://www.useragentman.com/blog/2011/08/24/how-to-simulate-css3-box-shadow-in-ie7-8-without-javascript/ */
+/* maybe add simple border as fallback */
 
 
 /* TODO: PNG support only starts at NN4.04+, with transparency support coming later
@@ -266,6 +267,14 @@ body.js-disabled .js-content {
     max-width: calc(max(60%, min(600px, 100%)));
 }
 
+.page-wrapper.wide {
+    min-width: 320px;
+    max-width: 80%;
+    min-width: calc(min(800px, 100%));
+    max-width: calc(max(80%, min(800px, 100%)));
+}
+
+/* TODO: unused? may have been replaced with .bg-wrapper */
 .bg-pattern {
     width: 100vw;
     height: 100vh;
@@ -279,6 +288,7 @@ body.js-disabled .js-content {
 
 .content-wrapper {
     background: #152931;
+    /* TODO: set var() overwrite */
     margin: 15px;
     padding: 15px;
     border-radius: 15px;

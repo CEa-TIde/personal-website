@@ -1,3 +1,5 @@
+// TODO: REWRITE FOR OLD JS SUPPORT
+
 window.onload = () => init();
 
 function init() {

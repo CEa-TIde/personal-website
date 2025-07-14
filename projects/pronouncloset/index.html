@@ -6,15 +6,42 @@ style: /pronouncloset/pronouncloset.css
 
 is-indexed: true
 page-categories: [sandbox]
+
+has-js: true
+require-js: true
 ---
 
-<div>
+<div class="page-box">
+    <div class="content-wrapper">
+        <!-- TODO: spacing of the h4 titles? -->
+        <h4 class="sub-title">Are you unsure about your gender? Do you want to know how it would feel to be called something else?</h4>
+        <p>
+            Then this <span>Pronoun Closet</span> is for you!
+            This program inserts your tryout pronouns and name into example sentences.
+            Simply choose the pronoun set(s) you want (or none if you select that option), your preferred name(s) and click on <span>Reload</span>.
+            You also have options for when the program randomly picks a name or pronoun set (per word, sentence, or block), and the option to use the names associated with pronoun sets.
+        </p>
+
+        <h4 class="sub-title">Editing sentence blocks</h4>
+        <p>
+               You can edit or remove the sentence blocks by using the button controls on the bottom right of a block.
+               The format that is used when editing, is explained at the bottom of the page.
+               Use the button at the bottom of the list to add a new sentence block and start editing it.
+        </p>
+        <noscript>
+            <br/>
+            <h4 class="sub-title">This page uses Javascript for its functionality.</h4>
+        </noscript>
+    </div>
+    
+</div>
+
+<div class="page-box">
     <noscript><span class="noscript">This page uses javascript for its functionality.</span></noscript>
     <main>
         <div class="settings-view">
-            <p>Explanation blah blah blah</p>
             <div class="pronoun-selection-panel">
-                <label for="preset-pronouns-dropdown">Pick a pronoun:</label>
+                <label for="preset-pronouns-dropdown">Pick a pronoun set:</label>
                 <select id="preset-pronouns-dropdown">
                     <option value="">--Select a preset pronoun set--</option>
                     <option value="she/her/her/hers/herself">she/her/her/hers/herself</option>
@@ -151,4 +178,45 @@ page-categories: [sandbox]
         <input type="button" value="Reset" id="resetls"/>
     </div>
     <script type="text/javascript" src="/projects/pronouncloset/pronouncloset.js"></script>
+</div>
+
+<div class="page-box">
+    <div class="content-wrapper">
+        <h4 class="sub-title">Sentence Block Edit Format</h4>
+        <p>
+            Pronouns and names are inserted in a sentence block by replacing certain keywords surrounded by curly braces (<span class="inline-code">{}</span>),
+            for example <span class="inline-code">{obj}</span>. If the first letter between the braces is capitalised, the replaced word is also capitalised.
+            The keywords for pronoun conjugations and names can be found in the table below.
+        </p>
+        <table>
+            <tr>
+                <th>Pronoun/Name</th>
+                <th>Keyword</th>
+            </tr>
+            <tr>
+                <td>Name</td>
+                <td><span class="inline-code">{name}</span></td>
+            </tr>
+            <tr>
+                <td>Subject</td>
+                <td><span class="inline-code">{sub}</span></td>
+            </tr>
+            <tr>
+                <td>Object</td>
+                <td><span class="inline-code">{obj}</span></td>
+            </tr>
+            <tr>
+                <td>Possessive Determiner</td>
+                <td><span class="inline-code">{pod}</span></td>
+            </tr>
+            <tr>
+                <td>Possessive Pronoun</td>
+                <td><span class="inline-code">{pop}</span></td>
+            </tr>
+            <tr>
+                <td>Reflexive</td>
+                <td><span class="inline-code">{ref}</span></td>
+            </tr>
+        </table>
+    </div>
 </div>

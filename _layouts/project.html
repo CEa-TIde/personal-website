@@ -22,9 +22,13 @@
                 </span>     
             </nav>
         </header>
-        <div class="page-wrapper" id="nav-skip">
-            {{ content }}
+        <div class="bg-wrapper">
+            <div class="page-wrapper centered-div wide" id="nav-skip">
+                {{ content }}
+                {% include {{ page.includes.noscript }} %}
+            </div>
         </div>
+        
         {%- if page.has-js -%}
         <script src="/scripts/ondomload.js"></script>
         {%- endif -%}
