@@ -1,6 +1,32 @@
 // TODO: REWRITE FOR OLD JS SUPPORT
 
-window.onload = () => init();
+// window.onload = () => init();
+// since window.onload is already overwritten by the general ondomload.js
+// set global variable for that script to listen to instead.
+if (!window.__onload_functions__) window.__onload_functions__ = []
+window.__onload_functions__.push(init);
+
+
+// console object with guards for log/warn/error
+_console = {
+    log : function(val) {
+        if (console && console.log) console.log(val);
+    },
+    warn : function(val) {
+        if (console && console.warn) {
+            console.warn(val);
+        } else {
+            this.log(val);
+        }
+    },
+    error : function(val) {
+        if (console && console.error) {
+            console.error(val);
+        } else {
+            this.warn(val);
+        }
+    }
+}
 
 function init() {
     console.log('init');
@@ -130,22 +156,29 @@ class UIInteraction {
      * @returns {HTMLElement} the newly created sentence block
      */
     static createNewBlock(formatText = '') {
+        console.log('creating new block');
         let sentenceWrapper = document.createElement('LI');
+        // TODO: directly edit string instead?
         sentenceWrapper.classList.add('message-block');
 
         let text = document.createElement('P');
         text.className = 'text-field';
         // set to format text. The block needs to be parsed later
-        text.value = formatText;
+        text.innerHTML = formatText || '';
 
         let editField = document.createElement('TEXTAREA');
         editField.className = 'edit-field onlyedit';
-        editField.innerText = formatText || '';
+        editField.value = formatText || '';
         editField.placeholder = 'Write a couple of sentences using the syntax explained in the left panel...';
+
+        let editCopy = document.createElement('P');
+        editCopy.className = 'edit-field-copy';
+        // set to format text. This is a backup copy when editing
+        editCopy.innerHTML = formatText || '';
 
         let controls = this.createBlockControls();
 
-        sentenceWrapper.append(text, editField, controls);
+        sentenceWrapper.append(text, editField, editCopy, controls);
 
         return sentenceWrapper;
     }
@@ -189,9 +222,9 @@ class UIInteraction {
         return bttn;
     }
 
-    static addBlockToList(elem) {
+    static addBlockToList(block) {
         let list = document.querySelector('.sentence-list');
-        list.append(elem);
+        list.append(block);
     }
 
     static clearBlockList() {
@@ -199,12 +232,49 @@ class UIInteraction {
         removeAllChildren(list);
     }
 
+    static getTextField(blockElement) {
+        var textfield = blockElement.querySelector('.text-field');
+        if (textfield) return textfield;
+        console.error("Textfield not found in block.", blockElement);
+        return null;
+    }
+
+    static getEditField(blockElement) {
+        var editfield = blockElement.querySelector('.edit-field');
+        if (editfield) return editfield;
+        console.error("Editfield not found in block.", blockElement);
+        return null;
+    }
+
+    static getEditCopy(blockElement) {
+        var editCopy = blockElement.querySelector('.edit-field-copy');
+        if (editCopy) return editCopy;
+        console.error("Editfield copy not found in block.", block);
+        return null;
+    }
+
+    static createBlockObject(blockElement) {
+        var textField = this.getTextField(blockElement);
+        var editField = this.getEditField(blockElement);
+        var editCopy = this.getEditCopy(blockElement);
+        if (!textField || !editField || !editCopy) return null;
+
+        return {
+            element : blockElement,
+            textField : textField,
+            editField : editField,
+            editCopy : editCopy,
+        }
+    }
+
     /**
      * Start editing block by showing the textarea.
      * @param {Element} block the sentence element
      */
     static startEditBlock(block) {
-        block.classList.add('editing');
+
+        block.element.classList.add('editing');
+        block.editCopy.innerHTML = block.editField.value;
     }
 
     /**
@@ -213,16 +283,33 @@ class UIInteraction {
      * @param {Boolean} shouldApply if the edits should be applied or not
      */
     static stopEditBlock(block, shouldApply) {
-        if (shouldApply) {
-            this.updateBlock(block);
 
-            let formatText = block.querySelector('.edit-field')?.value;
-            if (formatText) {
-                LocalStorage.saveBlock(formatText);
+        console.log(shouldApply, block.textField.innerHTML);
+        if (shouldApply) {
+            console.log("Edit field:", block.editField.value);
+            console.log("Edit copy:", block.editCopy.innerHTML);
+            
+            if (block.editField.value) {
+                console.log("Applying edits...");
+                this.updateBlock(block);
+                LocalStorage.saveBlock(block.editField.value);
+                // make sure the edit copy is up-to-date too
+                block.editCopy.innerHTML = block.editField.value;
+            }
+            // edit was empty. Revert to original text, or delete if new block
+            else if (block.editCopy.innerHTML == "") {
+                this.deleteBlock(block);
+                return;
             }
         }
-    
-        block.classList.remove('editing');
+        else if (block.editCopy.innerHTML == "") {
+            // delete block if edit cancelled on new block
+            this.deleteBlock(block);
+            return;
+        }
+
+        block.editField.value = block.editCopy.innerHTML;
+        block.element.classList.remove('editing');
     }
 
 
@@ -231,12 +318,11 @@ class UIInteraction {
      * @param {Element} block block to delete
      */
     static deleteBlock(block) {
-        // TODO add confirm box
+        // TODO add confirm box (only if not empty already; boolean flag)
 
-        let formatText = block.querySelector('.edit-field').value;
-        LocalStorage.deleteBlock(formatText);
-
-        block.remove();
+        let formatText = block.editCopy.value;
+        if (formatText) LocalStorage.deleteBlock(formatText);
+        block.element.remove();
     }
 
 
@@ -432,7 +518,8 @@ class UIInteraction {
 
     static reloadAllBlocks() {
         document.querySelectorAll('.message-block').forEach(elem => {
-            this.updateBlock(elem);
+            var block = this.createBlockObject(elem);
+            if (block) this.updateBlock(block);
         });
     }
 
@@ -441,12 +528,8 @@ class UIInteraction {
      * @param {HTMLElement} block the block to parse and update the text of
      */
     static updateBlock(block) {
-        let template = block.querySelector('.edit-field');
-        let outputElem = block.querySelector('.text-field');
-        if (template && outputElem) {
-            let parsedText = Parser.parseText(template.value);
-            outputElem.innerHTML = parsedText;
-        }
+        var parsedText = Parser.parseText(block.editField.value);
+        block.textField.innerHTML = parsedText;
     }
 
     static getPronounSets() {
@@ -684,7 +767,8 @@ class Parser {
         // Set regex global flag if all pronouns should be replaced.
         let sFlags = replaceAllPronouns ? 'g' : '';
         // Replace all pronouns (and their capitalised versions)
-        return sentence.replace(new RegExp(/{sub}/, sFlags), set.subject)
+        return sentence
+            .replace(new RegExp(/{sub}/, sFlags), set.subject)
             .replace(new RegExp(/{pod}/, sFlags), set.possessiveDeterminer)
             .replace(new RegExp(/{obj}/, sFlags), set.object)
             .replace(new RegExp(/{pop}/, sFlags), set.possessivePronoun)
@@ -828,6 +912,7 @@ class LocalStorage {
         
         UIInteraction.clearBlockList();
         for (let block of blocks) {
+            
             UIInteraction.addBlockToList(block);
         }
 
@@ -977,9 +1062,12 @@ function handleChangeSetting(ev, type) {
 function handleCreateBlock() {
     console.log('handling creation sentence...');
     let blockElement = UIInteraction.createNewBlock();
-    UIInteraction.addBlockToList(blockElement);
+    var block = UIInteraction.createBlockObject(blockElement);
+    console.log(block);
+    if (!block) return;
+    UIInteraction.addBlockToList(block.element);
     // Set to edit mode
-    UIInteraction.startEditBlock(blockElement);
+    UIInteraction.startEditBlock(block);
 }
 
 /**
@@ -988,7 +1076,9 @@ function handleCreateBlock() {
  */
 function handleStartEditBlock(ev) {
     console.log('handling edit...');
-    let block = ev.target.parentElement.parentElement;
+    var blockElement = ev.target.parentElement.parentElement;
+    var block = UIInteraction.createBlockObject(blockElement);
+    if (!block) return;
     UIInteraction.startEditBlock(block);
 }
 
@@ -998,7 +1088,9 @@ function handleStartEditBlock(ev) {
  * @param {*} shouldApply whether changes should be applied or not
  */
 function handleStopEditBlock(ev, shouldApply) {
-    let block = ev.target.parentElement.parentElement;
+    var blockElement = ev.target.parentElement.parentElement;
+    var block = UIInteraction.createBlockObject(blockElement);
+    if (!block) return;
     UIInteraction.stopEditBlock(block, shouldApply);
 }
 
@@ -1008,7 +1100,9 @@ function handleStopEditBlock(ev, shouldApply) {
  */
 function handleDeleteBlock(ev) {
     console.log('handling deletion...');
-    let block = ev.target.parentElement.parentElement;
+    var blockElement = ev.target.parentElement.parentElement;
+    var block = UIInteraction.createBlockObject(blockElement);
+    if (!block) return;
     UIInteraction.deleteBlock(block);
 }
 

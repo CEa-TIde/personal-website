@@ -7,6 +7,15 @@ function onDomLoad() {
     window._hasrun = true;
     setJSContentFlag();
     insertUriString();
+
+    // run all init functions that may have also been added.
+    var onload_funcs = window.__onload_functions__;
+    if (onload_funcs && onload_funcs.length) {
+        for (var i = 0; i < onload_funcs.length; i++) {
+            var onload_func = onload_funcs[i];
+            onload_func();
+        }
+    }
 }
 
 
@@ -18,8 +27,8 @@ function setJSContentFlag() {
         bd.classList.add('js-enabled');
     }
     else if (bd.className) {
-        // assuming this script is only run once, so not needed if already present.
-        // assuming body has only the js-disabled class when running this script.
+        // assuming this script is only run once, so not needed to check if class already present.
+        // assuming body has only the js-disabled class when running this script!!
         bd.className = "js-enabled";
     }
     // else not possible to set class name

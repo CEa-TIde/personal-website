@@ -75,6 +75,10 @@ ul {
     padding: 5px;
 }
 
+.message-block .edit-field-copy {
+    display: none;
+}
+
 /* Only set display to none of edit-elements when not editing */
 .message-block:not(.editing) .onlyedit {
     display: none;
