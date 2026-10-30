@@ -26,3 +26,4 @@ Disallow: /
 # OpenAI's LLM bullshit -> Fuck off
 User-Agent: GPTBot
 Disallow: /
+
